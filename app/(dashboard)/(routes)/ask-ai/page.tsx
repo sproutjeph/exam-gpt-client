@@ -15,13 +15,19 @@ import { cn } from "@/lib/utils";
 import { UserAvatar } from "@/components/base-components/UserAvatar";
 import { BotAvatar } from "@/components/base-components/BotAvatar";
 import { Empty } from "@/components/base-components/Empty";
+import { ChatCompletionRequestMessage } from "openai";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
+import { useAppDispatch } from "@/redux-store/hooks";
 
 interface pageProps {}
 
 const AskAiPage: FC<pageProps> = ({}) => {
-  const [messages, setMessages] = useState<{ content: string; role: string }[]>(
-    []
-  );
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
 
   const form = useForm<z.infer<typeof askAiformSchema>>({
     resolver: zodResolver(askAiformSchema),
@@ -34,6 +40,29 @@ const AskAiPage: FC<pageProps> = ({}) => {
 
   const onSubmit = async (values: z.infer<typeof askAiformSchema>) => {
     console.log(values);
+
+    try {
+      const userMessage: ChatCompletionRequestMessage = {
+        role: "user",
+        content: values.prompt,
+      };
+      const newMessages = [...messages, userMessage];
+
+      const response = await axios.post("/api/conversation", {
+        messages: newMessages,
+      });
+      setMessages((current) => [...current, userMessage, response.data]);
+
+      form.reset();
+    } catch (error: any) {
+      if (error?.response?.status === 403) {
+        dispatch(openSubscriptionModal());
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } finally {
+      router.refresh();
+    }
   };
 
   return (

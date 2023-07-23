@@ -7,14 +7,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface pageProps {}
 
 const ExamsPage: FC<pageProps> = ({}) => {
-  // const router = useRouter();
-
   return (
     <main className="p-8 text-white">
       <Tabs defaultValue="JAMB" className="">
