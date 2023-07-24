@@ -29,6 +29,7 @@ import {
 } from "./constants";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { questionData } from "@/utils/data";
 
 interface pageProps {}
 

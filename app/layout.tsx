@@ -6,6 +6,18 @@ import ToasterProvider from "@/providers/ToasterProvider";
 import { ReduxProviders } from "@/providers/ReduxProvider";
 import { ModalProvider } from "@/providers/ModalProvider";
 import { saveCurrentUSerToDB } from "@/lib/saveCurrentUser";
+import { questionData } from "@/utils/data";
+import * as fs from "fs";
+
+// const jsonContent = JSON.stringify(questionData);
+
+// fs.writeFile("./questionData.json", jsonContent, "utf8", (err) => {
+//   if (err) {
+//     console.log("An error occurred while writing the JSON object to file.");
+//     return console.log(err);
+//   }
+//   console.log("JSON file has been saved.");
+// });
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({

@@ -46,6 +46,7 @@ const examsDataSchema = new mongoose.Schema({
 });
 
 // Create and export the Mongoose model
-const ExamsDataModel = mongoose.model("ExamsData", examsDataSchema);
+const Exam =
+  mongoose.models.ExamsDataModel || mongoose.model("Exam", examsDataSchema);
 
-module.exports = ExamsDataModel;
+export default Exam;

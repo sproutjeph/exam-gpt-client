@@ -49,7 +49,3 @@ const QuestionsPage: FC<pageProps> = ({
 };
 
 export default QuestionsPage;
-
-//          // <QuestionCard question={question} index={2} />
-//          // <QuestionCard question={question} index={3} />
-//          // <QuestionCard question={question} index={4} />
