@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { IQuestion, IQuestionData } from "@/types/types";
+import { IQuestion } from "@/types/types";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface QuestionCardProps {
@@ -48,10 +48,10 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index }) => {
           </RadioGroup>
           <hr className="my-2" />
 
-          <CardFooter className="flex justify-between pt-1">
+          <CardFooter className="flex justify-between gap-4 px-0 pt-2">
             <Popover>
               <PopoverTrigger asChild>
-                <Button className="bg-fuchsia-200" variant="secondary">
+                <Button className=" bg-fuchsia-200" variant="secondary">
                   Check Answer
                 </Button>
               </PopoverTrigger>
@@ -60,7 +60,9 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index }) => {
               </PopoverContent>
             </Popover>
 
-            <Button variant="main">Ask AI To Slove</Button>
+            <Button variant="main" className="">
+              Ask AI To Slove
+            </Button>
           </CardFooter>
         </CardContent>
       </Card>

@@ -1,9 +1,10 @@
 "use client";
 import { QuestionCard } from "@/components/base-components";
 import { ArrowBigLeftDashIcon } from "lucide-react";
-import { questionData } from "@/utils/data";
+import { useQuestion } from "@/hooks/useQuestion";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
+import { IQuestion } from "@/types/types";
 
 interface pageProps {
   searchParams: {
@@ -18,13 +19,13 @@ const QuestionsPage: FC<pageProps> = ({
 }) => {
   const router = useRouter();
 
-  console.log(examType, subject, examYear);
+  // console.log(examType, subject, examYear);
 
-  const selectedQuestion = questionData.data.filter(
-    (x) =>
-      x.examType === examType ||
-      (x.examYear == Number(examYear) && x.subject === subject?.toUpperCase())
-  );
+  const { questions, isLoading } = useQuestion(examType, examYear, subject);
+
+  // if (!isLoading) {
+  //   console.log(questions);
+  // }
 
   return (
     <main className="mt-8 overflow-scroll text-white bg-black">
@@ -37,12 +38,11 @@ const QuestionsPage: FC<pageProps> = ({
       </div>
       <h2 className="mt-4 text-lg text-center">{`  ${examYear} ${examType}  ${subject} Past Questions`}</h2>
 
-      <ul className="flex flex-col items-center justify-center my-4 gap-y-4">
-        {selectedQuestion.map((question, i) =>
-          question.questions.map((x, i) => (
-            <QuestionCard key={question.id + i} question={x} index={i} />
-          ))
-        )}
+      <ul className="grid justify-center my-4 xl:grid-cols-2 gap-y-4 xl:place-items-center">
+        {!isLoading &&
+          questions.data.map((question: IQuestion, i: number) => (
+            <QuestionCard key={question._id} question={question} index={i} />
+          ))}
       </ul>
     </main>
   );

@@ -8,6 +8,7 @@ import { ModalProvider } from "@/providers/ModalProvider";
 import { saveCurrentUSerToDB } from "@/lib/saveCurrentUser";
 import { questionData } from "@/utils/data";
 import * as fs from "fs";
+import { ReactQueryProvider } from "@/providers/ReactQuery";
 
 // const jsonContent = JSON.stringify(questionData);
 
@@ -42,15 +43,17 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider>
-      <ReduxProviders>
-        <html lang="en">
-          <body className={inter.className}>
-            <ToasterProvider />
-            <ModalProvider />
-            {children}
-          </body>
-        </html>
-      </ReduxProviders>
+      <ReactQueryProvider>
+        <ReduxProviders>
+          <html lang="en">
+            <body className={inter.className}>
+              <ToasterProvider />
+              <ModalProvider />
+              {children}
+            </body>
+          </html>
+        </ReduxProviders>
+      </ReactQueryProvider>
     </ClerkProvider>
   );
 }

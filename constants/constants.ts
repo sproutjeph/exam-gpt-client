@@ -104,3 +104,21 @@ export const routes = [
     color: "text-white",
   },
 ];
+export const exams = [
+  {
+    id: "beeba215e2",
+    examName: "JAMB",
+  },
+  {
+    id: "35dc83a",
+    examName: "WASSCE",
+  },
+  {
+    id: "7d15e2d52a",
+    examName: "NECO",
+  },
+  {
+    id: "eeb7d15e2d52a3",
+    examName: "POST-UTME",
+  },
+];

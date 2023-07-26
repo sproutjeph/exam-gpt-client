@@ -6,46 +6,35 @@ export const askAiformSchema = z.object({
   }),
 });
 
-interface ExamSubject {
-  id: string;
+export interface ISubject {
   name: string;
-  examYears: number[];
-}
-
-interface ExamType {
-  id: string;
-  name: string;
-  examCat: string;
-  subjects: ExamSubject[];
-}
-
-export interface IExamsData {
-  result: number;
-  message: string;
-  examTypes: ExamType[];
+  _id: string;
+  exam: string;
+  examYears: {
+    examYear: number;
+    _id: string;
+    isActive: boolean;
+  }[];
 }
 
 export interface IQuestion {
-  correctOption: string;
-  examType: string;
-  examYear: number;
-  id: string;
-  image: string;
   option: {
     [key: string]: string;
   };
+  _id: string;
+  correctOption: string;
+  examType: string;
+  examYear: string;
+  subject: string;
+  image: string;
   question: string;
   solution: string;
 }
 
-export interface IQuestionData {
-  result: number;
-  message: string;
-  data: {
-    subject: string;
-    examType: string;
-    examYear: number;
-    id: string;
-    questions: IQuestion[];
-  }[];
+export interface Option {
+  a: string;
+  b: string;
+  c: string;
+  d: string;
+  e: string;
 }

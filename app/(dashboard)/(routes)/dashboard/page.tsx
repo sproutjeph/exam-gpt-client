@@ -1,10 +1,10 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
 import { routes } from "@/constants/constants";
-import { cn } from "@/lib/utils";
-import { ArrowRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const DashboardPage = () => {
   const router = useRouter();
@@ -13,10 +13,10 @@ const DashboardPage = () => {
     <section>
       <div className="my-8 space-y-4">
         <h2 className="text-2xl font-bold text-center text-white md:text-4xl">
-          Explore the power of AI
+          Solve O-Level Past Questions with AI
         </h2>
         <p className="text-sm font-light text-center text-muted-foreground md:text-lg">
-          Chat with the smartest AI - Experience the power of AI
+          Learn with the smartest AI - Experience the power of AI
         </p>
       </div>
       <div className="px-4 space-y-4 md:px-20 lg:px-32">

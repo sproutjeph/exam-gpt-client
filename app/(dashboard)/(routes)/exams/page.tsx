@@ -1,36 +1,45 @@
-import { FC } from "react";
+"use client";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { examsData } from "@/utils/data";
-import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { useSubject } from "@/hooks/useSubject";
+import { exams } from "@/constants/constants";
+import { ISubject } from "@/types/types";
+import { useState } from "react";
 import Link from "next/link";
 
-interface pageProps {}
+const ExamsPage = () => {
+  const [currentExam, setCurrentExam] = useState("JAMB");
+  const { subjects, isLoading, isSuccess } = useSubject(currentExam);
 
-const ExamsPage: FC<pageProps> = ({}) => {
   return (
     <main className="p-8 text-white">
-      <Tabs defaultValue="JAMB" className="">
+      <Tabs defaultValue={currentExam} className="">
         <TabsList className="justify-between w-full">
-          {examsData.examTypes.map((exam) => (
-            <>
-              <TabsTrigger value={exam.name} key={exam.id}>
-                {exam.name}
-              </TabsTrigger>
-            </>
+          {exams.map((exam) => (
+            <TabsTrigger
+              value={exam.examName}
+              key={exam.id}
+              onClick={() => {
+                setCurrentExam(exam.examName.toUpperCase());
+              }}
+            >
+              {exam.examName}
+            </TabsTrigger>
           ))}
         </TabsList>
 
-        {examsData.examTypes.map((exam) => (
-          <TabsContent value={exam.name} key={exam.id}>
-            <h4 className="my-4 text-lg text-center">{`${exam.name} PAST QUESTION`}</h4>
-            <ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
-              {exam.subjects.map((subject) => (
-                <Popover key={subject.id}>
+        <TabsContent value={currentExam.toUpperCase()}>
+          <h4 className="my-4 text-lg text-center">{`${currentExam} PAST QUESTION`}</h4>
+          <ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {!isLoading &&
+              subjects?.data?.map((subject: ISubject) => (
+                <Popover key={subject._id}>
                   <PopoverTrigger asChild>
                     <Button variant="main">{subject.name}</Button>
                   </PopoverTrigger>
@@ -39,21 +48,20 @@ const ExamsPage: FC<pageProps> = ({}) => {
                       {subject.name}
                     </h4>
                     <div className="grid justify-center grid-cols-3 gap-2">
-                      {subject.examYears.map((year, i) => (
+                      {subject?.examYears?.map((year: any) => (
                         <Link
-                          key={i}
-                          href={`/questions/?examType=${exam.name}&subject=${subject.name}&examYear=${year}`}
+                          key={year._id}
+                          href={`/questions/?examType=${subject.exam}&subject=${subject.name}&examYear=${year.examYear}`}
                         >
-                          <Button variant="main">{year}</Button>
+                          <Button variant="main">{year.examYear}</Button>
                         </Link>
                       ))}
                     </div>
                   </PopoverContent>
                 </Popover>
               ))}
-            </ul>
-          </TabsContent>
-        ))}
+          </ul>
+        </TabsContent>
       </Tabs>
     </main>
   );
