@@ -1,3 +1,4 @@
+import { queryKeys } from "@/constants/constants";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -25,7 +26,7 @@ export function useQuestion(
     error,
     isSuccess,
   } = useQuery(
-    ["questions", examType, examYear, subject],
+    [queryKeys.questions, examType, examYear, subject],
     () => getQuestionsByQuery(examType, examYear, subject),
     {
       staleTime: 3600, // 40 mins to refetch

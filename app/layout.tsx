@@ -6,7 +6,6 @@ import ToasterProvider from "@/providers/ToasterProvider";
 import { ReduxProviders } from "@/providers/ReduxProvider";
 import { ModalProvider } from "@/providers/ModalProvider";
 import { saveCurrentUSerToDB } from "@/lib/saveCurrentUser";
-import { questionData } from "@/utils/data";
 import * as fs from "fs";
 import { ReactQueryProvider } from "@/providers/ReactQuery";
 

@@ -12,10 +12,11 @@ import { exams } from "@/constants/constants";
 import { ISubject } from "@/types/types";
 import { useState } from "react";
 import Link from "next/link";
+import { Loader } from "@/components/base-components/Loader";
 
 const ExamsPage = () => {
   const [currentExam, setCurrentExam] = useState("JAMB");
-  const { subjects, isLoading, isSuccess } = useSubject(currentExam);
+  const { subjects, isLoading, error } = useSubject(currentExam);
 
   return (
     <main className="p-8 text-white">
@@ -37,7 +38,9 @@ const ExamsPage = () => {
         <TabsContent value={currentExam.toUpperCase()}>
           <h4 className="my-4 text-lg text-center">{`${currentExam} PAST QUESTION`}</h4>
           <ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {!isLoading &&
+            {isLoading ? (
+              <Loader />
+            ) : (
               subjects?.data?.map((subject: ISubject) => (
                 <Popover key={subject._id}>
                   <PopoverTrigger asChild>
@@ -59,7 +62,8 @@ const ExamsPage = () => {
                     </div>
                   </PopoverContent>
                 </Popover>
-              ))}
+              ))
+            )}
           </ul>
         </TabsContent>
       </Tabs>

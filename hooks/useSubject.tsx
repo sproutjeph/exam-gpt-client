@@ -1,3 +1,4 @@
+import { queryKeys } from "@/constants/constants";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -16,8 +17,8 @@ export function useSubject(examName: string = "jamb") {
     isLoading,
     error,
     isSuccess,
-  } = useQuery(["subjects", examName], () => getSubject(examName), {
-    staleTime: 3600, // 40 mins to refetch
+  } = useQuery([queryKeys.subjects, examName], () => getSubject(examName), {
+    staleTime: 360000, // 30 mins to refetch
     cacheTime: 360000, // 30 mins for cache data
     refetchOnWindowFocus: false,
     refetchOnMount: false,

@@ -122,3 +122,8 @@ export const exams = [
     examName: "POST-UTME",
   },
 ];
+
+export const queryKeys = {
+  questions: "questions",
+  subjects: "subjects",
+};

@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    const data = await Subject.create(body);
+    const data = await Question.create(body);
 
     return NextResponse.json({ data: data, message: "Success" });
   } catch (error) {
