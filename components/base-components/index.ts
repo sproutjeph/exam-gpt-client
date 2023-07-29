@@ -12,3 +12,13 @@ export { default as LandingContent } from "@/components/base-components/LandingC
 export { default as StoreDownLoadBtns } from "@/components/base-components/StoreDownLoadBtns";
 
 export { default as QuestionCard } from "@/components/base-components/QuestionCard";
+
+export { default as Empty } from "@/components/base-components/Empty";
+
+export { default as UserAvatar } from "@/components/base-components/UserAvatar";
+
+export { default as BotAvatar } from "@/components/base-components/BotAvatar";
+
+export { default as Heading } from "@/components/base-components/Heading";
+
+export { default as Loader } from "@/components/base-components/Loader";

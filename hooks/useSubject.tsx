@@ -1,29 +1,42 @@
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { axiosInstance } from "@/lib/axiosInstance";
 import { queryKeys } from "@/constants/constants";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useEffect } from "react";
+import { ISubject } from "@/types/types";
 
-async function getSubject(examName: string) {
-  const { data } = await axios.get(
-    // `http://localhost:3000/api/subjects?exam=${examName}`
-    `http://localhost:8000/api/v1/subjects/${examName}`
-  );
+interface IAxiosReturnType {
+  message: string;
+  data: ISubject[];
+}
+
+async function getSubject(examName: string): Promise<IAxiosReturnType> {
+  const { data } = await axiosInstance.get(`/subjects/${examName}`);
 
   return data;
 }
 
-export function useSubject(examName: string = "jamb") {
+export function useSubject(examName: string) {
   const {
     data: subjects,
     isLoading,
     error,
     isSuccess,
-  } = useQuery([queryKeys.subjects, examName], () => getSubject(examName), {
-    staleTime: 360000, // 30 mins to refetch
-    cacheTime: 360000, // 30 mins for cache data
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-  });
+  } = useQuery([queryKeys.subjects, examName], () => getSubject(examName));
+
+  // prefetch the next subject set to "WASSEC" Bcos by "JAMB" is defalut
+  const queryClient = useQueryClient();
+  let examToPrefecth = "WASSCE";
+  if (examName === "WASSCE") {
+    examToPrefecth = "NECO";
+  } else if (examName === "NECO") {
+    examToPrefecth = "POST-UTME";
+  }
+
+  useEffect(() => {
+    queryClient.prefetchQuery([queryKeys.subjects, examToPrefecth], () =>
+      getSubject(examToPrefecth)
+    );
+  }, [examToPrefecth, queryClient]);
 
   return { subjects, isLoading, error, isSuccess };
 }

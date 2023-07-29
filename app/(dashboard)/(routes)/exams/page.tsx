@@ -12,7 +12,7 @@ import { exams } from "@/constants/constants";
 import { ISubject } from "@/types/types";
 import { useState } from "react";
 import Link from "next/link";
-import { Loader } from "@/components/base-components/Loader";
+import { Loader } from "@/components/base-components";
 
 const ExamsPage = () => {
   const [currentExam, setCurrentExam] = useState("JAMB");

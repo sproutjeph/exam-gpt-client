@@ -1,15 +1,20 @@
+import { axiosInstance } from "@/lib/axiosInstance";
 import { queryKeys } from "@/constants/constants";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { IQuestion } from "@/types/types";
+
+interface IAxiosReturnType {
+  message: string;
+  data: IQuestion[];
+}
 
 async function getQuestionsByQuery(
-  examType: string = "jamb",
-  examYear: string = "2010",
-  subject: string = "mathematics"
-) {
-  const { data } = await axios.get(
-    // `http://localhost:3000/api/subjects?exam=${examName}`
-    `http://localhost:8000/api/v1/questions/${examType}/${examYear}/${subject}`
+  examType: string,
+  examYear: string,
+  subject: string
+): Promise<IAxiosReturnType> {
+  const { data } = await axiosInstance.get(
+    `questions/${examType}/${examYear}/${subject}`
   );
 
   return data;
@@ -25,16 +30,8 @@ export function useQuestion(
     isLoading,
     error,
     isSuccess,
-  } = useQuery(
-    [queryKeys.questions, examType, examYear, subject],
-    () => getQuestionsByQuery(examType, examYear, subject),
-    {
-      staleTime: 3600, // 40 mins to refetch
-      cacheTime: 360000, // 30 mins for cache data
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
+  } = useQuery([queryKeys.questions, examType, examYear, subject], () =>
+    getQuestionsByQuery(examType, examYear, subject)
   );
 
   return { questions, isLoading, error, isSuccess };

@@ -4,7 +4,7 @@ interface EmptyProps {
   label: string;
 }
 
-export const Empty = ({ label }: EmptyProps) => {
+const Empty = ({ label }: EmptyProps) => {
   return (
     <div className="flex flex-col items-center justify-center h-full p-20">
       <div className="relative h-72 w-72">
@@ -14,3 +14,5 @@ export const Empty = ({ label }: EmptyProps) => {
     </div>
   );
 };
+
+export default Empty;

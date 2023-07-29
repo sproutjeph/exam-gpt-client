@@ -1,26 +1,28 @@
 "use client";
 
-import { askAiformSchema } from "@/types/types";
-import { FC, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Heading } from "@/components/base-components/Heading";
-import { MessageSquare } from "lucide-react";
+import {
+  BotAvatar,
+  Empty,
+  Heading,
+  Loader,
+  UserAvatar,
+} from "@/components/base-components";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Loader } from "@/components/base-components/Loader";
-import { cn } from "@/lib/utils";
-import { UserAvatar } from "@/components/base-components/UserAvatar";
-import { BotAvatar } from "@/components/base-components/BotAvatar";
-import { Empty } from "@/components/base-components/Empty";
+import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ChatCompletionRequestMessage } from "openai";
-import axios from "axios";
+import { useAppDispatch } from "@/redux-store/hooks";
+import { Button } from "@/components/ui/button";
+import { askAiformSchema } from "@/types/types";
+import { Input } from "@/components/ui/input";
+import { MessageSquare } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
-import { useAppDispatch } from "@/redux-store/hooks";
+import { FC, useState } from "react";
+import { cn } from "@/lib/utils";
+import axios from "axios";
+import * as z from "zod";
 
 interface pageProps {}
 

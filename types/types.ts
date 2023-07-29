@@ -38,3 +38,22 @@ export interface Option {
   d: string;
   e: string;
 }
+
+export interface IUploadQuestion {
+  correctOption: string;
+  examType: string;
+  examYear: string;
+  subject: string;
+  image: string;
+  option: IUploadOption;
+  question: string;
+  solution: string;
+}
+
+interface IUploadOption {
+  a: string;
+  b: string;
+  c: string;
+  d: string;
+  e: string;
+}

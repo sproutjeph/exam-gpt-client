@@ -29,11 +29,16 @@ import {
 } from "./constants";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { questionData } from "@/utils/data";
+import { useUploadQuestion } from "@/hooks/useUploadQuestion";
+import { IUploadQuestion } from "@/types/types";
+import { useIsMutating } from "@tanstack/react-query";
 
 interface pageProps {}
 
 const UploadQuestionPage: FC<pageProps> = ({}) => {
+  const mutate = useUploadQuestion();
+  const isMutating = useIsMutating();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,11 +50,29 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
       optionE: "",
     },
   });
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = form.formState.isSubmitting || isMutating !== 0;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    console.log("clicked Submit");
+    const newQuestion: IUploadQuestion = {
+      correctOption: values.correctOption,
+      examType: values.exam,
+      examYear: values.examYear,
+      subject: values.subject,
+      question: values.question,
+      option: {
+        a: values.optionA,
+        b: values.optionB,
+        c: values.optionC,
+        d: values.optionD,
+        e: values.optionE,
+      },
+      solution: "",
+      image: "",
+    };
+
+    mutate(newQuestion);
+
+    form.reset();
   };
 
   return (
@@ -315,14 +338,45 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                 )}
               />
             </div>
+            <FormField
+              control={form.control}
+              name="correctOption"
+              render={({ field }) => (
+                <FormItem className="">
+                  <Select
+                    disabled={isLoading}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select Correct Answer"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="overflow-scroll">
+                      <SelectItem value="A">A</SelectItem>
+                      <SelectItem value="B">B</SelectItem>
+                      <SelectItem value="C">C</SelectItem>
+                      <SelectItem value="D">D</SelectItem>
+                      <SelectItem value="E">E</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <Button
               type="submit"
               disabled={isLoading}
               variant="main"
-              className="col-span-2"
+              className=""
             >
-              Submit
+              {isLoading ? "uploading..." : "Submit"}
             </Button>
           </form>
         </Form>

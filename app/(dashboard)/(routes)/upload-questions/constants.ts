@@ -23,6 +23,8 @@ export const formSchema = z.object({
 
   optionD: z.string().min(1),
   optionE: z.string().min(1),
+
+  correctOption: z.string().min(1),
 });
 
 export const examTypeOptions = [
@@ -39,8 +41,8 @@ export const examTypeOptions = [
     label: "NECO",
   },
   {
-    value: "POST_UTME",
-    label: "POST_UTME",
+    value: "POST-UTME",
+    label: "POST-UTME",
   },
 ];
 
