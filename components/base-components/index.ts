@@ -22,3 +22,5 @@ export { default as BotAvatar } from "@/components/base-components/BotAvatar";
 export { default as Heading } from "@/components/base-components/Heading";
 
 export { default as Loader } from "@/components/base-components/Loader";
+
+export { default as CBTestSubjectCard } from "@/components/base-components/CBTestSubjectCard";

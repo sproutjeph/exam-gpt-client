@@ -1,10 +1,12 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 
 import modalsReducer from "@/featuers/modals/modalSlice";
+import askAiReducer from "@/featuers/askAiSlice";
 
 export const store = configureStore({
   reducer: {
     modals: modalsReducer,
+    askAi: askAiReducer,
   },
 });
 

@@ -11,34 +11,41 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChatCompletionRequestMessage } from "openai";
-import { useAppDispatch } from "@/redux-store/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { Button } from "@/components/ui/button";
 import { askAiformSchema } from "@/types/types";
-import { Input } from "@/components/ui/input";
 import { MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import * as z from "zod";
+import { Textarea } from "@/components/ui/textarea";
+import { clearQuestion } from "@/featuers/askAiSlice";
 
 interface pageProps {}
 
 const AskAiPage: FC<pageProps> = ({}) => {
   const router = useRouter();
+  const path = usePathname();
   const dispatch = useAppDispatch();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+
+  const { cuurentQuestion } = useAppSelector((state) => state.askAi);
 
   const form = useForm<z.infer<typeof askAiformSchema>>({
     resolver: zodResolver(askAiformSchema),
     defaultValues: {
-      prompt: "",
+      prompt: cuurentQuestion.length > 0 ? cuurentQuestion : "",
     },
   });
 
   const isLoading = form.formState.isSubmitting;
+  useEffect(() => {
+    dispatch(clearQuestion());
+  }, [path, dispatch]);
 
   const onSubmit = async (values: z.infer<typeof askAiformSchema>) => {
     console.log(values);
@@ -89,7 +96,7 @@ const AskAiPage: FC<pageProps> = ({}) => {
                 render={({ field }) => (
                   <FormItem className="col-span-12 lg:col-span-10">
                     <FormControl className="p-0 m-0">
-                      <Input
+                      <Textarea
                         className="text-black border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                         disabled={isLoading}
                         placeholder="How do I calculate the radius of a circle?"
@@ -106,7 +113,7 @@ const AskAiPage: FC<pageProps> = ({}) => {
                 size="icon"
                 variant="main"
               >
-                Generate
+                Slove
               </Button>
             </form>
           </Form>

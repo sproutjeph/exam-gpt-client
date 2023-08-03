@@ -25,7 +25,7 @@ const FreeCounter: FC<FreeCounterProps> = ({
         <CardContent className="py-6">
           <div className="mb-4 space-y-2 text-sm text-center text-white">
             <p>
-              {apiLimitCount} / {5} Free Generations
+              {apiLimitCount} / {4} Free Generations
             </p>
             <Progress className="h-3" value={(apiLimitCount / 0) * 100} />
           </div>

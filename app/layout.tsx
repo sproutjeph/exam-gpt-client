@@ -1,4 +1,4 @@
-import { ClerkProvider, auth, currentUser } from "@clerk/nextjs";
+import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Roboto } from "next/font/google";
@@ -6,18 +6,7 @@ import ToasterProvider from "@/providers/ToasterProvider";
 import { ReduxProviders } from "@/providers/ReduxProvider";
 import { ModalProvider } from "@/providers/ModalProvider";
 import { saveCurrentUSerToDB } from "@/lib/saveCurrentUser";
-import * as fs from "fs";
 import { ReactQueryProvider } from "@/providers/ReactQuery";
-
-// const jsonContent = JSON.stringify(questionData);
-
-// fs.writeFile("./questionData.json", jsonContent, "utf8", (err) => {
-//   if (err) {
-//     console.log("An error occurred while writing the JSON object to file.");
-//     return console.log(err);
-//   }
-//   console.log("JSON file has been saved.");
-// });
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -35,10 +24,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await currentUser();
-  const currentUserEmail = user?.emailAddresses?.[0]?.emailAddress || "";
+  // const user = await currentUser();
+  // const currentUserEmail = user?.emailAddresses?.[0]?.emailAddress || "";
 
-  await saveCurrentUSerToDB(currentUserEmail);
+  // await saveCurrentUSerToDB(currentUserEmail);
 
   return (
     <ClerkProvider>

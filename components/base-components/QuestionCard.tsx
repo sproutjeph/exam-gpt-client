@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +13,9 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { IQuestion } from "@/types/types";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux-store/hooks";
+import { saveCurrentQuestion } from "@/featuers/askAiSlice";
 
 interface QuestionCardProps {
   question: IQuestion;
@@ -20,6 +23,9 @@ interface QuestionCardProps {
 }
 
 const QuestionCard: FC<QuestionCardProps> = ({ question, index }) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
   return (
     <article>
       <Card className="w-[350px] md:w-[450px]">
@@ -60,7 +66,14 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index }) => {
               </PopoverContent>
             </Popover>
 
-            <Button variant="main" className="">
+            <Button
+              variant="main"
+              className=""
+              onClick={() => {
+                dispatch(saveCurrentQuestion(question.question));
+                router.push("/ask-ai");
+              }}
+            >
               Ask AI To Slove
             </Button>
           </CardFooter>

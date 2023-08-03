@@ -11,7 +11,7 @@ const DashboardPage = () => {
 
   return (
     <section>
-      <div className="my-8 space-y-4">
+      <div className="my-8 space-y-4 ">
         <h2 className="text-2xl font-bold text-center text-white md:text-4xl">
           Solve O-Level Past Questions with AI
         </h2>
@@ -19,12 +19,14 @@ const DashboardPage = () => {
           Learn with the smartest AI - Experience the power of AI
         </p>
       </div>
-      <div className="px-4 space-y-4 md:px-20 lg:px-32">
+      <div className="grid items-center justify-center grid-cols-2 gap-4 px-4 space-y-4 md:px-8 lg:px-32 2xl:grid-cols-3">
         {routes.map((tool) => (
           <Card
             onClick={() => router.push(tool.href)}
             key={tool.href}
-            className="flex items-center justify-between p-4 text-white transition bg-gray-800 cursor-pointer border-black/5 hover:shadow-md"
+            className={cn(
+              `flex items-center justify-between p-4 transition  cursor-pointer border-black/5 hover:shadow-md text-white bg-gray-600`
+            )}
           >
             <div className="flex items-center gap-x-4">
               <div className={cn("p-2 w-fit rounded-md", tool.color)}>
