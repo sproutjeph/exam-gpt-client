@@ -20,7 +20,7 @@ const ExamsPage = () => {
 
   return (
     <main className="p-8 text-white">
-      <Tabs defaultValue={currentExam} className="">
+      <Tabs defaultValue={currentExam} className="max-w-4xl px-2 mx-auto">
         <TabsList className="justify-between w-full">
           {exams.map((exam) => (
             <TabsTrigger

@@ -218,7 +218,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                 <FormItem className="col-span-2">
                   <FormControl className="">
                     <Textarea
-                      className="account-form_input no-focus"
+                      className=" account-form_input no-focus"
                       disabled={isLoading}
                       placeholder="Type Your Question Here"
                       {...field}
@@ -228,7 +228,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               )}
             />
 
-            <FormDescription className="text-center">
+            <FormDescription className="text-center text-white">
               Options Section.
             </FormDescription>
 

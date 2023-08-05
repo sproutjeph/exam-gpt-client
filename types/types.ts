@@ -57,3 +57,9 @@ interface IUploadOption {
   d: string;
   e: string;
 }
+
+export interface ITextBook {
+  id: number;
+  subject: string;
+  image: string;
+}

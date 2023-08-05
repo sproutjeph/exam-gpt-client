@@ -20,9 +20,10 @@ import { saveCurrentQuestion } from "@/featuers/askAiSlice";
 interface QuestionCardProps {
   question: IQuestion;
   index: number;
+  cbTest: boolean;
 }
 
-const QuestionCard: FC<QuestionCardProps> = ({ question, index }) => {
+const QuestionCard: FC<QuestionCardProps> = ({ question, index, cbTest }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -43,7 +44,11 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index }) => {
           <RadioGroup defaultValue="">
             {Object.keys(question.option).map((optionKey) => (
               <div key={optionKey} className="flex items-center space-x-2">
-                <RadioGroupItem value={optionKey} id={optionKey} />
+                <RadioGroupItem
+                  value={optionKey}
+                  id={optionKey}
+                  className="bg-white"
+                />
 
                 <Label htmlFor={optionKey}>
                   <span className="mr-4 capitalize">{optionKey}:</span>{" "}
@@ -54,29 +59,31 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index }) => {
           </RadioGroup>
           <hr className="my-2" />
 
-          <CardFooter className="flex justify-between gap-4 px-0 pt-2">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button className=" bg-fuchsia-200" variant="secondary">
-                  Check Answer
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-32 h-8 py-1 font-bold text-center text-mainColor">
-                {question.correctOption}
-              </PopoverContent>
-            </Popover>
+          {!cbTest && (
+            <CardFooter className="flex justify-between gap-4 px-0 pt-2">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button className=" bg-fuchsia-200" variant="secondary">
+                    Check Answer
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-32 h-8 py-1 font-bold text-center text-mainColor">
+                  {question.correctOption}
+                </PopoverContent>
+              </Popover>
 
-            <Button
-              variant="main"
-              className=""
-              onClick={() => {
-                dispatch(saveCurrentQuestion(question.question));
-                router.push("/ask-ai");
-              }}
-            >
-              Ask AI To Slove
-            </Button>
-          </CardFooter>
+              <Button
+                variant="main"
+                className=""
+                onClick={() => {
+                  dispatch(saveCurrentQuestion(question.question));
+                  router.push("/ask-ai");
+                }}
+              >
+                Ask AI To Slove
+              </Button>
+            </CardFooter>
+          )}
         </CardContent>
       </Card>
     </article>

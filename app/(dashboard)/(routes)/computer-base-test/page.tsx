@@ -30,7 +30,7 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
     <main className="relative mx-10 mb-16 overflow-scroll text-stone-50">
       <h1 className="my-8 text-xl text-center">Test Your Knowledge</h1>
 
-      <Tabs defaultValue={currentTab}>
+      <Tabs defaultValue={currentTab} className="max-w-4xl mx-auto">
         <TabsList className="justify-between w-full px-4">
           {tabs.map((tab, index) => (
             <TabsTrigger key={tab} value={tab}>
@@ -58,9 +58,9 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
           </div>
         </TabsContent>
 
-        <TabsContent value="Options">
-          <div className="grid mt-8 gap-y-4">
-            <Card>
+        <TabsContent value="Options" className="max-w-2xl mx-auto">
+          <div className="grid gap-4 mt-8 lg:grid-cols-2">
+            <Card className="text-white bg-dark-1">
               <div
                 className="flex justify-between mx-4 my-2 space-x-2 cursor-pointer"
                 onClick={() => {}}
@@ -71,7 +71,7 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
                 <Checkbox id="" className="w-6 h-6" />
               </div>
             </Card>
-            <Card>
+            <Card className="text-white bg-dark-1">
               <div
                 className="flex justify-between mx-4 my-2 space-x-2 cursor-pointer"
                 onClick={() => {}}
@@ -83,16 +83,16 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
               </div>
             </Card>
 
-            <Card>
+            <Card className="text-white bg-dark-1">
               <div className="flex items-center m-4 space-x-2 ">
                 <div className="flex items-center flex-1 space-x-2">
                   <Book />
-                  <p className="text-sm text-gray-600 ">Exam Mode</p>
+                  <p className="text-sm ">Exam Mode</p>
                 </div>
 
                 <div className="flex-1 pl-20">
                   <Select onValueChange={() => {}} defaultValue="2010">
-                    <SelectTrigger>
+                    <SelectTrigger className="account-form_input">
                       <SelectValue placeholder="Select Exam Year" />
                     </SelectTrigger>
                     <SelectContent className="overflow-scroll ">
@@ -108,17 +108,17 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
               </div>
             </Card>
 
-            <Card>
+            <Card className="text-white bg-dark-1">
               <div className="flex items-center m-4 space-x-2 ">
                 <div className="flex items-center flex-1 space-x-2">
                   <Clock />
-                  <p className="text-sm text-gray-600 ">Set Time</p>
+                  <p className="text-sm text-gray-200 ">Set Time</p>
                 </div>
 
                 <div className="flex-1 pl-20">
                   <Select onValueChange={() => {}} defaultValue="2010">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Exam Year" />
+                    <SelectTrigger className="account-form_input">
+                      <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="overflow-scroll ">
                       <SelectGroup>

@@ -136,3 +136,9 @@ export const queryKeys = {
   subjects: "subjects",
   allSubjects: "allSubjects",
 };
+
+export const textBooks = [
+  { id: 1, subject: "Physics", image: "/physics1.jpeg" },
+  { id: 2, subject: "Biology", image: "/Biology1.jpeg" },
+  { id: 3, subject: "Mathmetics", image: "/maths1.webp" },
+];

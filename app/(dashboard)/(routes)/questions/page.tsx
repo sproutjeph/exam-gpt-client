@@ -43,7 +43,12 @@ const QuestionsPage: FC<pageProps> = ({
           <Loader />
         ) : (
           questions?.data.map((question: IQuestion, i: number) => (
-            <QuestionCard key={question._id} question={question} index={i} />
+            <QuestionCard
+              key={question._id}
+              question={question}
+              index={i}
+              cbTest={false}
+            />
           ))
         )}
       </ul>

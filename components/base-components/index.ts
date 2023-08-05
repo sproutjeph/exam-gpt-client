@@ -26,3 +26,4 @@ export { default as Loader } from "@/components/base-components/Loader";
 export { default as CBTestSubjectCard } from "@/components/base-components/CBTestSubjectCard";
 
 export { default as AccountProfile } from "@/components/base-components/AccountProfile";
+export { default as TextBookCard } from "@/components/base-components/TextBookCard";
