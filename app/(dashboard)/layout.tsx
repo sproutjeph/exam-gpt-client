@@ -1,26 +1,13 @@
 import { Navbar, Sidebar } from "@/components/base-components";
-import connectMongoDB from "@/lib/mongoDB";
+import { saveCurrentUSerToDB } from "@/lib/actions/user.action";
 import { FC } from "react";
 
 interface layoutProps {
   children: React.ReactNode;
 }
 
-const getQuestionsDataFromDb = async () => {
-  try {
-    await connectMongoDB();
-    const data = await fetch("http://localhost:3000/api/questions");
-
-    // return data.json();
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const DashboardLayout: FC<layoutProps> = async ({ children }) => {
-  // const questions = await getQuestionsDataFromDb();
-
-  // console.log(`questions: ${questions} `);
+  // await saveCurrentUSerToDB();
 
   return (
     <section className="relative min-h-full bg-black">

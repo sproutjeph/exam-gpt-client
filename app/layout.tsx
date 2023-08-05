@@ -5,8 +5,9 @@ import { Inter, Roboto } from "next/font/google";
 import ToasterProvider from "@/providers/ToasterProvider";
 import { ReduxProviders } from "@/providers/ReduxProvider";
 import { ModalProvider } from "@/providers/ModalProvider";
-import { saveCurrentUSerToDB } from "@/lib/saveCurrentUser";
 import { ReactQueryProvider } from "@/providers/ReactQuery";
+import { dark } from "@clerk/themes";
+import { saveCurrentUSerToDB } from "@/lib/actions/user.action";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -30,7 +31,11 @@ export default async function RootLayout({
   // await saveCurrentUSerToDB(currentUserEmail);
 
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
       <ReactQueryProvider>
         <ReduxProviders>
           <html lang="en">

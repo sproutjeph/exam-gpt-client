@@ -28,7 +28,7 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index }) => {
 
   return (
     <article>
-      <Card className="w-[350px] md:w-[450px]">
+      <Card className="w-[350px] md:w-[450px] bg-dark-3 text-white border-dark-4">
         <CardHeader>
           <CardTitle className="text-center">Question ({index + 1})</CardTitle>
         </CardHeader>
