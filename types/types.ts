@@ -62,4 +62,7 @@ export interface ITextBook {
   id: number;
   subject: string;
   image: string;
+  description: string;
+  title: string;
+  date: string;
 }

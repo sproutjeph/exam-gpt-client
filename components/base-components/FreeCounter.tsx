@@ -1,42 +1,48 @@
 "use client";
 
+import { Card, CardContent, Typography } from "@mui/material";
 import { FC } from "react";
-import { Zap } from "lucide-react";
-import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
-import { Progress } from "../ui/progress";
-import { useAppDispatch } from "@/redux-store/hooks";
-import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
+import { styled } from "@mui/material/styles";
 
+import LinearProgress, {
+  linearProgressClasses,
+} from "@mui/material/LinearProgress";
+import { Button as ButtonSCN } from "../ui/button";
 interface FreeCounterProps {
   isPro: boolean;
   apiLimitCount: number;
 }
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 10,
+  borderRadius: 5,
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor:
+      theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 5,
+    backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
+  },
+}));
 
-const FreeCounter: FC<FreeCounterProps> = ({
-  isPro = false,
-  apiLimitCount = 1,
-}) => {
-  const dispatch = useAppDispatch();
-
+const FreeCounter: FC<FreeCounterProps> = ({ isPro, apiLimitCount }) => {
   return (
-    <div className="px-3">
+    <div className="px-3 mt-auto mb-8">
       <Card className="border-0 bg-white/10">
         <CardContent className="py-6">
           <div className="mb-4 space-y-2 text-sm text-center text-white">
-            <p>
-              {apiLimitCount} / {4} Free Generations
-            </p>
-            <Progress className="h-3" value={(apiLimitCount / 0) * 100} />
+            <Typography style={{ color: "black" }}>
+              {apiLimitCount} / {5} Free API Call
+            </Typography>
+            <BorderLinearProgress variant="determinate" value={50} />
           </div>
-          <Button
+          <ButtonSCN
             variant="premium"
-            onClick={() => dispatch(openSubscriptionModal())}
+            // onClick={() => dispatch(openSubscriptionModal())}
             className="w-full"
           >
             Upgrade
-            <Zap className="w-4 h-4 ml-2 fill-white" />
-          </Button>
+          </ButtonSCN>
         </CardContent>
       </Card>
     </div>

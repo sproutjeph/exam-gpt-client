@@ -18,6 +18,9 @@ import { useAllSubjects } from "@/hooks/useAllSubjects";
 import { Book, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
+import Box from "@mui/material/Box";
+import Fab from "@mui/material/Fab";
+import NavigationIcon from "@mui/icons-material/Navigation";
 
 interface pageProps {}
 
@@ -27,7 +30,7 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
   const [currentTab, setCurrentTab] = useState(tabs[0]);
   const { subjects, isLoading } = useAllSubjects();
   return (
-    <main className="relative mx-10 mb-16 overflow-scroll text-stone-50">
+    <main className="relative mx-10 mb-16 overflow-scroll">
       <h1 className="my-8 text-xl text-center">Test Your Knowledge</h1>
 
       <Tabs defaultValue={currentTab} className="max-w-4xl mx-auto">
@@ -52,15 +55,25 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
             )}
           </ul>
           <div className="fixed shadow-lg right-1/2 bottom-4 left-1/2">
-            <Button className="" variant="main">
+            {/* <Button className="" variant="default">
               Continue
-            </Button>
+            </Button> */}
+            <Box sx={{ "& > :not(style)": { m: 1 } }}>
+              <Fab
+                variant="extended"
+                style={{ backgroundColor: "#FFA200" }}
+                aria-label="add"
+              >
+                <NavigationIcon sx={{ mr: 1 }} />
+                Continue
+              </Fab>
+            </Box>
           </div>
         </TabsContent>
 
         <TabsContent value="Options" className="max-w-2xl mx-auto">
           <div className="grid gap-4 mt-8 lg:grid-cols-2">
-            <Card className="text-white bg-dark-1">
+            <Card className="">
               <div
                 className="flex justify-between mx-4 my-2 space-x-2 cursor-pointer"
                 onClick={() => {}}
@@ -71,7 +84,7 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
                 <Checkbox id="" className="w-6 h-6" />
               </div>
             </Card>
-            <Card className="text-white bg-dark-1">
+            <Card className="">
               <div
                 className="flex justify-between mx-4 my-2 space-x-2 cursor-pointer"
                 onClick={() => {}}
@@ -83,7 +96,7 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
               </div>
             </Card>
 
-            <Card className="text-white bg-dark-1">
+            <Card className="">
               <div className="flex items-center m-4 space-x-2 ">
                 <div className="flex items-center flex-1 space-x-2">
                   <Book />
@@ -92,7 +105,7 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
 
                 <div className="flex-1 pl-20">
                   <Select onValueChange={() => {}} defaultValue="2010">
-                    <SelectTrigger className="account-form_input">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="Select Exam Year" />
                     </SelectTrigger>
                     <SelectContent className="overflow-scroll ">
@@ -108,16 +121,16 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
               </div>
             </Card>
 
-            <Card className="text-white bg-dark-1">
+            <Card className="">
               <div className="flex items-center m-4 space-x-2 ">
                 <div className="flex items-center flex-1 space-x-2">
                   <Clock />
-                  <p className="text-sm text-gray-200 ">Set Time</p>
+                  <p className="text-sm ">Set Time</p>
                 </div>
 
                 <div className="flex-1 pl-20">
                   <Select onValueChange={() => {}} defaultValue="2010">
-                    <SelectTrigger className="account-form_input">
+                    <SelectTrigger className="">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="overflow-scroll ">
@@ -135,7 +148,7 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
           </div>
           <Button
             className="flex justify-center w-1/2 mx-auto my-8"
-            variant="main"
+            variant="default"
             onClick={() => {
               router.push("/cb-test-panel");
             }}

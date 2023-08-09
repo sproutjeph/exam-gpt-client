@@ -28,9 +28,9 @@ const QuestionsPage: FC<pageProps> = ({
   // }
 
   return (
-    <main className="mt-8 overflow-scroll text-white bg-black">
+    <main className="mt-8 overflow-scroll">
       <div
-        className="flex gap-2 pl-4 text-gray-400 cursor-pointer"
+        className="flex gap-2 pl-4 cursor-pointer"
         onClick={() => router.back()}
       >
         <ArrowBigLeftDashIcon />

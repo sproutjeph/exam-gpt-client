@@ -27,6 +27,12 @@ import {
   getExamYearsOptions,
   subjectsOptions,
 } from "./constants";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useUploadQuestion } from "@/hooks/useUploadQuestion";
@@ -77,11 +83,11 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
 
   return (
     <main className="px-4 ">
-      <h2 className="my-4 text-3xl font-bold text-center text-white underline">
+      <h2 className="my-4 text-3xl font-bold text-center underline">
         Help Train Our AI
       </h2>
 
-      <div className="p-6 mt-4 lg:max-w-xl lg:mx-auto bg-dark-2">
+      <div className="p-6 mt-4 shadow-md lg:max-w-xl lg:mx-auto">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -97,7 +103,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    <FormControl className="account-form_input no-focus">
+                    <FormControl className="">
                       <SelectTrigger>
                         <SelectValue
                           placeholder="Select Exam Type"
@@ -105,7 +111,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                         />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="overflow-scroll account-form_input no-focus">
+                    <SelectContent className="overflow-scroll ">
                       {examTypeOptions.map((option) => (
                         <SelectItem key={option.label} value={option.value}>
                           {option.label}
@@ -129,7 +135,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    <FormControl className="account-form_input no-focus">
+                    <FormControl className="">
                       <SelectTrigger>
                         <SelectValue
                           placeholder="Select Exam Year"
@@ -161,7 +167,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    <FormControl className="account-form_input no-focus">
+                    <FormControl className="">
                       <SelectTrigger>
                         <SelectValue
                           placeholder="Select Subject"
@@ -193,7 +199,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    <FormControl className="account-form_input no-focus">
+                    <FormControl className="">
                       <SelectTrigger>
                         <SelectValue
                           placeholder="Select Question Type"
@@ -218,7 +224,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                 <FormItem className="col-span-2">
                   <FormControl className="">
                     <Textarea
-                      className=" account-form_input no-focus"
+                      className=""
                       disabled={isLoading}
                       placeholder="Type Your Question Here"
                       {...field}
@@ -228,21 +234,22 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               )}
             />
 
-            <FormDescription className="text-center text-white">
+            <FormDescription className="text-center">
               Options Section.
             </FormDescription>
 
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button disabled={true} variant="main" type="button">
+              <Button variant="default" type="button">
                 A
               </Button>
+
               <FormField
                 name="optionA"
                 render={({ field }) => (
                   <FormItem className="flex-1 col-span-2">
                     <FormControl className="">
                       <Input
-                        className="account-form_input no-focus"
+                        className=""
                         disabled={isLoading}
                         placeholder="Enter Option A"
                         {...field}
@@ -253,7 +260,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               />
             </div>
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button disabled={true} variant="main" type="button">
+              <Button variant="default" type="button">
                 B
               </Button>
               <FormField
@@ -262,7 +269,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                   <FormItem className="flex-1 col-span-2">
                     <FormControl className="">
                       <Input
-                        className="account-form_input no-focus"
+                        className=""
                         disabled={isLoading}
                         placeholder="Enter Option B"
                         {...field}
@@ -273,7 +280,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               />
             </div>
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button disabled={true} variant="main" type="button">
+              <Button variant="default" type="button">
                 C
               </Button>
               <FormField
@@ -282,7 +289,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                   <FormItem className="flex-1 col-span-2">
                     <FormControl className="">
                       <Input
-                        className="account-form_input no-focus"
+                        className=""
                         disabled={isLoading}
                         placeholder="Enter Option C"
                         {...field}
@@ -293,7 +300,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               />
             </div>
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button disabled={true} variant="main" type="button">
+              <Button variant="default" type="button">
                 D
               </Button>
               <FormField
@@ -302,7 +309,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                   <FormItem className="flex-1 col-span-2">
                     <FormControl className="">
                       <Input
-                        className="account-form_input no-focus"
+                        className=""
                         disabled={isLoading}
                         placeholder="Enter Option D"
                         {...field}
@@ -313,7 +320,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               />
             </div>
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button disabled={true} variant="main" type="button">
+              <Button variant="default" type="button">
                 E
               </Button>
               <FormField
@@ -322,7 +329,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                   <FormItem className="flex-1 col-span-2">
                     <FormControl className="">
                       <Input
-                        className="account-form_input no-focus"
+                        className=""
                         disabled={isLoading}
                         placeholder="Enter Option E"
                         {...field}
@@ -342,7 +349,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    <FormControl className="account-form_input no-focus">
+                    <FormControl className="">
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
@@ -367,7 +374,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
             <Button
               type="submit"
               disabled={isLoading}
-              variant="main"
+              variant="default"
               className=""
             >
               {isLoading ? "uploading..." : "Submit"}

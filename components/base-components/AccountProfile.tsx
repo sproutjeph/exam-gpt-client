@@ -105,7 +105,7 @@ const AccountProfile: FC<AccountProfileProps> = ({ user, btnTitle }) => {
   return (
     <Form {...form}>
       <form
-        className="flex flex-col justify-start gap-6"
+        className="flex flex-col justify-start gap-6 p-2 shadow-md"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -138,7 +138,7 @@ const AccountProfile: FC<AccountProfileProps> = ({ user, btnTitle }) => {
                   type="file"
                   accept="image/*"
                   placeholder="Add profile photo"
-                  className="account-form_image-input"
+                  className=""
                   onChange={(e) => handleImage(e, field.onChange)}
                 />
               </FormControl>
@@ -151,15 +151,9 @@ const AccountProfile: FC<AccountProfileProps> = ({ user, btnTitle }) => {
           name="name"
           render={({ field }) => (
             <FormItem className="flex flex-col w-full gap-3">
-              <FormLabel className="text-base-semibold text-light-2">
-                Name
-              </FormLabel>
+              <FormLabel className="text-base-semibold ">Name</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  className="account-form_input no-focus"
-                  {...field}
-                />
+                <Input type="text" className="" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -171,22 +165,16 @@ const AccountProfile: FC<AccountProfileProps> = ({ user, btnTitle }) => {
           name="email"
           render={({ field }) => (
             <FormItem className="flex flex-col w-full gap-3">
-              <FormLabel className="text-base-semibold text-light-2">
-                Email
-              </FormLabel>
+              <FormLabel className="text-base-semibold ">Email</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  className="account-form_input no-focus"
-                  {...field}
-                />
+                <Input type="text" className="" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" variant="main" className="">
+        <Button type="submit" variant="default" className="">
           {btnTitle}
         </Button>
       </form>

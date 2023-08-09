@@ -8,6 +8,7 @@ import { ModalProvider } from "@/providers/ModalProvider";
 import { ReactQueryProvider } from "@/providers/ReactQuery";
 import { dark } from "@clerk/themes";
 import { saveCurrentUSerToDB } from "@/lib/actions/user.action";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -42,7 +43,13 @@ export default async function RootLayout({
             <body className={inter.className}>
               <ToasterProvider />
               <ModalProvider />
-              {children}
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                {children}
+              </ThemeProvider>
             </body>
           </html>
         </ReduxProviders>

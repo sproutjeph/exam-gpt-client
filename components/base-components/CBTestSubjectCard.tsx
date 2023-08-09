@@ -23,15 +23,12 @@ const CBTestSubjectCard: FC<CBTestSubjectCardProps> = ({ subject }) => {
   const [isSelected, setIselected] = useState(false);
 
   return (
-    <Card className="flex flex-col p-4 mt-8 text-white gap-y-6 bg-dark-4">
+    <Card className="flex flex-col p-4 mt-8 gap-y-6">
       <div
         className="flex space-x-2 cursor-pointer"
         onClick={() => setIselected(!isSelected)}
       >
-        <Checkbox
-          id=""
-          className={cn("w-6 h-6 bg-white", isSelected && "bg-mainColor")}
-        />
+        <Checkbox id="" className={cn("w-6 h-6")} />
         <label htmlFor="terms1" className="font-medium text-md ">
           {subject.name}
         </label>
@@ -48,7 +45,7 @@ const CBTestSubjectCard: FC<CBTestSubjectCardProps> = ({ subject }) => {
 
             <div className="flex-1 pl-20 ">
               <Select onValueChange={() => {}} defaultValue="2010">
-                <SelectTrigger className="account-form_input no-focus">
+                <SelectTrigger className="">
                   <SelectValue placeholder="Select Exam Year" />
                 </SelectTrigger>
                 <SelectContent>
@@ -75,7 +72,7 @@ const CBTestSubjectCard: FC<CBTestSubjectCardProps> = ({ subject }) => {
 
             <div className="flex-1 pl-20">
               <Select onValueChange={() => {}} defaultValue="10">
-                <SelectTrigger className="account-form_input no-focus">
+                <SelectTrigger className="">
                   <SelectValue placeholder="Select Exam Year" />
                 </SelectTrigger>
                 <SelectContent className="overflow-scroll ">

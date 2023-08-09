@@ -12,7 +12,7 @@ const DashboardPage = () => {
   return (
     <section>
       <div className="my-8 space-y-4 ">
-        <h2 className="text-2xl font-bold text-center text-white md:text-4xl">
+        <h2 className="text-2xl font-bold text-center md:text-4xl">
           Solve O-Level Past Questions with AI
         </h2>
         <p className="text-sm font-light text-center text-muted-foreground md:text-lg">
@@ -25,7 +25,7 @@ const DashboardPage = () => {
             onClick={() => router.push(tool.href)}
             key={tool.href}
             className={cn(
-              `flex items-center justify-between p-4 transition  cursor-pointer border-black/5 hover:shadow-md text-white bg-gray-600`
+              `flex items-center justify-between p-4 transition  cursor-pointer border-black/5 hover:shadow-md`
             )}
           >
             <div className="flex items-center gap-x-4">

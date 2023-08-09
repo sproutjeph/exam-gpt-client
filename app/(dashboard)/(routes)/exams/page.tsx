@@ -13,13 +13,14 @@ import { ISubject } from "@/types/types";
 import { useState } from "react";
 import Link from "next/link";
 import { Loader } from "@/components/base-components";
+import { CircularProgress } from "@mui/material";
 
 const ExamsPage = () => {
   const [currentExam, setCurrentExam] = useState("JAMB");
   const { subjects, isLoading, error } = useSubject(currentExam);
 
   return (
-    <main className="p-8 text-white">
+    <main className="p-8">
       <Tabs defaultValue={currentExam} className="max-w-4xl px-2 mx-auto">
         <TabsList className="justify-between w-full">
           {exams.map((exam) => (
@@ -39,17 +40,17 @@ const ExamsPage = () => {
           <h4 className="my-4 text-lg text-center">{`${currentExam} PAST QUESTION`}</h4>
           <ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {isLoading ? (
-              <Loader />
+              <div className="flex items-center justify-center">
+                <CircularProgress style={{}} />
+              </div>
             ) : (
               subjects?.data?.map((subject: ISubject) => (
                 <Popover key={subject._id}>
                   <PopoverTrigger asChild>
-                    <Button variant="main">{subject.name}</Button>
+                    <Button variant="default">{subject.name}</Button>
                   </PopoverTrigger>
-                  <PopoverContent className="bg-gray-800 border-black w-80">
-                    <h4 className="mb-2 text-center text-white">
-                      {subject.name}
-                    </h4>
+                  <PopoverContent className=" w-80">
+                    <h4 className="mb-2 text-center">{subject.name}</h4>
                     <div className="grid justify-center grid-cols-3 gap-2">
                       {subject?.examYears?.map((year: any) => (
                         <Link

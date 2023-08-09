@@ -1,25 +1,36 @@
 "use client";
 
-import { TextBookCard } from "@/components/base-components";
-import { textBooks } from "@/constants/constants";
+import TextBookCard from "@/components/base-components/TextBookCard";
+import { textBooks } from "@/utils/data";
+import { Container, Grid, Typography } from "@mui/material";
 import { FC } from "react";
 
 interface pageProps {}
 
-const BooksPage: FC<pageProps> = ({}) => {
+const TextBooksPage: FC<pageProps> = ({}) => {
   return (
-    <main className="mx-8">
-      <h2 className="my-8 text-center text-white">Text Books</h2>
+    <Container>
+      <Typography
+        variant="h5"
+        style={{
+          textAlign: "center",
+          marginBottom: "2rem",
+          marginTop: "2rem",
+          color: "white",
+        }}
+      >
+        Text Books
+      </Typography>
 
-      <ul className="grid items-center justify-center px-4 space-y-4 lg:grid-cols-2 lg:px-8 xl:grid-cols-3">
+      <Grid container spacing={3}>
         {textBooks.map((textBook) => (
-          <li key={textBook.id}>
+          <Grid item key={textBook.id} xs={12} sm={6} md={4} lg={3}>
             <TextBookCard textBook={textBook} />
-          </li>
+          </Grid>
         ))}
-      </ul>
-    </main>
+      </Grid>
+    </Container>
   );
 };
 
-export default BooksPage;
+export default TextBooksPage;

@@ -1,6 +1,6 @@
+"use client";
 import { FC } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 import Sidebar from "./Sidebar";
 
@@ -16,7 +16,7 @@ const MobileSidebar: FC<MobileSidebarProps> = ({
   return (
     <Sheet>
       <SheetTrigger>
-        <div className="text-white md:hidden">
+        <div className=" md:hidden">
           <Menu />
         </div>
       </SheetTrigger>

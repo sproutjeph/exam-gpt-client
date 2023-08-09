@@ -75,7 +75,7 @@ const AskAiPage: FC<pageProps> = ({}) => {
   };
 
   return (
-    <div className="text-white ">
+    <div className="mt-4">
       <Heading
         title="Slove With AI"
         description="Our most advanced AI  model"
@@ -85,7 +85,7 @@ const AskAiPage: FC<pageProps> = ({}) => {
       />
 
       <div className="px-4 lg:px-8">
-        <div className="bg-white rounded-md">
+        <div className="rounded-md ">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -97,7 +97,7 @@ const AskAiPage: FC<pageProps> = ({}) => {
                   <FormItem className="col-span-12 lg:col-span-10">
                     <FormControl className="p-0 m-0">
                       <Textarea
-                        className="text-black border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                         disabled={isLoading}
                         placeholder="How do I calculate the radius of a circle?"
                         {...field}
@@ -111,7 +111,7 @@ const AskAiPage: FC<pageProps> = ({}) => {
                 type="submit"
                 disabled={isLoading}
                 size="icon"
-                variant="main"
+                variant="default"
               >
                 Slove
               </Button>
