@@ -63,11 +63,11 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index, cbTest }) => {
             <CardFooter className="flex justify-between gap-4 px-0 pt-2">
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button className=" bg-fuchsia-200" variant="secondary">
+                  <Button className="" variant="outline">
                     Check Answer
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-32 h-8 py-1 font-bold text-center text-mainColor">
+                <PopoverContent className="w-32 h-8 py-1 font-bold text-center">
                   {question.correctOption}
                 </PopoverContent>
               </Popover>

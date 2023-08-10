@@ -39,12 +39,12 @@ export const tiers = [
       "Email support",
     ],
     buttonText: "Sign up for free",
-    buttonVariant: "outlined",
+    buttonVariant: "outline",
   },
   {
     title: "Standard",
     subheader: "Most popular",
-    price: "15",
+    price: "5000",
     description: [
       "60 Slove With AI per Day",
       "Unlimted CB Test",
@@ -53,11 +53,11 @@ export const tiers = [
       "Priority email support",
     ],
     buttonText: "Get started",
-    buttonVariant: "contained",
+    buttonVariant: "default",
   },
   {
     title: "Pro",
-    price: "30",
+    price: "7000",
     description: [
       "Unlimited Slove With AI",
       "Unlimited CB Test",
@@ -66,7 +66,7 @@ export const tiers = [
       "Priority email support",
     ],
     buttonText: "Contact us",
-    buttonVariant: "outlined",
+    buttonVariant: "outline",
   },
 ];
 export const footers = [

@@ -1,48 +1,37 @@
 "use client";
 
-import { Card, CardContent, Typography } from "@mui/material";
 import { FC } from "react";
-import { styled } from "@mui/material/styles";
 
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
-import { Button as ButtonSCN } from "../ui/button";
+import { Button } from "../ui/button";
+import { Progress } from "../ui/progress";
+import { useAppDispatch } from "@/redux-store/hooks";
+import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
+import { Card, CardContent } from "../ui/card";
 interface FreeCounterProps {
   isPro: boolean;
   apiLimitCount: number;
 }
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor:
-      theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
-    backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
-  },
-}));
 
 const FreeCounter: FC<FreeCounterProps> = ({ isPro, apiLimitCount }) => {
+  const dispatch = useAppDispatch();
   return (
     <div className="px-3 mt-auto mb-8">
-      <Card className="border-0 bg-white/10">
+      <Card className="border-0 bg-orange-50">
         <CardContent className="py-6">
-          <div className="mb-4 space-y-2 text-sm text-center text-white">
-            <Typography style={{ color: "black" }}>
+          <div className="mb-4 space-y-2 text-sm text-center">
+            <h6 style={{ color: "black" }}>
               {apiLimitCount} / {5} Free API Call
-            </Typography>
-            <BorderLinearProgress variant="determinate" value={50} />
+            </h6>
+
+            <Progress value={50} color="" />
           </div>
-          <ButtonSCN
+          <Button
             variant="premium"
-            // onClick={() => dispatch(openSubscriptionModal())}
+            onClick={() => dispatch(openSubscriptionModal())}
             className="w-full"
           >
             Upgrade
-          </ButtonSCN>
+          </Button>
         </CardContent>
       </Card>
     </div>

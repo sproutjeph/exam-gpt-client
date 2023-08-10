@@ -1,6 +1,6 @@
 "use client";
 
-import { CBTestSubjectCard, Loader } from "@/components/base-components";
+import { CBTestSubjectCard, CBTestTimer } from "@/components/base-components";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -17,35 +17,40 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAllSubjects } from "@/hooks/useAllSubjects";
 import { Book, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { FC, useState } from "react";
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
-import NavigationIcon from "@mui/icons-material/Navigation";
+import { useState } from "react";
+import { CircularProgress } from "@mui/material";
 
-interface pageProps {}
-
-const ComputerBaseTestPage: FC<pageProps> = ({}) => {
+const ComputerBaseTestPage = () => {
   const router = useRouter();
-  const tabs = ["Subjects", "Options"];
-  const [currentTab, setCurrentTab] = useState(tabs[0]);
+  const [currentTab, setCurrentTab] = useState("Subjects");
   const { subjects, isLoading } = useAllSubjects();
+
+  const handleTabChange = (tabValue: string) => {
+    setCurrentTab(tabValue);
+  };
+
   return (
     <main className="relative mx-10 mb-16 overflow-scroll">
-      <h1 className="my-8 text-xl text-center">Test Your Knowledge</h1>
+      <h1 className="mt-8 text-xl text-center">Test Your Knowledge</h1>
 
-      <Tabs defaultValue={currentTab} className="max-w-4xl mx-auto">
+      <h6 className="mb-4 text-center">Select the subjects you want </h6>
+
+      <Tabs
+        defaultValue={currentTab}
+        className="max-w-4xl mx-auto"
+        onChange={() => handleTabChange}
+      >
         <TabsList className="justify-between w-full px-4">
-          {tabs.map((tab, index) => (
-            <TabsTrigger key={tab} value={tab}>
-              {tab}
-            </TabsTrigger>
-          ))}
+          <TabsTrigger value="Subjects">Subjects</TabsTrigger>
+          <TabsTrigger value="Options">Options</TabsTrigger>
         </TabsList>
 
         <TabsContent value="Subjects">
           <ul className="grid 2xl:grid-cols-3 lg:grid-cols-2 gap-x-2">
             {isLoading ? (
-              <Loader />
+              <div className="flex items-center justify-center mt-2">
+                <CircularProgress />
+              </div>
             ) : (
               subjects?.data.map((subject) => (
                 <li key={subject._id}>
@@ -54,26 +59,21 @@ const ComputerBaseTestPage: FC<pageProps> = ({}) => {
               ))
             )}
           </ul>
-          <div className="fixed shadow-lg right-1/2 bottom-4 left-1/2">
-            {/* <Button className="" variant="default">
-              Continue
-            </Button> */}
-            <Box sx={{ "& > :not(style)": { m: 1 } }}>
-              <Fab
-                variant="extended"
-                style={{ backgroundColor: "#FFA200" }}
-                aria-label="add"
-              >
-                <NavigationIcon sx={{ mr: 1 }} />
-                Continue
-              </Fab>
-            </Box>
+          <div className="fixed z-50 translate-x-1 shadow-2xl left-1/3 sm:left-1/2 bottom-20 sm:bottom-4">
+            <Button
+              size="lg"
+              onClick={() => {
+                router.push("/cb-test-panel");
+              }}
+            >
+              Start Test
+            </Button>
           </div>
         </TabsContent>
 
-        <TabsContent value="Options" className="max-w-2xl mx-auto">
+        <TabsContent value="Options">
           <div className="grid gap-4 mt-8 lg:grid-cols-2">
-            <Card className="">
+            <Card>
               <div
                 className="flex justify-between mx-4 my-2 space-x-2 cursor-pointer"
                 onClick={() => {}}

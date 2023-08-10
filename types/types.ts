@@ -66,3 +66,10 @@ export interface ITextBook {
   title: string;
   date: string;
 }
+
+export interface ISelectedData {
+  subject: string;
+  examYear: string;
+  numberOfQuestions: string;
+  isSelected: boolean;
+}

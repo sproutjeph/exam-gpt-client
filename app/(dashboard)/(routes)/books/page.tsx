@@ -16,7 +16,7 @@ const TextBooksPage: FC<pageProps> = ({}) => {
           textAlign: "center",
           marginBottom: "2rem",
           marginTop: "2rem",
-          color: "white",
+          color: "",
         }}
       >
         Text Books
