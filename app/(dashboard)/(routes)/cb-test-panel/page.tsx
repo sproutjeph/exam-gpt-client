@@ -78,18 +78,20 @@ const CBtestPanelPage: FC<pageProps> = ({}) => {
 
   return (
     <main className="relative px-8">
-      <Tabs defaultValue={currentTab}>
-        <TabsList className="justify-between w-full px-4 my-8">
-          {tabs.map((tab, index) => (
-            <TabsTrigger key={tab} value={tab}>
-              {tab}
-            </TabsTrigger>
-          ))}
+      <Tabs defaultValue={selectedCBTestData[0]?.subject.toUpperCase()}>
+        <TabsList className="justify-between w-full px-4 my-8 overflow-x-scroll">
+          {selectedCBTestData?.map((tab, index) => {
+            return (
+              <TabsTrigger key={index} value={tab.subject.toUpperCase()}>
+                {tab.subject.toUpperCase()}
+              </TabsTrigger>
+            );
+          })}
         </TabsList>
 
-        <TabsContent value="English">
+        <TabsContent value={selectedCBTestData[0]?.subject.toUpperCase()}>
           <div className="">
-            <CBTestTimer time={1} />
+            <CBTestTimer time={0.1} />
           </div>
           <h2 className="text-center">{`Question ${
             currentQuestionIndex + 1

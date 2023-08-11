@@ -72,4 +72,5 @@ export interface ISelectedData {
   examYear: string;
   numberOfQuestions: string;
   isSelected: boolean;
+  exam: string;
 }

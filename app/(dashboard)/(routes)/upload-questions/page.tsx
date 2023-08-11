@@ -1,7 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import { FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -27,21 +27,19 @@ import {
   getExamYearsOptions,
   subjectsOptions,
 } from "./constants";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useUploadQuestion } from "@/hooks/useUploadQuestion";
 import { IUploadQuestion } from "@/types/types";
 import { useIsMutating } from "@tanstack/react-query";
+import Image from "next/image";
+import { Edit } from "lucide-react";
 
 interface pageProps {}
 
 const UploadQuestionPage: FC<pageProps> = ({}) => {
+  const [files, setFiles] = useState<File[]>([]);
   const mutate = useUploadQuestion();
   const isMutating = useIsMutating();
 
@@ -54,6 +52,8 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
       optionC: "",
       optionD: "",
       optionE: "",
+      image: "",
+      solution: "",
     },
   });
   const isLoading = form.formState.isSubmitting || isMutating !== 0;
@@ -72,8 +72,8 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
         d: values.optionD,
         e: values.optionE,
       },
-      solution: "",
-      image: "",
+      solution: values.solution,
+      image: values.image || "",
     };
 
     mutate(newQuestion);
@@ -81,13 +81,36 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
     form.reset();
   };
 
+  const handleImage = (
+    e: ChangeEvent<HTMLInputElement>,
+    fieldChange: (value: string) => void
+  ) => {
+    e.preventDefault();
+
+    const fileReader = new FileReader();
+
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setFiles(Array.from(e.target.files));
+
+      if (!file.type.includes("image")) return;
+
+      fileReader.onload = async (event) => {
+        const imageDataUrl = event.target?.result?.toString() || "";
+        fieldChange(imageDataUrl);
+      };
+
+      fileReader.readAsDataURL(file);
+    }
+  };
+
   return (
     <main className="px-4 ">
-      <h2 className="my-4 text-3xl font-bold text-center underline">
+      <h2 className="mt-4 text-2xl font-bold text-center underline">
         Help Train Our AI
       </h2>
 
-      <div className="p-6 mt-4 shadow-md lg:max-w-xl lg:mx-auto">
+      <div className="p-6 mt-2 shadow-md lg:max-w-xl lg:mx-auto">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -233,13 +256,62 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                 </FormItem>
               )}
             />
+            <FormField
+              name="solution"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormControl className="">
+                    <Textarea
+                      className=""
+                      disabled={isLoading}
+                      placeholder="Type the solution here if any"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-            <FormDescription className="text-center">
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem className="col-span-2 ">
+                  <FormLabel className="">
+                    {field.value ? (
+                      <div className="w-1/2 ">
+                        <Image
+                          src={field.value}
+                          alt="question_image"
+                          width={200}
+                          height={100}
+                          priority
+                          className="object-contain rounded-sm"
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-20 rounded-md bg-accent" />
+                    )}
+                  </FormLabel>
+                  <FormControl className=" text-base-semibold">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      placeholder="Add profile photo"
+                      className=""
+                      onChange={(e) => handleImage(e, field.onChange)}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormDescription className="col-span-2 text-center">
               Options Section.
             </FormDescription>
 
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button variant="default" type="button">
+              <Button variant="main" type="button">
                 A
               </Button>
 
@@ -260,7 +332,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               />
             </div>
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button variant="default" type="button">
+              <Button variant="main" type="button">
                 B
               </Button>
               <FormField
@@ -280,7 +352,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               />
             </div>
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button variant="default" type="button">
+              <Button variant="main" type="button">
                 C
               </Button>
               <FormField
@@ -300,7 +372,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               />
             </div>
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button variant="default" type="button">
+              <Button variant="main" type="button">
                 D
               </Button>
               <FormField
@@ -320,7 +392,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
               />
             </div>
             <div className="flex w-full col-span-2 gap-x-4">
-              <Button variant="default" type="button">
+              <Button variant="main" type="button">
                 E
               </Button>
               <FormField

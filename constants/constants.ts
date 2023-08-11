@@ -11,6 +11,7 @@ import {
   MessageSquare,
   Settings,
   UploadCloud,
+  User,
 } from "lucide-react";
 
 export const MAX_FREE_COUNTS = 5;
@@ -111,6 +112,13 @@ export const routes = [
     href: "/subscription-prices",
     color: "text-[#FFFFFF]",
     bgColor: "bg-[#8A2BE2]",
+  },
+  {
+    label: "Addmin",
+    icon: User,
+    href: "/addmin-dashboard",
+    color: "",
+    bgColor: "",
   },
 ];
 export const exams = [

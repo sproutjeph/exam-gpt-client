@@ -48,7 +48,7 @@ export default function Pricing() {
               md={4}
             >
               <Card>
-                <CardHeader className="text-center bg-primary">
+                <CardHeader className="text-center bg-mainColor">
                   <CardTitle> {tier.title}</CardTitle>
                 </CardHeader>
                 <CardContent>

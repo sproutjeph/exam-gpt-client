@@ -30,6 +30,7 @@ const CBTestSubjectCard: FC<CBTestSubjectCardProps> = ({ subject }) => {
     examYear: "",
     numberOfQuestions: "",
     isSelected: false,
+    exam: subject.exam,
   });
 
   useEffect(() => {
@@ -77,7 +78,7 @@ const CBTestSubjectCard: FC<CBTestSubjectCardProps> = ({ subject }) => {
             }}
           >
             <SelectTrigger className="">
-              <SelectValue placeholder="Select Exam Year" />
+              <SelectValue placeholder="Exam Year" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -111,7 +112,7 @@ const CBTestSubjectCard: FC<CBTestSubjectCardProps> = ({ subject }) => {
             }}
           >
             <SelectTrigger className="">
-              <SelectValue placeholder="Select Exam Year" />
+              <SelectValue placeholder="No questions" />
             </SelectTrigger>
             <SelectContent className="overflow-scroll ">
               <SelectGroup>

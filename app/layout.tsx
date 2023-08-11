@@ -39,7 +39,7 @@ export default async function RootLayout({
     >
       <ReactQueryProvider>
         <ReduxProviders>
-          <html lang="en">
+          <html lang="en" suppressHydrationWarning>
             <body className={inter.className}>
               <ToasterProvider />
               <ModalProvider />

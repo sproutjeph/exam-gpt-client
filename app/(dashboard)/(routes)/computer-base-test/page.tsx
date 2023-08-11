@@ -46,7 +46,7 @@ const ComputerBaseTestPage = () => {
         </TabsList>
 
         <TabsContent value="Subjects">
-          <ul className="grid 2xl:grid-cols-3 lg:grid-cols-2 gap-x-2">
+          <ul className="grid 3xl:grid-cols-3 lg:grid-cols-2 gap-x-2">
             {isLoading ? (
               <div className="flex items-center justify-center mt-2">
                 <CircularProgress />

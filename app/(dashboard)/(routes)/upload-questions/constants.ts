@@ -14,6 +14,7 @@ export const formSchema = z.object({
     required_error: "Select Qusetion Type.",
   }),
   question: z.string().min(1),
+  solution: z.string().min(1),
 
   optionA: z.string().min(1),
 
@@ -25,6 +26,7 @@ export const formSchema = z.object({
   optionE: z.string().min(1),
 
   correctOption: z.string().min(1),
+  image: z.string().optional(),
 });
 
 export const examTypeOptions = [
