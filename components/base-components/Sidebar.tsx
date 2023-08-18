@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { routes } from "@/constants/constants";
+import { Sheet, SheetClose } from "../ui/sheet";
 
 const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 

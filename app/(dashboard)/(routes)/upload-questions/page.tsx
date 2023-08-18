@@ -105,7 +105,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
   };
 
   return (
-    <main className="px-4 ">
+    <main className="sm:px-4 ">
       <h2 className="mt-4 text-2xl font-bold text-center underline">
         Help Train Our AI
       </h2>
@@ -127,7 +127,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     defaultValue={field.value}
                   >
                     <FormControl className="">
-                      <SelectTrigger>
+                      <SelectTrigger className="text-xs">
                         <SelectValue
                           placeholder="Select Exam Type"
                           defaultValue={field.value}
@@ -159,7 +159,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     defaultValue={field.value}
                   >
                     <FormControl className="">
-                      <SelectTrigger>
+                      <SelectTrigger className="text-xs">
                         <SelectValue
                           placeholder="Select Exam Year"
                           defaultValue={field.value}
@@ -191,7 +191,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     defaultValue={field.value}
                   >
                     <FormControl className="">
-                      <SelectTrigger>
+                      <SelectTrigger className="text-xs">
                         <SelectValue
                           placeholder="Select Subject"
                           defaultValue={field.value}
@@ -223,9 +223,9 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     defaultValue={field.value}
                   >
                     <FormControl className="">
-                      <SelectTrigger>
+                      <SelectTrigger className="text-xs">
                         <SelectValue
-                          placeholder="Select Question Type"
+                          placeholder=" Question Type"
                           defaultValue={field.value}
                         />
                       </SelectTrigger>
@@ -422,10 +422,10 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
                     defaultValue={field.value}
                   >
                     <FormControl className="">
-                      <SelectTrigger>
+                      <SelectTrigger className="text-xs">
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder="Select Correct Answer"
+                          placeholder=" Correct Answer"
                         />
                       </SelectTrigger>
                     </FormControl>

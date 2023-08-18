@@ -4,7 +4,8 @@ import {
   Sidebar,
 } from "@/components/base-components";
 import { saveCurrentUSerToDB } from "@/lib/actions/user.action";
-import { FC } from "react";
+import { FC, Suspense } from "react";
+import Loading from "./(routes)/loading";
 
 interface layoutProps {
   children: React.ReactNode;
@@ -20,8 +21,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
       </div>
       <main className="pb-10 md:pl-64">
         <Navbar />
-
-        {children}
+        <Suspense fallback={<Loading />}>{children}</Suspense>
         <DashboardBottomNavbar />
       </main>
     </section>

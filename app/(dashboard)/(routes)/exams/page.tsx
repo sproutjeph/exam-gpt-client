@@ -20,8 +20,11 @@ const ExamsPage = () => {
   const { subjects, isLoading, error } = useSubject(currentExam);
 
   return (
-    <main className="p-8">
-      <Tabs defaultValue={currentExam} className="max-w-4xl px-2 mx-auto">
+    <main className="py-8 sm:px-8">
+      <Tabs
+        defaultValue={currentExam}
+        className="w-full px-2 mx-auto sm:max-w-4xl"
+      >
         <TabsList className="justify-between w-full">
           {exams.map((exam) => (
             <TabsTrigger

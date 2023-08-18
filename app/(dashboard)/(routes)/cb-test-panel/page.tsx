@@ -77,9 +77,9 @@ const CBtestPanelPage: FC<pageProps> = ({}) => {
   };
 
   return (
-    <main className="relative px-8">
+    <main className="relative px-2 sm:px-8">
       <Tabs defaultValue={selectedCBTestData[0]?.subject.toUpperCase()}>
-        <TabsList className="justify-between w-full px-4 my-8 overflow-x-scroll">
+        <TabsList className="justify-between w-full px-1 my-8 overflow-x-scroll sm:px-4">
           {selectedCBTestData?.map((tab, index) => {
             return (
               <TabsTrigger key={index} value={tab.subject.toUpperCase()}>
