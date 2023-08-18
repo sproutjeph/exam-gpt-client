@@ -1,3 +1,4 @@
+import { AddminNavbar } from "@/components/base-components";
 import { FC } from "react";
 
 interface layoutProps {
@@ -5,7 +6,12 @@ interface layoutProps {
 }
 
 const layout: FC<layoutProps> = ({ children }) => {
-  return <main>{children}</main>;
+  return (
+    <main className="">
+      <AddminNavbar />
+      <div className="container py-8">{children}</div>
+    </main>
+  );
 };
 
 export default layout;

@@ -31,3 +31,5 @@ export { default as DashboardBottomNavbar } from "@/components/base-components/D
 export { default as ModeToggle } from "@/components/base-components/ModeToggle";
 
 export { default as CBTestTimer } from "@/components/base-components/CBTestTimer";
+export { default as AddminNavbar } from "@/components/base-components/AddminNavbar";
+export { default as RevenueCard } from "@/components/base-components/RevenueCard";
