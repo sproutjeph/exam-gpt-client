@@ -105,7 +105,7 @@ const AccountProfile: FC<AccountProfileProps> = ({ user, btnTitle }) => {
   return (
     <Form {...form}>
       <form
-        className="flex flex-col justify-start gap-6 p-3 shadow-md bg-background"
+        className="flex flex-col justify-start gap-6 p-3 bg-background"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField

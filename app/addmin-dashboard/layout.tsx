@@ -9,7 +9,7 @@ const layout: FC<layoutProps> = ({ children }) => {
   return (
     <main className="">
       <AddminNavbar />
-      <div className="container py-8">{children}</div>
+      <div className="py-8 ">{children}</div>
     </main>
   );
 };
