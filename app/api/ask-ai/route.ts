@@ -1,4 +1,9 @@
-import { checkApiLimit, increamentApiLimit } from "@/lib/api-limit";
+import { MAX_FREE_COUNTS } from "@/constants/constants";
+import {
+  checkApiLimit,
+  getApiLimit,
+  increamentApiLimit,
+} from "@/lib/api-limit";
 import connectMongoDB from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
@@ -12,6 +17,8 @@ const openai = new OpenAIApi(configuration);
 
 export async function POST(req: Request) {
   try {
+    await connectMongoDB();
+
     const { userId } = auth();
 
     const body = await req.json();
@@ -21,26 +28,30 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    if (!configuration.apiKey) {
+      return new NextResponse("API key is required", { status: 500 });
+    }
+
     if (!messages) {
       return new NextResponse("Messages are required", { status: 400 });
     }
 
-    // const freeTrial = await checkApiLimit();
+    const apiUseageCount = await getApiLimit();
 
-    // if (!freeTrial) {
-    //   return new NextResponse(
-    //     "Free trial has expired. Please upgrade to pro.",
-    //     {
-    //       status: 403,
-    //     }
-    //   );
-    // }
+    if (apiUseageCount === MAX_FREE_COUNTS) {
+      return new NextResponse(
+        "Free trial has expired. Please upgrade to pro.",
+        {
+          status: 403,
+        }
+      );
+    }
 
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages,
     });
-    // await increamentApiLimit();
+    await increamentApiLimit(userId);
 
     return NextResponse.json(response.data.choices[0].message);
   } catch (error) {

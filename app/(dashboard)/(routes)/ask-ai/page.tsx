@@ -14,7 +14,7 @@ import { ChatCompletionRequestMessage } from "openai";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { Button } from "@/components/ui/button";
 import { askAiformSchema } from "@/types/types";
-import { MessageSquare } from "lucide-react";
+import { ChevronLeft, MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter, usePathname } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -57,13 +57,15 @@ const AskAiPage: FC<pageProps> = ({}) => {
       };
       const newMessages = [...messages, userMessage];
 
-      const response = await axios.post("/api/conversation", {
+      const response = await axios.post("/api/ask-ai", {
         messages: newMessages,
       });
       setMessages((current) => [...current, userMessage, response.data]);
 
       form.reset();
     } catch (error: any) {
+      console.log(error);
+
       if (error?.response?.status === 403) {
         dispatch(openSubscriptionModal());
       } else {
@@ -83,6 +85,14 @@ const AskAiPage: FC<pageProps> = ({}) => {
         iconColor="text-white"
         bgColor="bg-violet-500/10"
       />
+
+      <div
+        className="container flex items-center my-4 cursor-pointer"
+        onClick={() => router.back}
+      >
+        <ChevronLeft />
+        <span className="text-xs">Back to Questions</span>
+      </div>
 
       <div className="px-4 lg:px-8">
         <div className="rounded-md ">

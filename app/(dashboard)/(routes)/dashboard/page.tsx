@@ -5,9 +5,31 @@ import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/nextjs";
+import { useSaveUser } from "@/hooks/useSaveUser";
+import { useEffect, useMemo } from "react";
 
 const DashboardPage = () => {
   const router = useRouter();
+  const { user } = useUser();
+  const mutate = useSaveUser();
+
+  const emailAddress = user?.emailAddresses[0].emailAddress;
+  const userId = user?.id;
+
+  const userData = useMemo(() => {
+    return {
+      email: emailAddress || "",
+      userId: userId || "",
+      apiUseageCount: 0,
+    };
+  }, [emailAddress, userId]);
+
+  useEffect(() => {
+    if (user) {
+      mutate(userData);
+    }
+  }, [mutate, user, userData]);
 
   return (
     <section>

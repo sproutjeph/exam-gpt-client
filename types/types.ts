@@ -81,3 +81,9 @@ export type Payment = {
   status: "pending" | "processing" | "success" | "failed";
   email: string;
 };
+
+export interface IUser {
+  userId: string;
+  email: string;
+  apiUseageCount: number;
+}
