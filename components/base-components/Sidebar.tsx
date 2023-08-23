@@ -30,7 +30,7 @@ const Sidebar: FC<SidebarProps> = ({ apiLimitCount = 0, isPro = false }) => {
   }
 
   return (
-    <aside className="flex flex-col h-full py-4 space-y-4 text-white bg-mainColor">
+    <aside className="flex flex-col h-full py-4 space-y-4 overflow-y-scroll text-white bg-mainColor">
       <div className="flex-1 px-3 py-2">
         <Link href="/dashboard" className="flex items-center pl-3 mb-14">
           <div className="relative w-8 h-8 mr-4">

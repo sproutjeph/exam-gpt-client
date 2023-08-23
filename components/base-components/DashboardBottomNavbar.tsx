@@ -39,7 +39,9 @@ const DashboardBottomNavbar: FC<DashboardBottomNavbarProps> = ({}) => {
             icon={<link.icon />}
             onClick={() => router.push(link.href)}
             key={i}
-            // style={{ color: "black" }}
+            style={{
+              color: "black",
+            }}
           />
         ))}
       </BottomNavigation>

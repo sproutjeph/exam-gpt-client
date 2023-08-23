@@ -32,9 +32,7 @@ export const checkApiLimit = async () => {
   }
 };
 
-export const getApiLimit = async (): Promise<number> => {
-  const { userId } = auth();
-
+export const getApiLimit = async (userId: string): Promise<number> => {
   if (!userId) {
     return 0;
   }

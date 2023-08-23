@@ -18,16 +18,14 @@ import { ChevronLeft, MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter, usePathname } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import * as z from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { clearQuestion } from "@/featuers/askAiSlice";
 
-interface pageProps {}
-
-const AskAiPage: FC<pageProps> = ({}) => {
+const AskAiPage = () => {
   const router = useRouter();
   const path = usePathname();
   const dispatch = useAppDispatch();
@@ -48,7 +46,7 @@ const AskAiPage: FC<pageProps> = ({}) => {
   }, [path, dispatch]);
 
   const onSubmit = async (values: z.infer<typeof askAiformSchema>) => {
-    console.log(values);
+    // console.log(values);
 
     try {
       const userMessage: ChatCompletionRequestMessage = {
@@ -64,12 +62,12 @@ const AskAiPage: FC<pageProps> = ({}) => {
 
       form.reset();
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
 
       if (error?.response?.status === 403) {
         dispatch(openSubscriptionModal());
       } else {
-        toast.error("Something went wrong.");
+        toast.error(`Something went wrong. ${error}`);
       }
     } finally {
       router.refresh();
@@ -88,7 +86,9 @@ const AskAiPage: FC<pageProps> = ({}) => {
 
       <div
         className="container flex items-center my-4 cursor-pointer"
-        onClick={() => router.back}
+        onClick={() => {
+          router.back();
+        }}
       >
         <ChevronLeft />
         <span className="text-xs">Back to Questions</span>
@@ -144,7 +144,7 @@ const AskAiPage: FC<pageProps> = ({}) => {
                 className={cn(
                   "p-8 w-full flex items-start gap-x-8 rounded-lg",
                   message.role === "user"
-                    ? "bg-white border border-black/10"
+                    ? " border border-black/10"
                     : "bg-muted"
                 )}
               >
