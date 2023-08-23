@@ -7,14 +7,17 @@ import { FC, Suspense } from "react";
 import Loading from "./(routes)/loading";
 import { getApiLimit } from "@/lib/api-limit";
 import connectMongoDB from "@/lib/mongoDB";
+import { auth } from "@clerk/nextjs";
 
 interface layoutProps {
   children: React.ReactNode;
 }
 
 const DashboardLayout: FC<layoutProps> = async ({ children }) => {
+  const { userId } = auth();
+
   await connectMongoDB();
-  const apiUsageCount = await getApiLimit();
+  const apiUsageCount = await getApiLimit(userId as string);
 
   return (
     <section className="relative min-h-full">
