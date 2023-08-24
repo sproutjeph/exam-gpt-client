@@ -34,7 +34,6 @@ import { useUploadQuestion } from "@/hooks/useUploadQuestion";
 import { IUploadQuestion } from "@/types/types";
 import { useIsMutating } from "@tanstack/react-query";
 import Image from "next/image";
-import { Edit } from "lucide-react";
 
 interface pageProps {}
 
@@ -56,7 +55,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
       solution: "",
     },
   });
-  const isLoading = form.formState.isSubmitting || isMutating !== 0;
+  const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const newQuestion: IUploadQuestion = {
