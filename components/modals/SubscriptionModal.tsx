@@ -32,14 +32,14 @@ const SubscriptionModal: FC<SubscriptionModalProps> = ({}) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
-            <div className="flex items-center text-xl font-bold gap-x-2">
+            <span className="flex items-center text-xl font-bold gap-x-2">
               Upgrade to Exam-GPT
               <Badge variant="premium" className="py-1 text-sm uppercase">
                 pro
               </Badge>
-            </div>
+            </span>
           </DialogTitle>
-          <DialogDescription className="pt-2 space-y-2 font-medium text-center text-zinc-900">
+          <div className="pt-2 space-y-2 font-medium text-center text-zinc-900">
             {tools.map((tool) => (
               <Card
                 key={tool.href}
@@ -54,7 +54,7 @@ const SubscriptionModal: FC<SubscriptionModalProps> = ({}) => {
                 <Check className="w-5 h-5 text-primary" />
               </Card>
             ))}
-          </DialogDescription>
+          </div>
         </DialogHeader>
         <DialogFooter>
           <Button

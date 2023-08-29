@@ -1,4 +1,4 @@
-import { ClerkProvider, currentUser } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Roboto } from "next/font/google";
@@ -7,7 +7,6 @@ import { ReduxProviders } from "@/providers/ReduxProvider";
 import { ModalProvider } from "@/providers/ModalProvider";
 import { ReactQueryProvider } from "@/providers/ReactQuery";
 import { dark } from "@clerk/themes";
-import { saveCurrentUSerToDB } from "@/lib/actions/user.action";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
