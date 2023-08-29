@@ -8,7 +8,7 @@ import TypewriterComponent from "typewriter-effect";
 const LandingHero = () => {
   const { isSignedIn } = useAuth();
   return (
-    <section className="space-y-5 font-bold text-center text-white pt-28 pb-14">
+    <section className="space-y-5 font-bold text-center text-white pt-14">
       <div className="space-y-5 text-4xl font-extrabold sm:text-5xl md:text-6xl lg:text-7xl">
         <h1>The Best AI Tool to Prepare for your O-Level Exams</h1>
         <div className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">

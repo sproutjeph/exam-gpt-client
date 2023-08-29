@@ -114,9 +114,9 @@ export const routes = [
     bgColor: "bg-[#8A2BE2]",
   },
   {
-    label: "Addmin",
+    label: "Admin",
     icon: User,
-    href: "/addmin-dashboard",
+    href: "/admin-dashboard",
     color: "",
     bgColor: "",
   },

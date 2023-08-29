@@ -26,7 +26,8 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
       </div>
       <main className="pb-10 md:pl-64">
         <Navbar />
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
+        {children}
         <DashboardBottomNavbar />
       </main>
     </section>
