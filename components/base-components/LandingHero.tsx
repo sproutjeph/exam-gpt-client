@@ -28,7 +28,7 @@ const LandingHero = () => {
         <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
           <Button
             variant="premium"
-            className="p-4 font-semibold rounded-full md:text-lg md:p-6"
+            className="p-4 font-semibold transition-all rounded-full md:text-lg md:p-6 hover:scale-105"
           >
             Start Sloving For Free
           </Button>
