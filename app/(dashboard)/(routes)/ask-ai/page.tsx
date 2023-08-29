@@ -31,12 +31,12 @@ const AskAiPage = () => {
   const dispatch = useAppDispatch();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
 
-  const { cuurentQuestion } = useAppSelector((state) => state.askAi);
+  const { currentQuestion } = useAppSelector((state) => state.askAi);
 
   const form = useForm<z.infer<typeof askAiformSchema>>({
     resolver: zodResolver(askAiformSchema),
     defaultValues: {
-      prompt: cuurentQuestion.length > 0 ? cuurentQuestion : "",
+      prompt: currentQuestion.length > 0 ? currentQuestion : "",
     },
   });
 
@@ -60,7 +60,7 @@ const AskAiPage = () => {
       });
       setMessages((current) => [...current, userMessage, response.data]);
 
-      form.reset();
+      form.setValue("prompt", "");
     } catch (error: any) {
       // console.log(error);
 
@@ -138,9 +138,9 @@ const AskAiPage = () => {
             <Empty label="No conversation started." />
           )}
           <div className="flex flex-col-reverse gap-y-4">
-            {messages.map((message) => (
+            {messages.map((message, i) => (
               <div
-                key={message.content}
+                key={i}
                 className={cn(
                   "p-8 w-full flex items-start gap-x-8 rounded-lg",
                   message.role === "user"

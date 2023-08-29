@@ -15,6 +15,7 @@ interface FreeCounterProps {
 
 const FreeCounter: FC<FreeCounterProps> = ({ isPro, apiLimitCount }) => {
   const dispatch = useAppDispatch();
+
   return (
     <div className="px-3 mt-auto mb-8">
       <Card className="border-0 bg-orange-50">

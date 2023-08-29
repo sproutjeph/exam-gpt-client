@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type ModalsState = {
-  cuurentQuestion: string;
+  currentQuestion: string;
 };
 
 const initialState: ModalsState = {
-  cuurentQuestion: "",
+  currentQuestion: "",
 };
 
 const askAiSlice = createSlice({
@@ -13,10 +13,10 @@ const askAiSlice = createSlice({
   initialState,
   reducers: {
     saveCurrentQuestion(state, action: PayloadAction<string>) {
-      state.cuurentQuestion = action.payload;
+      state.currentQuestion = action.payload;
     },
     clearQuestion(state) {
-      state.cuurentQuestion = "";
+      state.currentQuestion = "";
     },
   },
 });

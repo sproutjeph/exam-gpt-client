@@ -8,7 +8,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { routes } from "@/constants/constants";
-import { Sheet, SheetClose } from "../ui/sheet";
+import { useAppDispatch } from "@/redux-store/hooks";
+import { saveCurrentapiLimitCount } from "@/featuers/apiLimitCount";
 
 const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 
@@ -17,9 +18,14 @@ interface SidebarProps {
   isPro: boolean;
 }
 
-const Sidebar: FC<SidebarProps> = ({ apiLimitCount = 0, isPro = false }) => {
+const Sidebar: FC<SidebarProps> = ({ apiLimitCount, isPro }) => {
+  const dispatch = useAppDispatch();
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    dispatch(saveCurrentapiLimitCount(apiLimitCount));
+  }, [apiLimitCount, dispatch]);
 
   useEffect(() => {
     setIsMounted(true);
