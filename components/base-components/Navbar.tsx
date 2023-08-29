@@ -5,7 +5,7 @@ import ModeToggle from "./ModeToggle";
 const Navbar = () => {
   return (
     <nav className="flex items-center p-4 shadow-sm bg-accent">
-      <MobileSidebar isPro={false} apiLimitCount={5} />
+      <MobileSidebar />
       <div className="ml-10 ">
         <ModeToggle />
       </div>
