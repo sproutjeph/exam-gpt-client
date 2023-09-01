@@ -18,6 +18,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
 
   await connectMongoDB();
   const apiLimitCount = await getApiLimit(userId as string);
+
   console.log(apiLimitCount);
 
   return (
