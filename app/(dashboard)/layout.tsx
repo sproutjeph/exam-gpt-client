@@ -18,6 +18,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
 
   await connectMongoDB();
   const apiLimitCount = await getApiLimit(userId as string);
+  console.log(apiLimitCount);
 
   return (
     <section className="relative min-h-full">
@@ -26,8 +27,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
       </div>
       <main className="pb-10 md:pl-64">
         <Navbar />
-        {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
-        {children}
+        <Suspense fallback={<Loading />}>{children}</Suspense>
         <DashboardBottomNavbar />
       </main>
     </section>

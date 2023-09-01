@@ -39,5 +39,5 @@ export const getApiLimit = async (userId: string): Promise<number> => {
 
   const userApiLimit = await User.findOne({ userId });
 
-  return userApiLimit.apiUseageCount as number;
+  return userApiLimit?.apiUseageCount as number;
 };
