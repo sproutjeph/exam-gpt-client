@@ -1,7 +1,5 @@
 "use client";
 
-import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -20,7 +17,6 @@ import * as z from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,8 +27,6 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 
 export const registerFormSchema = z.object({
-  name: z.string().min(1, "First Name is Required").max(100),
-
   email: z.string().email("Invalid email").min(1, "Email is Required"),
   password: z
     .string()
@@ -40,13 +34,11 @@ export const registerFormSchema = z.object({
     .max(20),
 });
 
-function RegisterPage() {
+function LoginPage() {
   const router = useRouter();
-
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -59,7 +51,7 @@ function RegisterPage() {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
-        <CardTitle>Register your accout</CardTitle>
+        <CardTitle>Log in to your accout</CardTitle>
         <CardDescription>to continue with Exam-GPT</CardDescription>
       </CardHeader>
       <CardContent>
@@ -83,24 +75,6 @@ function RegisterPage() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              name="name"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormLabel className="">Name</FormLabel>
-
-                  <FormControl className="">
-                    <Input
-                      className=""
-                      disabled={isLoading}
-                      {...field}
-                      type="text"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               name="email"
               render={({ field }) => (
@@ -138,18 +112,18 @@ function RegisterPage() {
               )}
             />
             <CardFooter className="p-0 mt-4">
-              <Button className="w-full">Register</Button>
+              <Button className="w-full">Log in</Button>
             </CardFooter>
           </form>
         </Form>
         <div className="flex items-center mt-4">
-          <h4>Have an account ?</h4>
-          <Button variant="link" onClick={() => router.push("/auth/login")}>
-            Sign in
+          <h4> Do not have an account ?</h4>
+          <Button variant="link" onClick={() => router.push("/auth/register")}>
+            Sign up
           </Button>
         </div>
       </CardContent>
     </Card>
   );
 }
-export default RegisterPage;
+export default LoginPage;
