@@ -1,6 +1,5 @@
 import { MAX_FREE_COUNTS } from "@/constants/constants";
 import User from "@/models/user";
-import { auth } from "@clerk/nextjs";
 
 export const increamentApiLimit = async (userId: string) => {
   if (!userId) {
@@ -17,7 +16,7 @@ export const increamentApiLimit = async (userId: string) => {
 };
 
 export const checkApiLimit = async () => {
-  const { userId } = auth();
+  const userId = "";
 
   if (!userId) {
     return false;
