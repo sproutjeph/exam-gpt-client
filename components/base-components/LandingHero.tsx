@@ -1,12 +1,10 @@
 "use client";
 
-import { useAuth } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import TypewriterComponent from "typewriter-effect";
 
 const LandingHero = () => {
-  const { isSignedIn } = useAuth();
   return (
     <section className="space-y-5 font-bold text-center text-white pt-14">
       <div className="space-y-5 text-4xl font-extrabold sm:text-5xl md:text-6xl lg:text-7xl">
@@ -25,7 +23,7 @@ const LandingHero = () => {
         Slove Exam past Questions with AI.
       </div>
       <div>
-        <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
+        <Link href="/dashboard">
           <Button
             variant="premium"
             className="p-4 font-semibold transition-all rounded-full md:text-lg md:p-6 hover:scale-105"

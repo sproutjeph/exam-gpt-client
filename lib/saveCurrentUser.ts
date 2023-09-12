@@ -1,11 +1,10 @@
 import User from "@/models/user";
-import { auth } from "@clerk/nextjs";
 import connectMongoDB from "./mongoDB";
 
 export const saveCurrentUSerToDB = async (userEmail: string) => {
   try {
     await connectMongoDB();
-    const { userId } = auth();
+    const userId = "";
 
     if (!userId) {
       return;

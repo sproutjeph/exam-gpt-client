@@ -1,8 +1,7 @@
-import { useUser } from "@clerk/nextjs";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const UserAvatar = () => {
-  const { user } = useUser();
+  const { user } = { user: {} as any };
 
   return (
     <Avatar className="w-8 h-8">

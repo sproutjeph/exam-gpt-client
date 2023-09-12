@@ -4,14 +4,11 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { useAuth } from "@clerk/nextjs";
 import { Montserrat } from "next/font/google";
 
 const font = Montserrat({ weight: "600", subsets: ["latin"] });
 
 const LandingNavbar = () => {
-  const { isSignedIn } = useAuth();
-
   return (
     <nav className="flex items-center justify-between p-4 bg-transparent">
       <Link href="/" className="flex items-center">
@@ -23,7 +20,7 @@ const LandingNavbar = () => {
         </h1>
       </Link>
       <div className="flex items-center gap-x-2">
-        <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
+        <Link href="/dashboard">
           <Button variant="main" className="rounded-full hover:bg-mainColor/90">
             Get Started
           </Button>

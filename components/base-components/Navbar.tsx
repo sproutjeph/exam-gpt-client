@@ -1,4 +1,3 @@
-import { UserButton } from "@clerk/nextjs";
 import MobileSidebar from "./MobileSidebar";
 import ModeToggle from "./ModeToggle";
 
@@ -9,9 +8,7 @@ const Navbar = () => {
       <div className="ml-10 ">
         <ModeToggle />
       </div>
-      <div className="flex justify-end w-full">
-        <UserButton afterSignOutUrl="/" />
-      </div>
+      <div className="flex justify-end w-full">user</div>
     </nav>
   );
 };

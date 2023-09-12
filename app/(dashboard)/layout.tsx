@@ -7,24 +7,21 @@ import { FC, Suspense } from "react";
 import Loading from "./(routes)/loading";
 import { getApiLimit } from "@/lib/api-limit";
 import connectMongoDB from "@/lib/mongoDB";
-import { auth } from "@clerk/nextjs";
 
 interface layoutProps {
   children: React.ReactNode;
 }
 
 const DashboardLayout: FC<layoutProps> = async ({ children }) => {
-  const { userId } = auth();
+  // await connectMongoDB();
+  // const apiLimitCount = await getApiLimit("" as string);
 
-  await connectMongoDB();
-  const apiLimitCount = await getApiLimit(userId as string);
-
-  console.log(apiLimitCount);
+  // console.log(apiLimitCount);
 
   return (
     <section className="relative min-h-full">
       <div className="hidden h-full md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-80">
-        <Sidebar isPro={false} apiLimitCount={apiLimitCount} />
+        <Sidebar isPro={false} apiLimitCount={3} />
       </div>
       <main className="pb-10 md:pl-64">
         <Navbar />
