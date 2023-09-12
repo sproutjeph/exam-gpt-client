@@ -146,6 +146,7 @@ export const queryKeys = {
   allSubjects: "allSubjects",
   users: "users",
   usersApiUseage: "usersApiUseage",
+  registerUser: "registerUser",
 };
 
 export const textBooks = [

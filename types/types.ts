@@ -82,8 +82,12 @@ export type Payment = {
   email: string;
 };
 
-export interface IUser {
-  userId: string;
+export interface IRegUser {
+  name: string;
   email: string;
-  apiUseageCount: number;
+  password: string;
+}
+export interface IActivateUser {
+  activationToken: string;
+  activationCode: string;
 }

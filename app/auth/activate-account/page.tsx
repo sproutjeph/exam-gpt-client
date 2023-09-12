@@ -15,6 +15,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { axiosInstance } from "@/lib/axiosInstance";
+import toast from "react-hot-toast";
+import { useRouter, useSearchParams } from "next/navigation";
+import { IActivateUser } from "@/types/types";
 
 export const registerFormSchema = z.object({
   otp1: z.string().min(1, "First OTP Code").max(1),
@@ -26,6 +30,9 @@ export const registerFormSchema = z.object({
 });
 
 function ActivateAccountPage() {
+  const router = useRouter();
+  const activationToken = useSearchParams().get("activationToken");
+
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -38,16 +45,35 @@ function ActivateAccountPage() {
     },
   });
   const isLoading = form.formState.isSubmitting;
+
   const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
-    const activationCode = `${values.otp1}${values.otp2}${values.otp3}${values.otp4}${values.otp5}${values.otp6} `;
-    console.log(activationCode);
+    const activationCode = `${values.otp1}${values.otp2}${values.otp3}${values.otp4}${values.otp5}${values.otp6}`;
+
+    const data = {
+      activationToken,
+      activationCode,
+    } as IActivateUser;
+
+    try {
+      const res = await axiosInstance.post("/activate-user", data);
+      if (res.data.success === true) {
+        toast("activation is successful");
+        form.reset();
+        router.push("/auth/login");
+      }
+      console.log(res);
+    } catch (error: any) {
+      toast(`${error}`);
+    }
   };
 
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle>Activate your accout</CardTitle>
-        <CardDescription>Enter your activation code</CardDescription>
+        <CardDescription>
+          Enter the activation code sent to you email
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>

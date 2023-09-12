@@ -1,7 +1,5 @@
 "use client";
 
-import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -20,7 +17,6 @@ import * as z from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -29,6 +25,10 @@ import {
 import { Facebook } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
+import { IRegUser } from "@/types/types";
+import { useRegisterUser } from "@/hooks/useResiterUser";
+import { axiosInstance } from "@/lib/axiosInstance";
+import toast from "react-hot-toast";
 
 export const registerFormSchema = z.object({
   name: z.string().min(1, "First Name is Required").max(100),
@@ -53,7 +53,24 @@ function RegisterPage() {
   });
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
-    console.log(values);
+    const data: IRegUser = {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    };
+    try {
+      const res = await axiosInstance.post("/register-user", data);
+      if (res.data.success === true) {
+        toast("Your Registration is successful");
+        form.reset();
+        router.push(
+          `/auth/activate-account/?activationToken=${res.data.activationToken}`
+        );
+      }
+      console.log(res);
+    } catch (error: any) {
+      toast(`${error.message}`);
+    }
   };
 
   return (
@@ -138,7 +155,9 @@ function RegisterPage() {
               )}
             />
             <CardFooter className="p-0 mt-4">
-              <Button className="w-full">Register</Button>
+              <Button className="w-full" disabled={isLoading}>
+                Register
+              </Button>
             </CardFooter>
           </form>
         </Form>
