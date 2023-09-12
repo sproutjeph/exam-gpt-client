@@ -39,7 +39,7 @@ export const registerFormSchema = z.object({
     .max(20),
 });
 
-function AuthPage() {
+function RegisterPage() {
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -72,7 +72,7 @@ function AuthPage() {
             <span>Continue with Facebook</span>
           </div>
         </Button>
-        <div className="flex items-center w-full my-8">
+        <div className="flex items-center w-full mt-8 mb-4">
           <Separator className="w-36" />
           <span className="mx-auto">or</span>
           <Separator className="w-36" />
@@ -147,4 +147,4 @@ function AuthPage() {
     </Card>
   );
 }
-export default AuthPage;
+export default RegisterPage;
