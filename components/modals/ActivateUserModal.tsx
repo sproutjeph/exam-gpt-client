@@ -24,6 +24,7 @@ import { IActivateUser } from "@/types/types";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
+import React, { useRef } from "react";
 
 export const FormSchema = z.object({
   otp1: z.string().min(1, "First OTP Code").max(1),
@@ -38,6 +39,15 @@ const ActivateUserModal = () => {
   const dispatch = useAppDispatch();
   const activationToken = useSearchParams().get("activationToken");
 
+  const inputRefs = useRef<HTMLInputElement[] | null[]>([
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]);
+
   const { isActivateUserModalOpen } = useAppSelector((state) => state.modals);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -51,6 +61,33 @@ const ActivateUserModal = () => {
       otp6: "",
     },
   });
+
+  // Function to handle input changes and focus on the next input
+  const handleInputChange = (index: number, value: string) => {
+    // Check if the input is a digit
+    if (/^\d*$/.test(value) && value.length <= 1) {
+      const nextIndex = index + 1;
+
+      // Create an object with dynamically generated keys
+      const updatedValues = {
+        ...form.getValues(),
+        [`otp${index + 1}`]: value,
+      };
+
+      // Update the form valuesx
+      //@ts-ignore
+      form.setValue(`otp${index + 1}`, value);
+
+      // Move focus to the next input field
+      if (
+        nextIndex < inputRefs.current.length &&
+        inputRefs.current[nextIndex]
+      ) {
+        inputRefs.current[nextIndex]!.focus();
+      }
+    }
+  };
+
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
@@ -92,66 +129,30 @@ const ActivateUserModal = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex items-center gap-2 ">
-              <FormField
-                name="otp1"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input disabled={isLoading} {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="otp2"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input disabled={isLoading} {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="otp3"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl className="">
-                      <Input className="" disabled={isLoading} {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="otp4"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input disabled={isLoading} {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="otp5"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input disabled={isLoading} {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="otp6"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input disabled={isLoading} {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+              {["otp1", "otp2", "otp3", "otp4", "otp5", "otp6"].map(
+                (name, i) => (
+                  <FormField
+                    key={i}
+                    name={name}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            disabled={isLoading}
+                            {...field}
+                            maxLength={1}
+                            ref={(el) => (inputRefs.current[i] = el)}
+                            onChange={(e) =>
+                              handleInputChange(i, e.target.value)
+                            }
+                            className="text-center"
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                )
+              )}
             </div>
 
             <DialogFooter className="p-0 mt-4">
