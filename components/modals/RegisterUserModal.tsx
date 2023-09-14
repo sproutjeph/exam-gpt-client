@@ -32,7 +32,7 @@ import { IRegUser } from "@/types/types";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Facebook } from "lucide-react";
+import { Facebook, Loader2 } from "lucide-react";
 import Image from "next/image";
 
 export const registerFormSchema = z.object({
@@ -72,7 +72,7 @@ const RegisterUserModal = () => {
       if (res.data.success === true) {
         toast("Your Registration is successful");
         form.reset();
-        router.push(`/?activationToken=${res.data.activationToken}
+        router.push(`/dashboard/?activationToken=${res.data.activationToken}
         `);
         dispatch(closeRegisterUserModal());
         dispatch(openActivateUserModal());
@@ -150,19 +150,22 @@ const RegisterUserModal = () => {
             />
             <DialogFooter>
               <Button
-                disabled={false}
-                onClick={() => {}}
+                disabled={isLoading}
                 size="lg"
                 variant="default"
                 className="w-full"
               >
-                Sign Up
+                {isLoading ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <span>Sign Up</span>
+                )}
               </Button>
             </DialogFooter>
           </form>
         </Form>
         <h4 className="mt-4 mb-2 text-center">Or join with</h4>
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center ">
           <Button variant="ghost">
             <Image
               src="/google-logo.svg"

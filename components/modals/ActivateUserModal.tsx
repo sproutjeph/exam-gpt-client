@@ -25,6 +25,7 @@ import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import React, { useRef } from "react";
+import { Loader2 } from "lucide-react";
 
 export const FormSchema = z.object({
   otp1: z.string().min(1, "First OTP Code").max(1),
@@ -123,6 +124,9 @@ const ActivateUserModal = () => {
             <span className="flex items-center text-xl font-bold gap-x-2">
               Activate Account
             </span>
+            <span className="text-xs">
+              Enter your activation code sent to your email address
+            </span>
           </DialogTitle>
         </DialogHeader>
 
@@ -156,7 +160,13 @@ const ActivateUserModal = () => {
             </div>
 
             <DialogFooter className="p-0 mt-4">
-              <Button className="w-full">Activate</Button>
+              <Button className="w-full" disabled={isLoading}>
+                {isLoading ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <span>Activate</span>
+                )}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

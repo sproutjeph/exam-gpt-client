@@ -31,7 +31,7 @@ import { IRegUser } from "@/types/types";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Facebook } from "lucide-react";
+import { Facebook, Loader2 } from "lucide-react";
 import Image from "next/image";
 
 export const FormSchema = z.object({
@@ -66,8 +66,9 @@ const LoginModal = () => {
       const res = await axiosInstance.post("/login-user", data);
       if (res.data.success === true) {
         toast("login  successful");
+        dispatch(closeLoginModal());
         form.reset();
-        router.push(`/`);
+        router.push(`/dashboard`);
       }
       console.log(res);
     } catch (error: any) {
@@ -130,7 +131,11 @@ const LoginModal = () => {
                 variant="default"
                 className="w-full"
               >
-                Sign in
+                {isLoading ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <span>Sign in</span>
+                )}
               </Button>
             </DialogFooter>
           </form>
