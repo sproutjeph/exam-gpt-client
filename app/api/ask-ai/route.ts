@@ -1,6 +1,4 @@
 import { MAX_FREE_COUNTS } from "@/constants/constants";
-import { getApiLimit, increamentApiLimit } from "@/lib/api-limit";
-import connectMongoDB from "@/lib/mongoDB";
 import { NextResponse } from "next/server";
 import { Configuration, OpenAIApi } from "openai";
 
@@ -12,8 +10,6 @@ const openai = new OpenAIApi(configuration);
 
 export async function POST(req: Request) {
   try {
-    await connectMongoDB();
-
     const { userId } = { userId: "will add soon" };
 
     const body = await req.json();
@@ -31,7 +27,7 @@ export async function POST(req: Request) {
       return new NextResponse("Messages are required", { status: 400 });
     }
 
-    const apiUseageCount = await getApiLimit(userId);
+    let apiUseageCount = 0;
 
     if (apiUseageCount === MAX_FREE_COUNTS) {
       return new NextResponse(
@@ -46,7 +42,8 @@ export async function POST(req: Request) {
       model: "gpt-3.5-turbo",
       messages,
     });
-    await increamentApiLimit(userId);
+    // increase API limit
+    apiUseageCount += 1;
 
     return NextResponse.json(response.data.choices[0].message);
   } catch (error) {
