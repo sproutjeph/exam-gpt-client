@@ -18,7 +18,7 @@ export interface ISubject {
 }
 
 export interface IQuestion {
-  option: {
+  options: {
     [key: string]: string;
   };
   _id: string;

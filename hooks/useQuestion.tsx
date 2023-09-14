@@ -14,7 +14,7 @@ async function getQuestionsByQuery(
   subject: string
 ): Promise<IAxiosReturnType> {
   const { data } = await axiosInstance.get(
-    `questions/${examType}/${examYear}/${subject}`
+    `/get-questions/${examType}/${examYear}/${subject}`
   );
 
   return data;

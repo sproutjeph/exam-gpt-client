@@ -1,7 +1,6 @@
 import { MAX_FREE_COUNTS } from "@/constants/constants";
 import { getApiLimit, increamentApiLimit } from "@/lib/api-limit";
 import connectMongoDB from "@/lib/mongoDB";
-import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { Configuration, OpenAIApi } from "openai";
 
@@ -15,7 +14,7 @@ export async function POST(req: Request) {
   try {
     await connectMongoDB();
 
-    const { userId } = auth();
+    const { userId } = { userId: "will add soon" };
 
     const body = await req.json();
     const { messages } = body;

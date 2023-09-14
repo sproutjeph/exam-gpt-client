@@ -10,7 +10,7 @@ interface IAxiosReturnType {
 }
 
 async function getSubject(examName: string): Promise<IAxiosReturnType> {
-  const { data } = await axiosInstance.get(`/subjects/${examName}`);
+  const { data } = await axiosInstance.get(`/get-subject/${examName}`);
 
   return data;
 }

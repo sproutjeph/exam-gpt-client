@@ -42,7 +42,7 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index, cbTest }) => {
           </h4>
 
           <RadioGroup defaultValue="">
-            {Object.keys(question.option).map((optionKey) => (
+            {Object.keys(question.options)?.map((optionKey) => (
               <div key={optionKey} className="flex items-center space-x-2">
                 <RadioGroupItem
                   value={optionKey}
@@ -52,7 +52,7 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index, cbTest }) => {
 
                 <Label htmlFor={optionKey}>
                   <span className="mr-4 capitalize">{optionKey}:</span>{" "}
-                  {question.option[optionKey]}
+                  {question.options[optionKey]}
                 </Label>
               </div>
             ))}
