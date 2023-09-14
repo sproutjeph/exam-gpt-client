@@ -4,12 +4,14 @@ type ModalsState = {
   isSubscriptionModalOpen: boolean;
   isRegisterUserModalOpen: boolean;
   isLoginModalOpen: boolean;
+  isActivateUserModalOpen: boolean;
 };
 
 const initialState: ModalsState = {
   isSubscriptionModalOpen: false,
   isRegisterUserModalOpen: false,
   isLoginModalOpen: false,
+  isActivateUserModalOpen: false,
 };
 
 const modalsSlice = createSlice({
@@ -29,10 +31,16 @@ const modalsSlice = createSlice({
       state.isRegisterUserModalOpen = true;
     },
     closeLoginModal(state) {
-      state.isRegisterUserModalOpen = false;
+      state.isLoginModalOpen = false;
     },
     openLoginModal(state) {
-      state.isRegisterUserModalOpen = true;
+      state.isLoginModalOpen = true;
+    },
+    closeActivateUserModal(state) {
+      state.isActivateUserModalOpen = false;
+    },
+    openActivateUserModal(state) {
+      state.isActivateUserModalOpen = true;
     },
   },
 });
@@ -44,6 +52,8 @@ export const {
   closeRegisterUserModal,
   closeLoginModal,
   openLoginModal,
+  openActivateUserModal,
+  closeActivateUserModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

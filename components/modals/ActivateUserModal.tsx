@@ -1,26 +1,31 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
+import { Button } from "../ui/button";
+import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
+import {
+  closeActivateUserModal,
+  openLoginModal,
+} from "@/featuers/modals/modalSlice";
+import { IActivateUser } from "@/types/types";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
-import { useRouter, useSearchParams } from "next/navigation";
-import { IActivateUser } from "@/types/types";
+import { useSearchParams } from "next/navigation";
 
-export const registerFormSchema = z.object({
+export const FormSchema = z.object({
   otp1: z.string().min(1, "First OTP Code").max(1),
   otp2: z.string().min(1, "2nd OTP Code").max(1),
   otp3: z.string().min(1, "3rd OTP Code").max(1),
@@ -29,12 +34,14 @@ export const registerFormSchema = z.object({
   otp6: z.string().min(1, "6th OTP Code").max(1),
 });
 
-function ActivateAccountPage() {
-  const router = useRouter();
+const ActivateUserModal = () => {
+  const dispatch = useAppDispatch();
   const activationToken = useSearchParams().get("activationToken");
 
-  const form = useForm<z.infer<typeof registerFormSchema>>({
-    resolver: zodResolver(registerFormSchema),
+  const { isActivateUserModalOpen } = useAppSelector((state) => state.modals);
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
     defaultValues: {
       otp1: "",
       otp2: "",
@@ -46,7 +53,7 @@ function ActivateAccountPage() {
   });
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     const activationCode = `${values.otp1}${values.otp2}${values.otp3}${values.otp4}${values.otp5}${values.otp6}`;
 
     const data = {
@@ -58,8 +65,9 @@ function ActivateAccountPage() {
       const res = await axiosInstance.post("/activate-user", data);
       if (res.data.success === true) {
         toast("activation is successful");
+        dispatch(closeActivateUserModal());
+        dispatch(openLoginModal());
         form.reset();
-        router.push("/auth/login");
       }
       console.log(res);
     } catch (error: any) {
@@ -68,14 +76,19 @@ function ActivateAccountPage() {
   };
 
   return (
-    <Card className="w-full max-w-sm">
-      <CardHeader>
-        <CardTitle>Activate your accout</CardTitle>
-        <CardDescription>
-          Enter the activation code sent to you email
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <Dialog
+      open={isActivateUserModalOpen}
+      onOpenChange={() => dispatch(closeActivateUserModal())}
+    >
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
+            <span className="flex items-center text-xl font-bold gap-x-2">
+              Activate Account
+            </span>
+          </DialogTitle>
+        </DialogHeader>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex items-center gap-2 ">
@@ -141,13 +154,14 @@ function ActivateAccountPage() {
               />
             </div>
 
-            <CardFooter className="p-0 mt-4">
+            <DialogFooter className="p-0 mt-4">
               <Button className="w-full">Activate</Button>
-            </CardFooter>
+            </DialogFooter>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
-}
-export default ActivateAccountPage;
+};
+
+export default ActivateUserModal;

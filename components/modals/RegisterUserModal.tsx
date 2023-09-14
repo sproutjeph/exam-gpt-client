@@ -25,6 +25,7 @@ import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import {
   closeRegisterUserModal,
+  openActivateUserModal,
   openLoginModal,
 } from "@/featuers/modals/modalSlice";
 import { IRegUser } from "@/types/types";
@@ -65,12 +66,16 @@ const RegisterUserModal = () => {
       email: values.email,
       password: values.password,
     };
+
     try {
       const res = await axiosInstance.post("/register-user", data);
       if (res.data.success === true) {
         toast("Your Registration is successful");
         form.reset();
-        router.push(`/?activationToken=${res.data.activationToken}`);
+        router.push(`/?activationToken=${res.data.activationToken}
+        `);
+        dispatch(closeRegisterUserModal());
+        dispatch(openActivateUserModal());
       }
       console.log(res);
     } catch (error: any) {

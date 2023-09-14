@@ -34,7 +34,7 @@ import { useRouter } from "next/navigation";
 import { Facebook } from "lucide-react";
 import Image from "next/image";
 
-export const registerFormSchema = z.object({
+export const FormSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is Required"),
   password: z
     .string()
@@ -48,25 +48,26 @@ const LoginModal = () => {
   const dispatch = useAppDispatch();
   const { isLoginModalOpen } = useAppSelector((state) => state.modals);
 
-  const form = useForm<z.infer<typeof registerFormSchema>>({
-    resolver: zodResolver(registerFormSchema),
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
   const isLoading = form.formState.isSubmitting;
-  const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
+
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     const data: IRegUser = {
       email: values.email,
       password: values.password,
     };
     try {
-      const res = await axiosInstance.post("/register-user", data);
+      const res = await axiosInstance.post("/login-user", data);
       if (res.data.success === true) {
-        toast("Your Registration is successful");
+        toast("login  successful");
         form.reset();
-        router.push(`/?activationToken=${res.data.activationToken}`);
+        router.push(`/`);
       }
       console.log(res);
     } catch (error: any) {
