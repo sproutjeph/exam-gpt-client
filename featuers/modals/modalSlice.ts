@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 type ModalsState = {
   isSubscriptionModalOpen: boolean;
   isRegisterUserModalOpen: boolean;
+  isLoginModalOpen: boolean;
 };
 
 const initialState: ModalsState = {
   isSubscriptionModalOpen: false,
   isRegisterUserModalOpen: false,
+  isLoginModalOpen: false,
 };
 
 const modalsSlice = createSlice({
@@ -26,6 +28,12 @@ const modalsSlice = createSlice({
     openRegisterUserModal(state) {
       state.isRegisterUserModalOpen = true;
     },
+    closeLoginModal(state) {
+      state.isRegisterUserModalOpen = false;
+    },
+    openLoginModal(state) {
+      state.isRegisterUserModalOpen = true;
+    },
   },
 });
 
@@ -34,6 +42,8 @@ export const {
   openSubscriptionModal,
   openRegisterUserModal,
   closeRegisterUserModal,
+  closeLoginModal,
+  openLoginModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

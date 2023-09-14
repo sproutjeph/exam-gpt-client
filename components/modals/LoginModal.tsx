@@ -24,8 +24,8 @@ import {
 import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import {
-  closeRegisterUserModal,
-  openLoginModal,
+  closeLoginModal,
+  openRegisterUserModal,
 } from "@/featuers/modals/modalSlice";
 import { IRegUser } from "@/types/types";
 import { axiosInstance } from "@/lib/axiosInstance";
@@ -35,8 +35,6 @@ import { Facebook } from "lucide-react";
 import Image from "next/image";
 
 export const registerFormSchema = z.object({
-  name: z.string().min(1, "First Name is Required").max(100),
-
   email: z.string().email("Invalid email").min(1, "Email is Required"),
   password: z
     .string()
@@ -44,16 +42,15 @@ export const registerFormSchema = z.object({
     .max(20),
 });
 
-const RegisterUserModal = () => {
+const LoginModal = () => {
   const router = useRouter();
 
   const dispatch = useAppDispatch();
-  const { isRegisterUserModalOpen } = useAppSelector((state) => state.modals);
+  const { isLoginModalOpen } = useAppSelector((state) => state.modals);
 
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -61,7 +58,6 @@ const RegisterUserModal = () => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
     const data: IRegUser = {
-      name: values.name,
       email: values.email,
       password: values.password,
     };
@@ -80,38 +76,20 @@ const RegisterUserModal = () => {
 
   return (
     <Dialog
-      open={isRegisterUserModalOpen}
-      onOpenChange={() => dispatch(closeRegisterUserModal())}
+      open={isLoginModalOpen}
+      onOpenChange={() => dispatch(closeLoginModal())}
     >
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
             <span className="flex items-center text-xl font-bold gap-x-2">
-              Register an Account
+              Login
             </span>
           </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              name="name"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormLabel className="">Name</FormLabel>
-
-                  <FormControl className="">
-                    <Input
-                      className=""
-                      disabled={isLoading}
-                      {...field}
-                      type="text"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               name="email"
               render={({ field }) => (
@@ -151,12 +129,12 @@ const RegisterUserModal = () => {
                 variant="default"
                 className="w-full"
               >
-                Sign Up
+                Sign in
               </Button>
             </DialogFooter>
           </form>
         </Form>
-        <h4 className="mt-4 mb-2 text-center">Or join with</h4>
+        <h4 className="mt-4 mb-2 text-center">Or Sign in with</h4>
         <div className="flex items-center justify-center gap-4">
           <Button variant="ghost">
             <Image
@@ -171,15 +149,15 @@ const RegisterUserModal = () => {
           </Button>
         </div>
         <div className="text-center">
-          <span>Already have an account?</span>
+          <span>Dont have an account?</span>
           <span
             className="ml-4 cursor-pointer text-blue"
             onClick={() => {
-              dispatch(closeRegisterUserModal());
-              dispatch(openLoginModal());
+              dispatch(closeLoginModal());
+              dispatch(openRegisterUserModal());
             }}
           >
-            Sign In
+            Sign Up
           </span>
         </div>
       </DialogContent>
@@ -187,4 +165,4 @@ const RegisterUserModal = () => {
   );
 };
 
-export default RegisterUserModal;
+export default LoginModal;

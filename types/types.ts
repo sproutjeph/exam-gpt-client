@@ -83,7 +83,7 @@ export type Payment = {
 };
 
 export interface IRegUser {
-  name: string;
+  name?: string;
   email: string;
   password: string;
 }
