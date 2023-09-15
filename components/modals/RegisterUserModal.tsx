@@ -71,7 +71,7 @@ const RegisterUserModal = () => {
     try {
       const res = await axiosInstance.post("/register-user", data);
       if (res.data.success === true) {
-        toast("Your Registration is successful");
+        toast.success(`${res.data.message || "Registration Successed"}`);
         form.reset();
         dispatch(saveActivationToken(res.data.activationToken));
         dispatch(closeRegisterUserModal());
@@ -79,7 +79,7 @@ const RegisterUserModal = () => {
       }
       console.log(res);
     } catch (error: any) {
-      toast(`${error.message}`);
+      toast.error(`${error.response.data.msg}`);
     }
   };
 

@@ -101,14 +101,13 @@ const ActivateUserModal = () => {
     try {
       const res = await axiosInstance.post("/activate-user", data);
       if (res.data.success === true) {
-        toast("activation is successful");
+        toast.success(`${res.data.message || "activation is successful"}`);
         dispatch(closeActivateUserModal());
         dispatch(openLoginModal());
         form.reset();
       }
-      console.log(res);
     } catch (error: any) {
-      toast(`${error}`);
+      toast.error(`${error.response.data.msg}`);
     }
   };
 
@@ -135,7 +134,7 @@ const ActivateUserModal = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex items-center gap-2 ">
+            <div className="flex items-center gap-2 shake">
               {["otp1", "otp2", "otp3", "otp4", "otp5", "otp6"].map(
                 (name, i) => (
                   <FormField

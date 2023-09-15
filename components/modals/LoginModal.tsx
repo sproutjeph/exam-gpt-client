@@ -33,6 +33,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Facebook, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { saveAccessToken, saveUser } from "@/featuers/userSlice";
 
 export const FormSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is Required"),
@@ -65,14 +66,15 @@ const LoginModal = () => {
     try {
       const res = await axiosInstance.post("/login-user", data);
       if (res.data.success === true) {
-        toast("login  successful");
+        toast.success(`${res.data.message || "login  successful"}`);
+        dispatch(saveUser(res.data.user));
+        dispatch(saveAccessToken(res.data.accessToken));
         dispatch(closeLoginModal());
         form.reset();
-        router.push(`/dashboard`);
       }
       console.log(res);
     } catch (error: any) {
-      toast(`${error.message}`);
+      toast(`${error.response.data.msg || "Something went wrong"}`);
     }
   };
 
