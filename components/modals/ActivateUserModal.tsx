@@ -23,9 +23,8 @@ import {
 import { IActivateUser } from "@/types/types";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
-import { useSearchParams } from "next/navigation";
 import React, { useRef } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, ShieldCheckIcon } from "lucide-react";
 
 export const FormSchema = z.object({
   otp1: z.string().min(1, "First OTP Code").max(1),
@@ -38,7 +37,7 @@ export const FormSchema = z.object({
 
 const ActivateUserModal = () => {
   const dispatch = useAppDispatch();
-  const activationToken = useSearchParams().get("activationToken");
+  const { activationToken } = useAppSelector((state) => state.user);
 
   const inputRefs = useRef<HTMLInputElement[] | null[]>([
     null,
@@ -122,11 +121,15 @@ const ActivateUserModal = () => {
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
             <span className="flex items-center text-xl font-bold gap-x-2">
-              Activate Account
+              Verify Your Account
             </span>
             <span className="text-xs">
               Enter your activation code sent to your email address
             </span>
+
+            <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary">
+              <ShieldCheckIcon size={40} className="text-white" />
+            </div>
           </DialogTitle>
         </DialogHeader>
 
@@ -149,7 +152,8 @@ const ActivateUserModal = () => {
                             onChange={(e) =>
                               handleInputChange(i, e.target.value)
                             }
-                            className="text-center"
+                            className="text-center "
+                            type="number"
                           />
                         </FormControl>
                       </FormItem>
@@ -164,12 +168,25 @@ const ActivateUserModal = () => {
                 {isLoading ? (
                   <Loader2 className="animate-spin" />
                 ) : (
-                  <span>Activate</span>
+                  <span>Verify OTP</span>
                 )}
               </Button>
             </DialogFooter>
           </form>
         </Form>
+        <div className="text-center">
+          <span>Go back to sign in?</span>
+          <Button
+            variant="ghost"
+            className="text-blue"
+            onClick={() => {
+              dispatch(closeActivateUserModal());
+              dispatch(openLoginModal());
+            }}
+          >
+            Sign in
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

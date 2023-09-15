@@ -34,6 +34,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Facebook, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { saveActivationToken } from "@/featuers/userSlice";
 
 export const registerFormSchema = z.object({
   name: z.string().min(1, "First Name is Required").max(100),
@@ -72,8 +73,7 @@ const RegisterUserModal = () => {
       if (res.data.success === true) {
         toast("Your Registration is successful");
         form.reset();
-        router.push(`/dashboard/?activationToken=${res.data.activationToken}
-        `);
+        dispatch(saveActivationToken(res.data.activationToken));
         dispatch(closeRegisterUserModal());
         dispatch(openActivateUserModal());
       }
