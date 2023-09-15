@@ -8,24 +8,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { routes } from "@/constants/constants";
-import { useAppDispatch } from "@/redux-store/hooks";
-import { saveCurrentapiLimitCount } from "@/featuers/apiLimitCount";
 
 const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 
-interface SidebarProps {
-  apiLimitCount: number;
-  isPro: boolean;
-}
+interface SidebarProps {}
 
-const Sidebar: FC<SidebarProps> = ({ apiLimitCount, isPro }) => {
-  const dispatch = useAppDispatch();
+const Sidebar: FC<SidebarProps> = ({}) => {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    dispatch(saveCurrentapiLimitCount(apiLimitCount));
-  }, [apiLimitCount, dispatch]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -66,7 +56,7 @@ const Sidebar: FC<SidebarProps> = ({ apiLimitCount, isPro }) => {
           ))}
         </div>
       </div>
-      <FreeCounter apiLimitCount={apiLimitCount} isPro={isPro} />
+      <FreeCounter />
     </aside>
   );
 };

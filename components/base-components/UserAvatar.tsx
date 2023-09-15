@@ -1,11 +1,37 @@
+"use client";
+
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { useAppSelector } from "@/redux-store/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { LogOutIcon, Settings } from "lucide-react";
+import { Loader2, LogOutIcon, Settings } from "lucide-react";
+import { axiosInstance } from "@/lib/axiosInstance";
+import toast from "react-hot-toast";
+import { clearUser } from "@/featuers/userSlice";
+import { useState } from "react";
 
 const UserAvatar = () => {
+  const [loading, setLoading] = useState(false);
   const { user } = useAppSelector((state) => state.user);
+  const dispath = useAppDispatch();
   console.log(user);
+
+  async function logoutUser() {
+    try {
+      const res = await axiosInstance.get("/logout-user");
+      setLoading(true);
+      if (res?.data?.success === true) {
+        toast.success(`${res?.data?.message || "Logged out successfully"}`);
+        dispath(clearUser());
+
+        // localStorage.removeItem("token");
+        window.location.reload();
+        setLoading(false);
+      }
+    } catch (error: any) {
+      toast.error(`${error.response.data.msg}`);
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -31,9 +57,16 @@ const UserAvatar = () => {
             <Settings className="w-4 h-4" />
             <h6 className="text-sm">Manage Account</h6>
           </div>
-          <div className="flex items-center gap-8 px-6 py-2 mt-6 rounded-sm cursor-pointer hover:bg-muted">
+          <div
+            className="flex items-center gap-8 px-6 py-2 mt-6 rounded-sm cursor-pointer hover:bg-muted"
+            onClick={() => logoutUser()}
+          >
             <LogOutIcon className="w-4 h-4" />
-            <h6 className="text-sm">Log out</h6>
+            {loading ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <h6 className="text-sm">Log out</h6>
+            )}
           </div>
         </PopoverContent>
       </Popover>

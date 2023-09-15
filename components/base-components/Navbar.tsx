@@ -4,7 +4,7 @@ import { User } from "lucide-react";
 import MobileSidebar from "./MobileSidebar";
 import ModeToggle from "./ModeToggle";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
-import { openRegisterUserModal } from "@/featuers/modals/modalSlice";
+import { openLoginModal } from "@/featuers/modals/modalSlice";
 import UserAvatar from "./UserAvatar";
 
 const Navbar = () => {
@@ -23,7 +23,7 @@ const Navbar = () => {
         ) : (
           <User
             className="cursor-pointer"
-            onClick={() => dispatch(openRegisterUserModal())}
+            onClick={() => dispatch(openLoginModal())}
           />
         )}
       </div>

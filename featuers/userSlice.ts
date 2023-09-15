@@ -26,10 +26,15 @@ const UserSlice = createSlice({
     saveUser(state, action: PayloadAction<IUser>) {
       state.user = action.payload;
     },
+    clearUser(state) {
+      state.user = null;
+      state.accessToken = "";
+      state.activationToken = "";
+    },
   },
 });
 
-export const { saveActivationToken, saveUser, saveAccessToken } =
+export const { saveActivationToken, saveUser, saveAccessToken, clearUser } =
   UserSlice.actions;
 
 export default UserSlice.reducer;
