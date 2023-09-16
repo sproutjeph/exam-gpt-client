@@ -65,16 +65,17 @@ const LoginModal = () => {
     };
     try {
       const res = await axiosInstance.post("/login-user", data);
-      if (res.data.success === true) {
+      if (res.data?.success === true) {
         toast.success(`${res.data.message || "login  successful"}`);
-        dispatch(saveUser(res.data.user));
-        dispatch(saveAccessToken(res.data.accessToken));
+        // dispatch(saveUser(res.data.user));
+        dispatch(saveAccessToken(res.data?.accessToken));
         dispatch(closeLoginModal());
         form.reset();
+        router.push("/dashboard");
       }
       console.log(res);
     } catch (error: any) {
-      toast(`${error.response.data.msg || "Something went wrong"}`);
+      toast(`${error.response?.data?.msg || "Something went wrong"}`);
     }
   };
 

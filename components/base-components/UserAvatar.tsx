@@ -8,8 +8,10 @@ import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import { clearUser } from "@/featuers/userSlice";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const UserAvatar = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { user } = useAppSelector((state) => state.user);
   const dispath = useAppDispatch();
@@ -21,11 +23,10 @@ const UserAvatar = () => {
       setLoading(true);
       if (res?.data?.success === true) {
         toast.success(`${res?.data?.message || "Logged out successfully"}`);
-        dispath(clearUser());
-
-        // localStorage.removeItem("token");
-        window.location.reload();
         setLoading(false);
+        dispath(clearUser());
+        router.push("/");
+        // window.location.reload();
       }
     } catch (error: any) {
       toast.error(`${error.response.data.msg}`);

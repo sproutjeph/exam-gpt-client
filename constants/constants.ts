@@ -145,6 +145,7 @@ export const queryKeys = {
   subjects: "subjects",
   allSubjects: "allSubjects",
   users: "users",
+  currentUser: "currentUser",
   usersApiUseage: "usersApiUseage",
   registerUser: "registerUser",
 };

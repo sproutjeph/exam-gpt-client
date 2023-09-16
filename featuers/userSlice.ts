@@ -5,12 +5,14 @@ type UserState = {
   activationToken: string;
   accessToken: string;
   user: IUser | null;
+  apiUseageCount: number;
 };
 
 const initialState: UserState = {
   activationToken: "",
   accessToken: "",
   user: null,
+  apiUseageCount: 0,
 };
 
 const UserSlice = createSlice({
@@ -31,10 +33,18 @@ const UserSlice = createSlice({
       state.accessToken = "";
       state.activationToken = "";
     },
+    updateApiUseageCount(state) {
+      state.apiUseageCount = Number(state.user?.apiUseageCount);
+    },
   },
 });
 
-export const { saveActivationToken, saveUser, saveAccessToken, clearUser } =
-  UserSlice.actions;
+export const {
+  saveActivationToken,
+  saveUser,
+  saveAccessToken,
+  clearUser,
+  updateApiUseageCount,
+} = UserSlice.actions;
 
 export default UserSlice.reducer;
