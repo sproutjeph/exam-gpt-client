@@ -1,9 +1,10 @@
 "use client";
 
 import ActivateUserModal from "@/components/modals/ActivateUserModal";
+import ChangePasswordModal from "@/components/modals/ChangePasswordModal";
 import ChangeProfileImageModal from "@/components/modals/ChangeProfileImageModal";
 import LoginModal from "@/components/modals/LoginModal";
-import ProfileModal from "@/components/modals/ProfileModal";
+import ManageProfileModal from "@/components/modals/ManageProfileModal";
 import RegisterUserModal from "@/components/modals/RegisterUserModal";
 import SubscriptionModal from "@/components/modals/SubscriptionModal";
 import { useEffect, useState } from "react";
@@ -25,8 +26,9 @@ export const ModalProvider = () => {
       <RegisterUserModal />
       <LoginModal />
       <ActivateUserModal />
-      <ProfileModal />
+      <ManageProfileModal />
       <ChangeProfileImageModal />
+      <ChangePasswordModal />
     </main>
   );
 };

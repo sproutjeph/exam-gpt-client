@@ -11,32 +11,37 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
-import { closeChangeProfileImageModal } from "@/featuers/modals/modalSlice";
+import { closeChangePasswordModal } from "@/featuers/modals/modalSlice";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
-import Image from "next/image";
 
-const ChangeProfileImageModal = () => {
+const ChangePasswordModal = () => {
   const dispatch = useAppDispatch();
 
-  const { isChangeProfileImageModalOpen } = useAppSelector(
-    (state) => state.modals
-  );
-  const { user } = useAppSelector((state) => state.user);
+  const { isChangePasswordModalOpen } = useAppSelector((state) => state.modals);
 
   const UserValidation = z.object({
-    profile_photo: z.string().url().nonempty(),
+    oldPassword: z
+      .string()
+      .min(8, { message: "Minimum 8 characters." })
+      .max(30, { message: "Maximum 30 caracters." }),
+    newPassword: z
+      .string()
+      .min(8, { message: "Minimum 8 characters." })
+      .max(30, { message: "Maximum 30 caracters." }),
   });
   const form = useForm<z.infer<typeof UserValidation>>({
     resolver: zodResolver(UserValidation),
     defaultValues: {
-      profile_photo: user?.imageUrl ? user.imageUrl : "",
+      oldPassword: "",
+      newPassword: "",
     },
   });
   const isLoading = form.formState.isSubmitting;
@@ -44,8 +49,8 @@ const ChangeProfileImageModal = () => {
 
   return (
     <Dialog
-      open={isChangeProfileImageModalOpen}
-      onOpenChange={() => dispatch(closeChangeProfileImageModal())}
+      open={isChangePasswordModalOpen}
+      onOpenChange={() => dispatch(closeChangePasswordModal())}
     >
       <DialogContent>
         <DialogHeader>
@@ -61,38 +66,32 @@ const ChangeProfileImageModal = () => {
           >
             <FormField
               control={form.control}
-              name="profile_photo"
+              name="oldPassword"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
-                  <FormLabel className="account-form_image-label">
-                    {field.value ? (
-                      <Image
-                        src={field.value}
-                        alt="profile_icon"
-                        width={96}
-                        height={96}
-                        priority
-                        className="object-contain rounded-full"
-                      />
-                    ) : (
-                      <Image
-                        src="/assets/profile.svg"
-                        alt="profile_icon"
-                        width={24}
-                        height={24}
-                        className="object-contain"
-                      />
-                    )}
+                <FormItem className="flex flex-col w-full gap-3">
+                  <FormLabel className="text-base-semibold ">
+                    Old Password
                   </FormLabel>
-                  <FormControl className="flex-1 text-gray-200 text-base-semibold">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      placeholder="Add profile photo"
-                      className=""
-                      onChange={(e) => {}}
-                    />
+                  <FormControl>
+                    <Input type="text" className="" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="newPassword"
+              render={({ field }) => (
+                <FormItem className="flex flex-col w-full gap-3">
+                  <FormLabel className="text-base-semibold ">
+                    New Password
+                  </FormLabel>
+                  <FormControl>
+                    <Input type="text" className="" {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -116,4 +115,4 @@ const ChangeProfileImageModal = () => {
   );
 };
 
-export default ChangeProfileImageModal;
+export default ChangePasswordModal;
