@@ -20,7 +20,6 @@ import { Button } from "@/components/ui/button";
 
 import { FC } from "react";
 import { isBase64Image } from "@/lib/utils";
-import { updateUser } from "@/lib/actions/user.action";
 
 interface AccountProfileProps {
   user?: {
