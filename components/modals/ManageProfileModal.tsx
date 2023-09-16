@@ -9,8 +9,9 @@ import {
 } from "../ui/dialog";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import {
-  closeProfileModal,
+  closeManageProfileModal,
   openChangeProfileImageModal,
+  openChangePasswordModal,
 } from "@/featuers/modals/modalSlice";
 import { ChevronRight } from "lucide-react";
 import { Separator } from "../ui/separator";
@@ -20,12 +21,12 @@ const ManageProfileModal = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
 
-  const { isProfileModalOpen } = useAppSelector((state) => state.modals);
+  const { isManageProfileModalOpen } = useAppSelector((state) => state.modals);
 
   return (
     <Dialog
-      open={isProfileModalOpen}
-      onOpenChange={() => dispatch(closeProfileModal())}
+      open={isManageProfileModalOpen}
+      onOpenChange={() => dispatch(closeManageProfileModal())}
     >
       <DialogContent>
         <DialogHeader>
@@ -61,20 +62,23 @@ const ManageProfileModal = () => {
             <h4>Password</h4>
 
             <Separator />
-            <div className="flex items-center gap-4 p-2 my-2 rounded-sm cursor-pointer hover:bg-muted">
+            <div
+              className="flex items-center gap-4 p-2 my-2 rounded-sm cursor-pointer hover:bg-muted"
+              onClick={() => dispatch(openChangePasswordModal())}
+            >
               <h4>Change Password</h4>
               <ChevronRight className="ml-auto" />
             </div>
           </div>
 
-          <div
-            className=""
-            onClick={() => dispatch(openChangeProfileImageModal())}
-          >
+          <div className="">
             <h4>Profile Image</h4>
 
             <Separator />
-            <div className="flex items-center gap-4 p-2 my-2 rounded-sm cursor-pointer hover:bg-muted">
+            <div
+              className="flex items-center gap-4 p-2 my-2 rounded-sm cursor-pointer hover:bg-muted"
+              onClick={() => dispatch(openChangeProfileImageModal())}
+            >
               <Avatar className="w-12 h-12 ">
                 <AvatarImage src={user?.imageUrl || "/no-photo.jpg"} />
               </Avatar>

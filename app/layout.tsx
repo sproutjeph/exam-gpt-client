@@ -6,6 +6,7 @@ import { ReduxProviders } from "@/providers/ReduxProvider";
 import { ModalProvider } from "@/providers/ModalProvider";
 import { ReactQueryProvider } from "@/providers/ReactQuery";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import AuthProvider from "@/providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -24,18 +25,24 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ReactQueryProvider>
-      <ReduxProviders>
-        <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
+      <ReactQueryProvider>
+        <ReduxProviders>
           <body className={inter.className}>
-            <ToasterProvider />
-            <ModalProvider />
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
-            </ThemeProvider>
+            <AuthProvider>
+              <ToasterProvider />
+              <ModalProvider />
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                {children}
+              </ThemeProvider>
+            </AuthProvider>
           </body>
-        </html>
-      </ReduxProviders>
-    </ReactQueryProvider>
+        </ReduxProviders>
+      </ReactQueryProvider>
+    </html>
   );
 }

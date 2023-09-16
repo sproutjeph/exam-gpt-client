@@ -34,6 +34,7 @@ import { useRouter } from "next/navigation";
 import { Facebook, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { saveAccessToken, saveUser } from "@/featuers/userSlice";
+import { signIn } from "next-auth/react";
 
 export const FormSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is Required"),
@@ -145,7 +146,7 @@ const LoginModal = () => {
         </Form>
         <h4 className="mt-4 mb-2 text-center">Or Sign in with</h4>
         <div className="flex items-center justify-center gap-4">
-          <Button variant="ghost">
+          <Button variant="ghost" onClick={() => signIn("google")}>
             <Image
               src="/google-logo.svg"
               width="40"
@@ -153,7 +154,7 @@ const LoginModal = () => {
               alt="google logo"
             />
           </Button>
-          <Button variant="ghost">
+          <Button variant="ghost" onClick={() => signIn("facebook")}>
             <Facebook />
           </Button>
         </div>
