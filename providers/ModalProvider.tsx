@@ -1,6 +1,7 @@
 "use client";
 
 import ActivateUserModal from "@/components/modals/ActivateUserModal";
+import ChangeProfileImageModal from "@/components/modals/ChangeProfileImageModal";
 import LoginModal from "@/components/modals/LoginModal";
 import ProfileModal from "@/components/modals/ProfileModal";
 import RegisterUserModal from "@/components/modals/RegisterUserModal";
@@ -25,6 +26,7 @@ export const ModalProvider = () => {
       <LoginModal />
       <ActivateUserModal />
       <ProfileModal />
+      <ChangeProfileImageModal />
     </main>
   );
 };

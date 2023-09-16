@@ -6,6 +6,7 @@ type ModalsState = {
   isLoginModalOpen: boolean;
   isActivateUserModalOpen: boolean;
   isProfileModalOpen: boolean;
+  isChangeProfileModalOpen: boolean;
 };
 
 const initialState: ModalsState = {
@@ -14,6 +15,7 @@ const initialState: ModalsState = {
   isLoginModalOpen: false,
   isActivateUserModalOpen: false,
   isProfileModalOpen: false,
+  isChangeProfileModalOpen: false,
 };
 
 const modalsSlice = createSlice({
@@ -50,6 +52,12 @@ const modalsSlice = createSlice({
     openProfileModal(state) {
       state.isProfileModalOpen = true;
     },
+    closeChangeProfileImageModal(state) {
+      state.isChangeProfileModalOpen = false;
+    },
+    openChangeProfileImageModal(state) {
+      state.isChangeProfileModalOpen = true;
+    },
   },
 });
 
@@ -64,6 +72,8 @@ export const {
   closeActivateUserModal,
   openProfileModal,
   closeProfileModal,
+  openChangeProfileImageModal,
+  closeChangeProfileImageModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

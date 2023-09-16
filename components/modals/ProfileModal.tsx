@@ -23,7 +23,10 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
-import { closeProfileModal } from "@/featuers/modals/modalSlice";
+import {
+  closeProfileModal,
+  openChangeProfileModal,
+} from "@/featuers/modals/modalSlice";
 import { IRegUser } from "@/types/types";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
@@ -95,7 +98,7 @@ const ProfileModal = () => {
             </div>
           </div>
 
-          <div className="">
+          <div className="" onClick={() => dispatch(openChangeProfileModal())}>
             <h4>Profile Image</h4>
 
             <Separator />
