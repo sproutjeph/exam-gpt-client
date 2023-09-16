@@ -2,21 +2,15 @@
 
 import { routes } from "@/constants/constants";
 import { Card } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAppSelector } from "@/redux-store/hooks";
-import { useSession } from "next-auth/react";
+
+import Protected from "@/hooks/useProtected";
 
 const DashboardPage = () => {
   const router = useRouter();
-  const { user } = useAppSelector((state) => state.user);
-  const { data } = useSession();
-  console.log(data);
-
-  if (user === null) {
-    router.push("/");
-  }
 
   return (
     <section>

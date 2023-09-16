@@ -2,14 +2,16 @@
 
 import {
   DashboardBottomNavbar,
+  Loader,
   Navbar,
   Sidebar,
 } from "@/components/base-components";
 import { FC, Suspense, useEffect } from "react";
-import Loading from "./(routes)/loading";
-import { useAppDispatch } from "@/redux-store/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { loadCurrentUser, useGetCurrentUser } from "@/hooks/useGetCurrentUser";
 import { saveUser } from "@/featuers/userSlice";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface layoutProps {
   children: React.ReactNode;
@@ -17,8 +19,13 @@ interface layoutProps {
 
 const DashboardLayout: FC<layoutProps> = ({ children }) => {
   const dispatch = useAppDispatch();
-  const { currentUser } = useGetCurrentUser();
-  console.log(currentUser);
+  const { currentUser, isLoading } = useGetCurrentUser();
+  const { user } = useAppSelector((state) => state.user);
+  const { data } = useSession();
+
+  if (user === null) {
+    redirect("/");
+  }
 
   useEffect(() => {
     loadCurrentUser()();
@@ -31,7 +38,8 @@ const DashboardLayout: FC<layoutProps> = ({ children }) => {
       </div>
       <main className="pb-10 md:pl-64">
         <Navbar />
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <Suspense fallback={<Loader />}>{children}</Suspense>
+        {/* <Custom>{children}</Custom> */}
         <DashboardBottomNavbar />
       </main>
     </section>
@@ -39,3 +47,13 @@ const DashboardLayout: FC<layoutProps> = ({ children }) => {
 };
 
 export default DashboardLayout;
+
+// interface CustomProps {
+//   children: React.ReactNode;
+// }
+
+// const Custom: FC<CustomProps> = ({ children }) => {
+//   const { isLoading } = useGetCurrentUser();
+
+//   return <>{isLoading ? <Loader /> : <>{children}</>}</>;
+// };
