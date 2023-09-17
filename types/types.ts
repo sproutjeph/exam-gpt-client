@@ -94,14 +94,14 @@ export interface IActivateUser {
 
 export interface IUser {
   apiUseageCount: number;
-  createdAt: string;
   email: string;
   isVerified: boolean;
   name: string;
-  role: "user" | "admin";
-  subjectVideo: [];
-  updatedAt: string;
-  __v: number;
-  _id: string;
+  role: string;
+  subjectVideo?: [];
+  updatedAt?: string;
+  createdAt?: string;
+  __v?: number;
+  _id?: string;
   imageUrl?: string;
 }

@@ -93,13 +93,6 @@ export const routes = [
   },
 
   {
-    label: "Settings",
-    icon: Settings,
-    href: "/settings",
-    color: "text-[text-white]",
-    bgColor: "bg-[#1E90FF]",
-  },
-  {
     label: "C B Test",
     icon: Computer,
     href: "/computer-base-test",
@@ -177,10 +170,5 @@ export const bottomNavLinks = [
     label: "CB Test",
     icon: Computer,
     href: "/computer-base-test",
-  },
-  {
-    label: "Settings",
-    icon: Settings,
-    href: "/settings",
   },
 ];

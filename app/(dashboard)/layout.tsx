@@ -33,6 +33,7 @@ const DashboardLayout: FC<layoutProps> = ({ children }) => {
       console.log(error);
     }
   }
+
   // async function socialAuth() {
   //   try {
   //     const res = await axiosInstance.post("/social-auth", {
@@ -54,7 +55,21 @@ const DashboardLayout: FC<layoutProps> = ({ children }) => {
 
   useEffect(() => {
     loadCurrentUser()();
-    dispatch(saveUser(currentUser));
+    if (currentUser && !isLoading) {
+      dispatch(
+        saveUser({
+          email: currentUser?.email,
+          name: currentUser?.name,
+          imageUrl: currentUser?.avatar?.url,
+          role: currentUser?.role,
+          apiUseageCount: currentUser?.apiUseageCount,
+          isVerified: currentUser?.isVerified,
+        })
+      );
+    }
+  }, [currentUser, dispatch, isLoading]);
+
+  useEffect(() => {
     // Refresh the token every 9 minutes (540,000 milliseconds)
     const refreshTokenInterval = setInterval(() => {
       refreshToken();
@@ -62,7 +77,7 @@ const DashboardLayout: FC<layoutProps> = ({ children }) => {
     return () => {
       clearInterval(refreshTokenInterval);
     };
-  }, [currentUser, dispatch]);
+  }, []);
 
   if (!isLoading && !currentUser && !user) {
     redirect("/");

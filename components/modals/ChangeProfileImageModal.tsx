@@ -21,8 +21,12 @@ import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
+import { ChangeEvent, useState } from "react";
+import { isBase64Image } from "@/lib/utils";
 
 const ChangeProfileImageModal = () => {
+  const [files, setFiles] = useState<File[]>([]);
+
   const dispatch = useAppDispatch();
 
   const { isChangeProfileImageModalOpen } = useAppSelector(
@@ -40,7 +44,40 @@ const ChangeProfileImageModal = () => {
     },
   });
   const isLoading = form.formState.isSubmitting;
-  const onSubmit = async (values: z.infer<typeof UserValidation>) => {};
+  const onSubmit = async (values: z.infer<typeof UserValidation>) => {
+    const blob = values.profile_photo;
+
+    try {
+      const hasImageChanged = isBase64Image(blob);
+      if (hasImageChanged) {
+        const imgRes = await axiosInstance.put("/update-avatar", {
+          avatar: blob,
+        });
+        if (imgRes && imgRes.data) {
+          toast.success("Profile image updated successfully");
+        }
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
+  const handleImage = (
+    e: ChangeEvent<HTMLInputElement>,
+    fieldChange: (value: string) => void
+  ) => {
+    e.preventDefault();
+    const fileReader = new FileReader();
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setFiles(Array.from(e.target.files));
+      if (!file.type.includes("image")) return;
+      fileReader.onload = async (event) => {
+        const imageDataUrl = event.target?.result?.toString() || "";
+        fieldChange(imageDataUrl);
+      };
+      fileReader.readAsDataURL(file);
+    }
+  };
 
   return (
     <Dialog
@@ -69,10 +106,10 @@ const ChangeProfileImageModal = () => {
                       <Image
                         src={field.value}
                         alt="profile_icon"
-                        width={96}
-                        height={96}
+                        width={100}
+                        height={100}
                         priority
-                        className="object-contain rounded-full"
+                        className="object-contain w-full h-full rounded-full"
                       />
                     ) : (
                       <Image
@@ -90,7 +127,9 @@ const ChangeProfileImageModal = () => {
                       accept="image/*"
                       placeholder="Add profile photo"
                       className=""
-                      onChange={(e) => {}}
+                      onChange={(e) => {
+                        handleImage(e, field.onChange);
+                      }}
                     />
                   </FormControl>
                 </FormItem>
