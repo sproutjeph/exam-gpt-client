@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { clearUser } from "@/featuers/userSlice";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { openProfileModal } from "@/featuers/modals/modalSlice";
+import { openManageProfileModal } from "@/featuers/modals/modalSlice";
 
 const UserAvatar = () => {
   const router = useRouter();
@@ -57,7 +57,7 @@ const UserAvatar = () => {
           </div>
           <div
             className="flex items-center gap-8 px-6 py-2 mx-2 mt-6 rounded-sm cursor-pointer hover:bg-muted"
-            onClick={() => dispath(openProfileModal())}
+            onClick={() => dispath(openManageProfileModal())}
           >
             <Settings className="w-4 h-4" />
             <h6 className="text-sm">Manage Account</h6>

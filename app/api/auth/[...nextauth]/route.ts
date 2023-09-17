@@ -14,6 +14,11 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "",
     }),
   ],
+  callbacks: {
+    async redirect() {
+      return "/dashboard";
+    },
+  },
   secret: process.env.NEXT_AUTH_SECRET,
 };
 const handler = NextAuth(authOptions);

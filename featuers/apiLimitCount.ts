@@ -12,12 +12,12 @@ const apiLimitCountSlice = createSlice({
   name: "apiLimitCount",
   initialState,
   reducers: {
-    saveCurrentapiLimitCount(state, action: PayloadAction<number>) {
+    saveApiUseageCount(state, action: PayloadAction<number>) {
       state.apiLimitCount = action.payload;
     },
   },
 });
 
-export const { saveCurrentapiLimitCount } = apiLimitCountSlice.actions;
+export const { saveApiUseageCount } = apiLimitCountSlice.actions;
 
 export default apiLimitCountSlice.reducer;

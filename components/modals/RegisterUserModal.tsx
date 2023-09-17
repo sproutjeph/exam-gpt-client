@@ -164,7 +164,7 @@ const RegisterUserModal = () => {
             </DialogFooter>
           </form>
         </Form>
-        <h4 className="mt-4 mb-2 text-center">Or join with</h4>
+        {/* <h4 className="mt-4 mb-2 text-center">Or join with</h4>
         <div className="flex items-center justify-center ">
           <Button variant="ghost">
             <Image
@@ -177,7 +177,7 @@ const RegisterUserModal = () => {
           <Button variant="ghost">
             <Facebook />
           </Button>
-        </div>
+        </div> */}
         <div className="text-center">
           <span>Already have an account?</span>
           <span
