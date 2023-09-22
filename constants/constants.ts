@@ -9,7 +9,6 @@ import {
   DollarSign,
   LayoutDashboard,
   MessageSquare,
-  Settings,
   UploadCloud,
   User,
 } from "lucide-react";

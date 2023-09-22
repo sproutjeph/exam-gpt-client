@@ -19,6 +19,8 @@ const ExamsPage = () => {
   const [currentExam, setCurrentExam] = useState("JAMB");
   const { subjects, isLoading, error } = useSubject(currentExam);
 
+  console.log(subjects);
+
   return (
     <main className="py-8 sm:px-8">
       <Tabs
