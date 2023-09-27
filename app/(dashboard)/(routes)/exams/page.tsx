@@ -56,7 +56,7 @@ const ExamsPage = () => {
                   </PopoverTrigger>
                   <PopoverContent className=" w-80">
                     <h4 className="mb-2 text-center">{subject.name}</h4>
-                    {/* <div className="grid justify-center grid-cols-3 gap-2">
+                    <div className="grid justify-center grid-cols-3 gap-2">
                       {subject?.examYears?.map((year: any) => (
                         <Link
                           key={year._id}
@@ -65,22 +65,6 @@ const ExamsPage = () => {
                           <Button variant="main">{year.examYear}</Button>
                         </Link>
                       ))}
-                    </div> */}
-                    <div className="grid justify-center grid-cols-3 gap-2">
-                      {subject?.examYears
-                        ? [
-                            ...new Set(
-                              subject.examYears.map((year) => year.examYear)
-                            ),
-                          ].map((uniqueYear) => (
-                            <Link
-                              key={uniqueYear}
-                              href={`/questions/?examType=${subject.exam}&subject=${subject.name}&examYear=${uniqueYear}`}
-                            >
-                              <Button variant="main">{uniqueYear}</Button>
-                            </Link>
-                          ))
-                        : null}
                     </div>
                   </PopoverContent>
                 </Popover>
