@@ -35,7 +35,8 @@ import { useRouter } from "next/navigation";
 import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
 import { saveActivationToken } from "@/featuers/userSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRegisterMutation } from "@/featuers/auth/authApi";
 
 export const registerFormSchema = z.object({
   name: z.string().min(1, "First Name is Required").max(100),
@@ -48,13 +49,13 @@ export const registerFormSchema = z.object({
 });
 
 const RegisterUserModal = () => {
+  const router = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [register, { data, error, isSuccess }] = useRegisterMutation();
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
-
-  const router = useRouter();
 
   const dispatch = useAppDispatch();
   const { isRegisterUserModalOpen } = useAppSelector((state) => state.modals);
@@ -75,20 +76,36 @@ const RegisterUserModal = () => {
       password: values.password,
     };
 
-    try {
-      const res = await axiosInstance.post("/register-user", data);
-      if (res.data.success === true) {
-        toast.success(`${res.data.message || "Registration Successed"}`);
-        form.reset();
-        dispatch(saveActivationToken(res.data.activationToken));
-        dispatch(closeRegisterUserModal());
-        dispatch(openActivateUserModal());
-      }
-      console.log(res);
-    } catch (error: any) {
-      toast.error(`${error.response.data.msg}`);
-    }
+    // try {
+    //   const res = await axiosInstance.post("/register-user", data);
+    //   if (res.data.success === true) {
+    //     toast.success(`${res.data.message || "Registration Successed"}`);
+    //     form.reset();
+    //     dispatch(saveActivationToken(res.data.activationToken));
+    //     dispatch(closeRegisterUserModal());
+    //     dispatch(openActivateUserModal());
+    //   }
+    //   console.log(res);
+    // } catch (error: any) {
+    //   toast.error(`${error.response.data.msg}`);
+    // }
+
+    register(data);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      const message = data?.message || "Registration Successed";
+      toast.success(message);
+      form.reset();
+      dispatch(closeRegisterUserModal());
+      dispatch(openActivateUserModal());
+    }
+    if (error) {
+      const errorData = error as any;
+      toast.error(errorData.data.msg);
+    }
+  }, [isSuccess, error]);
 
   return (
     <Dialog

@@ -23,8 +23,12 @@ import {
 import { IActivateUser } from "@/types/types";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Loader2, ShieldCheckIcon } from "lucide-react";
+import {
+  useActivationMutation,
+  useRegisterMutation,
+} from "@/featuers/auth/authApi";
 
 export const FormSchema = z.object({
   otp1: z.string().min(1, "First OTP Code").max(1),
@@ -37,7 +41,8 @@ export const FormSchema = z.object({
 
 const ActivateUserModal = () => {
   const dispatch = useAppDispatch();
-  const { activationToken } = useAppSelector((state) => state.user);
+  const { token } = useAppSelector((state) => state.auth);
+  const [activation, { isSuccess, error }] = useActivationMutation();
 
   const inputRefs = useRef<HTMLInputElement[] | null[]>([
     null,
@@ -94,22 +99,41 @@ const ActivateUserModal = () => {
     const activationCode = `${values.otp1}${values.otp2}${values.otp3}${values.otp4}${values.otp5}${values.otp6}`;
 
     const data = {
-      activationToken,
+      activationToken: token,
       activationCode,
     } as IActivateUser;
 
-    try {
-      const res = await axiosInstance.post("/activate-user", data);
-      if (res.data.success === true) {
-        toast.success(`${res.data.message || "activation is successful"}`);
-        dispatch(closeActivateUserModal());
-        dispatch(openLoginModal());
-        form.reset();
-      }
-    } catch (error: any) {
-      toast.error(`${error.response.data.msg}`);
-    }
+    // try {
+    //   const res = await axiosInstance.post("/activate-user", data);
+    //   if (res.data.success === true) {
+    //     toast.success(`${res.data.message || "activation is successful"}`);
+    //     dispatch(closeActivateUserModal());
+    //     dispatch(openLoginModal());
+    //     form.reset();
+    //   }
+    // } catch (error: any) {
+    //   toast.error(`${error.response.data.msg}`);
+    // }
+    await activation(data);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Activation is successful");
+      dispatch(closeActivateUserModal());
+      dispatch(openLoginModal());
+      form.reset();
+    }
+
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.msg);
+      } else {
+        console.log("Something went wrong");
+      }
+    }
+  }, [isSuccess, error]);
 
   return (
     <Dialog

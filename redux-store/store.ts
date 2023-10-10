@@ -5,6 +5,8 @@ import askAiReducer from "@/featuers/askAiSlice";
 import cbTestReducer from "@/featuers/CBtest";
 import apiLimitCountReducer from "@/featuers/apiLimitCount";
 import userRrducer from "@/featuers/userSlice";
+import { apiSlice } from "@/featuers/auth/apiSlice";
+import authReducer from "@/featuers/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,8 +15,12 @@ export const store = configureStore({
     modals: modalsReducer,
     cbTest: cbTestReducer,
     apiLimitCount: apiLimitCountReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    auth: authReducer,
   },
   devTools: false,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
