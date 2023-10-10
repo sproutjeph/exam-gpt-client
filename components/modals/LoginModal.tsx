@@ -28,14 +28,13 @@ import {
   openRegisterUserModal,
 } from "@/featuers/modals/modalSlice";
 import { IRegUser } from "@/types/types";
-import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
-import { saveAccessToken, saveUser } from "@/featuers/userSlice";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLoginMutation } from "@/featuers/auth/authApi";
 
 export const FormSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is Required"),
@@ -46,6 +45,7 @@ export const FormSchema = z.object({
 });
 
 const LoginModal = () => {
+  const [login, { error, isSuccess }] = useLoginMutation();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -70,21 +70,26 @@ const LoginModal = () => {
       email: values.email,
       password: values.password,
     };
-    try {
-      const res = await axiosInstance.post("/login-user", data);
-      if (res.data?.success === true) {
-        toast.success(`${res.data.message || "login  successful"}`);
-        // dispatch(saveUser(res.data.user));
-        dispatch(saveAccessToken(res.data?.accessToken));
-        dispatch(closeLoginModal());
-        form.reset();
-        router.push("/dashboard");
-      }
-      console.log(res);
-    } catch (error: any) {
-      toast(`${error.response?.data?.msg || "Something went wrong"}`);
-    }
+
+    await login(data);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Login successful");
+      dispatch(closeLoginModal());
+      form.reset();
+      router.push("/dashboard");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.msg);
+      } else {
+        console.log("Something went wrong");
+      }
+    }
+  }, [error, isSuccess]);
 
   return (
     <Dialog

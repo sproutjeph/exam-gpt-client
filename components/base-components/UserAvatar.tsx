@@ -14,7 +14,7 @@ import { openManageProfileModal } from "@/featuers/modals/modalSlice";
 const UserAvatar = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
   const dispath = useAppDispatch();
   console.log(user);
 

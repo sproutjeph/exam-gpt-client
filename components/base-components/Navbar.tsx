@@ -9,7 +9,7 @@ import UserAvatar from "./UserAvatar";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <nav className="flex items-center p-4 shadow-sm bg-accent">

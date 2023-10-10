@@ -12,7 +12,7 @@ interface FreeCounterProps {}
 
 const FreeCounter: FC<FreeCounterProps> = () => {
   const dispatch = useAppDispatch();
-  const { apiUseageCount } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <div className="px-3 mt-auto mb-8">
@@ -20,11 +20,11 @@ const FreeCounter: FC<FreeCounterProps> = () => {
         <CardContent className="py-6">
           <div className="mb-4 space-y-2 text-sm text-center">
             <h6 style={{ color: "black" }}>
-              {apiUseageCount} / {MAX_FREE_COUNTS} Free API Call
+              {user?.apiUseageCount} / {MAX_FREE_COUNTS} Free API Call
             </h6>
 
             <Progress
-              value={(Number(apiUseageCount) / MAX_FREE_COUNTS) * 100}
+              value={(Number(user?.apiUseageCount) / MAX_FREE_COUNTS) * 100}
               color=""
             />
           </div>

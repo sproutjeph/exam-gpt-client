@@ -29,12 +29,9 @@ import {
   openLoginModal,
 } from "@/featuers/modals/modalSlice";
 import { IRegUser } from "@/types/types";
-import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
-import { saveActivationToken } from "@/featuers/userSlice";
 import { useEffect, useState } from "react";
 import { useRegisterMutation } from "@/featuers/auth/authApi";
 
@@ -49,7 +46,6 @@ export const registerFormSchema = z.object({
 });
 
 const RegisterUserModal = () => {
-  const router = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [register, { data, error, isSuccess }] = useRegisterMutation();
 
@@ -75,20 +71,6 @@ const RegisterUserModal = () => {
       email: values.email,
       password: values.password,
     };
-
-    // try {
-    //   const res = await axiosInstance.post("/register-user", data);
-    //   if (res.data.success === true) {
-    //     toast.success(`${res.data.message || "Registration Successed"}`);
-    //     form.reset();
-    //     dispatch(saveActivationToken(res.data.activationToken));
-    //     dispatch(closeRegisterUserModal());
-    //     dispatch(openActivateUserModal());
-    //   }
-    //   console.log(res);
-    // } catch (error: any) {
-    //   toast.error(`${error.response.data.msg}`);
-    // }
 
     register(data);
   };

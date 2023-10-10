@@ -21,14 +21,10 @@ import {
   openLoginModal,
 } from "@/featuers/modals/modalSlice";
 import { IActivateUser } from "@/types/types";
-import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import React, { useEffect, useRef } from "react";
 import { Loader2, ShieldCheckIcon } from "lucide-react";
-import {
-  useActivationMutation,
-  useRegisterMutation,
-} from "@/featuers/auth/authApi";
+import { useActivationMutation } from "@/featuers/auth/authApi";
 
 export const FormSchema = z.object({
   otp1: z.string().min(1, "First OTP Code").max(1),
@@ -102,18 +98,6 @@ const ActivateUserModal = () => {
       activationToken: token,
       activationCode,
     } as IActivateUser;
-
-    // try {
-    //   const res = await axiosInstance.post("/activate-user", data);
-    //   if (res.data.success === true) {
-    //     toast.success(`${res.data.message || "activation is successful"}`);
-    //     dispatch(closeActivateUserModal());
-    //     dispatch(openLoginModal());
-    //     form.reset();
-    //   }
-    // } catch (error: any) {
-    //   toast.error(`${error.response.data.msg}`);
-    // }
     await activation(data);
   };
 
