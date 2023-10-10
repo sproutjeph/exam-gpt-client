@@ -31,10 +31,11 @@ import { IRegUser } from "@/types/types";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Facebook, Loader2 } from "lucide-react";
+import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
 import { saveAccessToken, saveUser } from "@/featuers/userSlice";
 import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 export const FormSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is Required"),
@@ -45,6 +46,11 @@ export const FormSchema = z.object({
 });
 
 const LoginModal = () => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
   const router = useRouter();
 
   const dispatch = useAppDispatch();
@@ -121,7 +127,24 @@ const LoginModal = () => {
                   <FormLabel className="">Password</FormLabel>
 
                   <FormControl>
-                    <Input disabled={isLoading} {...field} type="password" />
+                    <div className="relative">
+                      <Input
+                        disabled={isLoading}
+                        {...field}
+                        type={isPasswordVisible ? "text" : "password"}
+                      />
+                      {isPasswordVisible ? (
+                        <LucideEyeOff
+                          className="absolute cursor-pointer top-2 right-2"
+                          onClick={togglePasswordVisibility}
+                        />
+                      ) : (
+                        <LucideEye
+                          className="absolute cursor-pointer top-2 right-2"
+                          onClick={togglePasswordVisibility}
+                        />
+                      )}
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
