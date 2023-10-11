@@ -103,5 +103,5 @@ export interface IUser {
   createdAt?: string;
   __v?: number;
   _id?: string;
-  imageUrl?: string;
+  avatar?: { id: string; url: string };
 }

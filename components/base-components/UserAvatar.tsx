@@ -31,13 +31,13 @@ const UserAvatar = () => {
       <Popover>
         <PopoverTrigger asChild>
           <Avatar className="w-10 h-10 cursor-pointer">
-            <AvatarImage src={user?.imageUrl || "/no-photo.jpg"} />
+            <AvatarImage src={user?.avatar?.url || "/no-photo.jpg"} />
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="w-80">
           <div className="flex items-center gap-3">
             <Avatar className="w-12 h-12">
-              <AvatarImage src={user?.imageUrl || "/no-photo.jpg"} />
+              <AvatarImage src={user?.avatar?.url || "/no-photo.jpg"} />
             </Avatar>
             <div className="">
               <h4 className="text-xs">{user?.name}</h4>

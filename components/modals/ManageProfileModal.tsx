@@ -43,7 +43,7 @@ const ManageProfileModal = () => {
             <Separator />
             <div className="flex items-center gap-4 p-2 my-2 rounded-sm cursor-pointer hover:bg-muted">
               <Avatar className="w-12 h-12 ">
-                <AvatarImage src={user?.imageUrl || "/no-photo.jpg"} />
+                <AvatarImage src={user?.avatar?.url || "/no-photo.jpg"} />
               </Avatar>
               <h4>{user?.name || "Jephthah Mbah"}</h4>
               <ChevronRight className="ml-auto" />
@@ -80,7 +80,7 @@ const ManageProfileModal = () => {
               onClick={() => dispatch(openChangeProfileImageModal())}
             >
               <Avatar className="w-12 h-12 ">
-                <AvatarImage src={user?.imageUrl || "/no-photo.jpg"} />
+                <AvatarImage src={user?.avatar?.url || "/no-photo.jpg"} />
               </Avatar>
               <h4>Change Profile Image</h4>
               <ChevronRight className="ml-auto" />

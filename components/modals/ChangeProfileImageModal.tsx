@@ -40,7 +40,7 @@ const ChangeProfileImageModal = () => {
   const form = useForm<z.infer<typeof UserValidation>>({
     resolver: zodResolver(UserValidation),
     defaultValues: {
-      profile_photo: user?.imageUrl ? user.imageUrl : "",
+      profile_photo: user?.avatar?.url ? user.avatar.url : "",
     },
   });
   const isLoading = form.formState.isSubmitting;
@@ -55,10 +55,11 @@ const ChangeProfileImageModal = () => {
         });
         if (imgRes && imgRes.data) {
           toast.success("Profile image updated successfully");
+          dispatch(closeChangeProfileImageModal());
         }
       }
-    } catch (error) {
-      toast.error("Something went wrong");
+    } catch (error: any) {
+      toast.error(error?.response?.data.msg || "Something went wrong");
     }
   };
   const handleImage = (

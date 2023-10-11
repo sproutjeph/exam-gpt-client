@@ -22,8 +22,8 @@ const DashboardLayout: FC<layoutProps> = ({ children }) => {
   const [socailAuth, { isSuccess }] = useSocialAuthMutation();
   const { user } = useAppSelector((state) => state.auth);
   const { data } = useSession();
-  console.log(user);
-  console.log(data);
+  // console.log(user);
+  // console.log(data);
   const [loggedOut, setLoggedOut] = useState(false);
 
   const {} = useLogOutQuery(undefined, {
@@ -36,7 +36,10 @@ const DashboardLayout: FC<layoutProps> = ({ children }) => {
         socailAuth({
           name: data.user?.name,
           email: data.user?.email,
-          avatar: data.user?.image,
+          avatar: {
+            public_id: "",
+            url: data.user?.image,
+          },
         });
       }
     }
