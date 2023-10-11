@@ -34,6 +34,7 @@ import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRegisterMutation } from "@/featuers/auth/authApi";
+import { signIn } from "next-auth/react";
 
 export const registerFormSchema = z.object({
   name: z.string().min(1, "First Name is Required").max(100),
@@ -47,7 +48,8 @@ export const registerFormSchema = z.object({
 
 const RegisterUserModal = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [register, { data, error, isSuccess }] = useRegisterMutation();
+  const [register, { data, error, isSuccess, isLoading: rtkLoading }] =
+    useRegisterMutation();
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
@@ -64,7 +66,7 @@ const RegisterUserModal = () => {
       password: "",
     },
   });
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = form.formState.isSubmitting || rtkLoading;
   const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
     const data: IRegUser = {
       name: values.name,
@@ -190,7 +192,7 @@ const RegisterUserModal = () => {
         </Form>
         <h4 className="mt-4 mb-2 text-center">Or join with</h4>
         <div className="flex items-center justify-center ">
-          <Button variant="ghost">
+          <Button variant="ghost" onClick={() => signIn("google")}>
             <Image
               src="/google-logo.svg"
               width="40"
@@ -198,9 +200,9 @@ const RegisterUserModal = () => {
               alt="google logo"
             />
           </Button>
-          <Button variant="ghost">
+          {/* <Button variant="ghost">
             <Facebook />
-          </Button>
+          </Button> */}
         </div>
         <div className="text-center">
           <span>Already have an account?</span>

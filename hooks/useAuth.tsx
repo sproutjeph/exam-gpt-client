@@ -1,9 +1,9 @@
 import { useAppSelector } from "@/redux-store/hooks";
 
 const useAuth = () => {
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
-  if (!user) {
+  if (user) {
     return true;
   } else {
     return false;

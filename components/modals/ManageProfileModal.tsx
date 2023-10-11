@@ -19,7 +19,7 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 
 const ManageProfileModal = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
   const { isManageProfileModalOpen } = useAppSelector((state) => state.modals);
 

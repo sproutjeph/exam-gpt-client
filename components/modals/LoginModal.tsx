@@ -182,9 +182,9 @@ const LoginModal = () => {
               alt="google logo"
             />
           </Button>
-          <Button variant="ghost" onClick={() => signIn("facebook")}>
+          {/* <Button variant="ghost" onClick={() => signIn("facebook")}>
             <Facebook />
-          </Button>
+          </Button> */}
         </div>
         <div className="text-center">
           <span>Dont have an account?</span>

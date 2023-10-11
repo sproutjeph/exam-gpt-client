@@ -4,42 +4,33 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Loader2, LogOutIcon, Settings } from "lucide-react";
-import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
-import { clearUser } from "@/featuers/userSlice";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { openManageProfileModal } from "@/featuers/modals/modalSlice";
+import { signOut } from "next-auth/react";
+import { useLogOutQuery } from "@/featuers/auth/authApi";
 
 const UserAvatar = () => {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const { user } = useAppSelector((state) => state.auth);
   const dispath = useAppDispatch();
-  console.log(user);
+  const [loggedOut, setLoggedOut] = useState(false);
+
+  const { user } = useAppSelector((state) => state.auth);
+  const { isLoading } = useLogOutQuery(undefined, {
+    skip: !loggedOut ? true : false,
+  });
 
   async function logoutUser() {
-    try {
-      const res = await axiosInstance.get("/logout-user");
-      setLoading(true);
-      if (res?.data?.success === true) {
-        toast.success(`${res?.data?.message || "Logged out successfully"}`);
-        setLoading(false);
-        dispath(clearUser());
-        router.push("/");
-        // window.location.reload();
-      }
-    } catch (error: any) {
-      toast.error(`${error.response.data.msg}`);
-      setLoading(false);
-    }
+    setLoggedOut(true);
+    await signOut();
+    redirect("/");
   }
 
   return (
     <>
       <Popover>
         <PopoverTrigger asChild>
-          <Avatar className="w-10 h-10 ">
+          <Avatar className="w-10 h-10 cursor-pointer">
             <AvatarImage src={user?.imageUrl || "/no-photo.jpg"} />
           </Avatar>
         </PopoverTrigger>
@@ -67,7 +58,7 @@ const UserAvatar = () => {
             onClick={() => logoutUser()}
           >
             <LogOutIcon className="w-4 h-4" />
-            {loading ? (
+            {isLoading ? (
               <Loader2 className="animate-spin" />
             ) : (
               <h6 className="text-sm">Log out</h6>
