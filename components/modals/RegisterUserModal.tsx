@@ -87,9 +87,9 @@ const RegisterUserModal = () => {
     }
     if (error) {
       const errorData = error as any;
-      toast.error(errorData.data.msg);
+      toast.error(errorData?.data?.msg);
     }
-  }, [isSuccess, error]);
+  }, [isSuccess, error, data?.message, form, dispatch]);
 
   return (
     <Dialog
