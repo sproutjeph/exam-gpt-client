@@ -18,7 +18,7 @@ const questions = [
     examYear: "2010",
     subject: "mathematics",
     image: "",
-    option: { a: "6", b: "9", c: "12", d: "34", e: "16" },
+    options: { a: "6", b: "9", c: "12", d: "34", e: "16" },
     question:
       "The volume of a certain sphere is numerically equal to twice its surface area. The diameter of the sphere is:",
     solution:
@@ -31,7 +31,7 @@ const questions = [
     examYear: "2010",
     subject: "mathematics",
     image: "",
-    option: { a: "0.9", b: "1", c: "0.4", d: "0.49", e: "0.46" },
+    options: { a: "0.9", b: "1", c: "0.4", d: "0.49", e: "0.46" },
     question:
       "A bag contains 10 balls of which 3 are red 7 are white. Two balls are drawn at random. Find the probability of none of the balls is red if the draw is",
     solution:
