@@ -71,7 +71,7 @@ const UploadQuestionPage: FC<pageProps> = ({}) => {
         d: values.optionD,
         e: values.optionE,
       },
-      solution: values.solution,
+      solution: values.solution || "",
       image: values.image || "",
     };
 

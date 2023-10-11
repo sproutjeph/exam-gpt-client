@@ -9,7 +9,7 @@ interface IAxiosReturnType {
 }
 
 async function getAllSubjects(): Promise<IAxiosReturnType> {
-  const { data } = await axiosInstance.get(`/subjects`);
+  const { data } = await axiosInstance.get(`/get-all-subjects`);
 
   return data;
 }

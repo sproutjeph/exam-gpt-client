@@ -24,6 +24,7 @@ const ComputerBaseTestPage = () => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("Subjects");
   const { subjects, isLoading } = useAllSubjects();
+  console.log(subjects);
 
   const handleTabChange = (tabValue: string) => {
     setCurrentTab(tabValue);
