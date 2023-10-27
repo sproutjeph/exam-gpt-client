@@ -18,12 +18,13 @@ import { ChevronLeft, MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter, usePathname } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import * as z from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { clearQuestion } from "@/featuers/askAiSlice";
+import ChatActionIcons from "@/components/base-components/ChatActionIcons";
 
 const AskAiPage = () => {
   const router = useRouter();
@@ -71,7 +72,7 @@ const AskAiPage = () => {
   };
 
   return (
-    <div className="mt-4">
+    <div className="flex h-[90vh] w-full max-w-5xl flex-col px-2 pt-2 mx-auto">
       <Heading
         title="Slove With AI"
         description="Our most advanced AI  model"
@@ -79,9 +80,8 @@ const AskAiPage = () => {
         iconColor="text-white"
         bgColor="bg-violet-500/10"
       />
-
       <div
-        className="container flex items-center my-4 cursor-pointer"
+        className="container flex items-center mb-2 cursor-pointer"
         onClick={() => {
           router.back();
         }}
@@ -89,8 +89,8 @@ const AskAiPage = () => {
         <ChevronLeft />
         <span className="text-xs">Back to Questions</span>
       </div>
-
-      <div className="mt-4 space-y-4">
+      {/* Prompt Messages */}
+      <div className="flex-1 p-4 overflow-y-auto text-sm leading-6 rounded-xl sm:text-base sm:leading-7">
         {isLoading && (
           <div className="flex items-center justify-center w-full p-8 rounded-lg bg-muted">
             <Loader />
@@ -99,57 +99,85 @@ const AskAiPage = () => {
         {messages.length === 0 && !isLoading && (
           <Empty label="No conversation started." />
         )}
-        <div className="flex flex-col-reverse gap-y-4">
+        <div className="">
           {messages.map((message, i) => (
-            <div
-              key={i}
-              className={cn(
-                "p-8 w-full flex items-start gap-x-8 rounded-lg",
-                message.role === "user" ? " border border-black/10" : "bg-muted"
-              )}
-            >
-              {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
-              <p className="text-sm">{message.content}</p>
-            </div>
+            <Fragment key={i}>
+              <ChatActionIcons />
+
+              <div
+                className={cn(
+                  "p-6 w-full flex items-start gap-x-4 rounded-lg",
+                  message.role === "user"
+                    ? " border border-black/10"
+                    : "bg-muted"
+                )}
+              >
+                {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
+
+                <p>{message.content}</p>
+              </div>
+            </Fragment>
           ))}
         </div>
       </div>
-
-      <div className="px-4 mt-auto lg:px-8">
-        <div className="rounded-md ">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex items-center w-full gap-2 p-4 px-3 rounded-lg md:px-6 focus-within:shadow-sm"
+      {/* Prompt message input */}
+      <Form {...form}>
+        <form className="mt-2" onSubmit={form.handleSubmit(onSubmit)}>
+          <label htmlFor="chat-input" className="sr-only">
+            Enter your prompt
+          </label>
+          <div className="relative">
+            <Button
+              variant="ghost"
+              type="button"
+              className="absolute left-0 flex items-center pl-3 bottom-6"
             >
-              <FormField
-                name="prompt"
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormControl className="p-0 m-0">
-                      <Textarea
-                        className="p-2 border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                        disabled={isLoading}
-                        placeholder="How do I calculate the radius of a circle?"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button
-                className="w-20"
-                type="submit"
-                disabled={isLoading}
-                size="icon"
-                variant="default"
+              <svg
+                aria-hidden="true"
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                strokeWidth="2"
+                stroke="currentColor"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                Slove
-              </Button>
-            </form>
-          </Form>
-        </div>
-      </div>
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z"></path>
+                <path d="M5 10a7 7 0 0 0 14 0"></path>
+                <path d="M8 21l8 0"></path>
+                <path d="M12 17l0 4"></path>
+              </svg>
+              <span className="sr-only">Use voice input</span>
+            </Button>
+
+            <FormField
+              name="prompt"
+              render={({ field }) => (
+                <FormItem className="mx-2">
+                  <FormControl>
+                    <Textarea
+                      className="block pt-6 pl-10 pr-20 text-sm shadow-md resize-none bg-gray-50 dark:bg-dark-4 sm:text-base"
+                      disabled={isLoading}
+                      placeholder="How do I calculate the radius of a circle?"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <Button
+              variant="ghost"
+              type="submit"
+              className="absolute bottom-6 right-2.5 rounded-lg  px-4 py-2 text-sm font-medium sm:text-base"
+              disabled={isLoading}
+            >
+              Solve <span className="sr-only">Send message</span>
+            </Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  DashboardBottomNavbar,
-  Loader,
-  Navbar,
-  Sidebar,
-} from "@/components/base-components";
+import { Loader, Navbar, Sidebar } from "@/components/base-components";
 import { FC, Suspense, useEffect, useState } from "react";
 import { useAppSelector } from "@/redux-store/hooks";
 
@@ -65,7 +60,6 @@ const DashboardLayout: FC<layoutProps> = ({ children }) => {
       <main className="pb-10 md:pl-64">
         <Navbar />
         <Suspense fallback={<Loader />}>{children}</Suspense>
-        <DashboardBottomNavbar />
       </main>
     </section>
   );
