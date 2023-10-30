@@ -170,10 +170,10 @@ const AskAiPage = () => {
             <Button
               variant="ghost"
               type="submit"
-              className="absolute bottom-6 right-2.5 rounded-lg  px-4 py-2 text-sm font-medium sm:text-base"
+              className="absolute bottom-6 right-2.5 rounded-lg  px-4 py-2 text-sm font-medium sm:text-base text-primary"
               disabled={isLoading}
             >
-              Solve <span className="sr-only">Send message</span>
+              Solve <span className="sr-only">Solve</span>
             </Button>
           </div>
         </form>
