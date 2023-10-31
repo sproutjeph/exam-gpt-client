@@ -22,7 +22,7 @@ const DashboardPage = () => {
           Learn with the smartest AI - Experience the power of AI
         </p>
       </div>
-      <div className="grid items-center justify-center gap-4 px-4 space-y-4 sm:grid-cols-2 md:px-8 lg:px-32 2xl:grid-cols-3">
+      <div className="grid items-center justify-center grid-cols-2 gap-4 px-4 space-y-4 md:px-8 lg:px-32 2xl:grid-cols-3">
         {routes.map((tool) => (
           <Card
             onClick={() => router.push(tool.href)}
@@ -31,13 +31,15 @@ const DashboardPage = () => {
               `flex items-center justify-between p-4 transition  cursor-pointer border-black/5 hover:shadow-md`
             )}
           >
-            <div className="flex items-center gap-x-4">
-              <div className={cn("p-2 w-fit rounded-md", tool.color)}>
-                <tool.icon className={cn("w-8 h-8", tool.color)} />
+            <div className="flex items-center gap-x-2">
+              <div className={cn("p-2 w-fit rounded-md")}>
+                <tool.icon className={cn("w-8 h-8")} />
               </div>
-              <div className="font-semibold">{tool.label}</div>
+              <div className="text-xs font-semibold sm:text-base">
+                {tool.label}
+              </div>
             </div>
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="hidden w-5 h-5 sm:block" />
           </Card>
         ))}
       </div>
