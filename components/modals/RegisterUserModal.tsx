@@ -32,24 +32,15 @@ import { IRegUser } from "@/types/types";
 import toast from "react-hot-toast";
 import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRegisterMutation } from "@/featuers/auth/authApi";
 import { signIn } from "next-auth/react";
-
-export const registerFormSchema = z.object({
-  name: z.string().min(1, "First Name is Required").max(100),
-
-  email: z.string().email("Invalid email").min(1, "Email is Required"),
-  password: z
-    .string()
-    .min(6, "password must be greater than 6 characters")
-    .max(20),
-});
+import { RegisterSchema } from "@/shemas";
+import { register } from "@/actions/registerUser";
 
 const RegisterUserModal = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [register, { data, error, isSuccess, isLoading: rtkLoading }] =
-    useRegisterMutation();
+  const [isPending, startTransition] = useTransition();
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
@@ -58,38 +49,38 @@ const RegisterUserModal = () => {
   const dispatch = useAppDispatch();
   const { isRegisterUserModalOpen } = useAppSelector((state) => state.modals);
 
-  const form = useForm<z.infer<typeof registerFormSchema>>({
-    resolver: zodResolver(registerFormSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: "",
       email: "",
       password: "",
     },
   });
-  const isLoading = form.formState.isSubmitting || rtkLoading;
-  const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
-    const data: IRegUser = {
-      name: values.name,
-      email: values.email,
-      password: values.password,
-    };
+  const isLoading = form.formState.isSubmitting;
 
-    register(data);
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    startTransition(() => {
+      register(values).then((data) => {
+        console.log(data);
+      });
+    });
+    console.log(values);
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      const message = data?.message || "Registration Successed";
-      toast.success(message);
-      form.reset();
-      dispatch(closeRegisterUserModal());
-      dispatch(openActivateUserModal());
-    }
-    if (error) {
-      const errorData = error as any;
-      toast.error(errorData?.data?.msg);
-    }
-  }, [isSuccess, error, data?.message, form, dispatch]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     const message = data?.message || "Registration Successed";
+  //     toast.success(message);
+  //     form.reset();
+  //     dispatch(closeRegisterUserModal());
+  //     dispatch(openActivateUserModal());
+  //   }
+  //   if (error) {
+  //     const errorData = error as any;
+  //     toast.error(errorData?.data?.msg);
+  //   }
+  // }, [isSuccess, error, data?.message, form, dispatch]);
 
   return (
     <Dialog
