@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole{
+  ADMIN
+  USER
+  USER_PLUS
+}
+
+
+
+type QuestionsOptions {
+  a String
+  b String
+  c String
+  d String
+  e String
+}
+
+type SubjectsExamYears {
+  id       String  @map("_id") @db.ObjectId
+  examYear Int
+  isActive Boolean
+}
+
+type UsersAvatar {
+  public_id String
+  url       String
+}
+
+model questions {
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  v               Int              @map("__v")
+  correctOption   String
+  createdAt       DateTime         @db.Date
+  examType        String
+  examYear        String
+  image           String
+  options         QuestionsOptions
+  question        String
+  questionReports Json?
+  solution        String
+  subject         String
+  updatedAt       DateTime         @db.Date
+}
+
+model subjects {
+  id        String              @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int                 @map("__v")
+  createdAt DateTime            @db.Date
+  exam      String
+  examYears SubjectsExamYears[]
+  name      String
+  updatedAt DateTime            @db.Date
+}
+
+model Account {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider           String
+  providerAccountId  String
+  refresh_token     String?
+  access_token       String?  
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model User {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  v              Int          @map("__v")
+  apiUseageCount Int
+  avatar         UsersAvatar?
+  createdAt      DateTime     @db.Date
+  email          String       @unique(map: "email_1")
+  isVerified     Boolean
+  name           String
+  password       String?
+  role            UserRole @default(USER)
+  updatedAt      DateTime     @db.Date
+  accounts      Account[]
+  isTwoFactorEnabled Boolean @default(false)
+  twoFactorConfirmation TwoFactorConfirmation?
+  
+}
+
+model VerificationToken {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+model PasswordResetToken {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+model TwoFactorToken {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+}
