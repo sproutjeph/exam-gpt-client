@@ -6,9 +6,9 @@ export { default as MobileSidebar } from "@/components/base-components/MobileSid
 
 export { default as Sidebar } from "@/components/base-components/Sidebar";
 
-export { default as LandingNavbar } from "@/components/base-components/LandingNavbar";
-export { default as LandingHero } from "@/components/base-components/LandingHero";
-export { default as LandingContent } from "@/components/base-components/LandingContent";
+export { default as LandingNavbar } from "@/app/(landing)/_components/LandingNavbar";
+export { default as LandingHero } from "@/app/(landing)/_components/LandingHero";
+export { default as LandingContent } from "@/app/(landing)/_components/LandingContent";
 export { default as StoreDownLoadBtns } from "@/components/base-components/StoreDownLoadBtns";
 
 export { default as QuestionCard } from "@/components/base-components/QuestionCard";
@@ -38,4 +38,4 @@ export { default as Icons } from "@/components/base-components/Icons";
 export { default as ReportIssue } from "@/components/base-components/ReportIssue";
 export { default as RecentSales } from "@/components/base-components/RecentSales";
 export { default as Payments } from "@/components/base-components/payments/Payments";
-export { default as LineChartComp } from "@/components/base-components/LineChartComp";
+export { default as LineChartComp } from "@/app/(landing)/_components/LineChartComp";

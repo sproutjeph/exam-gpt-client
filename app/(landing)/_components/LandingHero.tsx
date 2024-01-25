@@ -3,7 +3,7 @@
 import { openLoginModal } from "@/featuers/modals/modalSlice";
 import { useAppDispatch } from "@/redux-store/hooks";
 import TypewriterComponent from "typewriter-effect";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 
 const LandingHero = () => {
   const dispatch = useAppDispatch();

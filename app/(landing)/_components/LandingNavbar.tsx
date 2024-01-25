@@ -3,7 +3,7 @@
 import { openLoginModal } from "@/featuers/modals/modalSlice";
 import { useAppDispatch } from "@/redux-store/hooks";
 import { Montserrat } from "next/font/google";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";

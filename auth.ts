@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { UserRole } from "@prisma/client";
 import authConfig from "./auth.config";
-import db from "./lib/mongoDB";
+import prisma from "./lib/mongoDB";
 
 export const {
   handlers: { GET, POST },
@@ -13,7 +13,7 @@ export const {
   pages: {},
   events: {},
   callbacks: {},
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   ...authConfig,
 });

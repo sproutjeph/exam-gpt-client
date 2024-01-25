@@ -33,7 +33,6 @@ import toast from "react-hot-toast";
 import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState, useTransition } from "react";
-import { useRegisterMutation } from "@/featuers/auth/authApi";
 import { signIn } from "next-auth/react";
 import { RegisterSchema } from "@/shemas";
 import { register } from "@/actions/registerUser";
@@ -57,15 +56,17 @@ const RegisterUserModal = () => {
       password: "",
     },
   });
-  const isLoading = form.formState.isSubmitting;
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    startTransition(() => {
-      register(values).then((data) => {
-        console.log(data);
+    try {
+      startTransition(() => {
+        register(values).then((data) => {
+          console.log(data);
+        });
       });
-    });
-    console.log(values);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // useEffect(() => {
@@ -107,7 +108,7 @@ const RegisterUserModal = () => {
                   <FormControl className="">
                     <Input
                       className=""
-                      disabled={isLoading}
+                      disabled={isPending}
                       {...field}
                       type="text"
                     />
@@ -125,7 +126,7 @@ const RegisterUserModal = () => {
                   <FormControl className="">
                     <Input
                       className=""
-                      disabled={isLoading}
+                      disabled={isPending}
                       {...field}
                       type="email"
                     />
@@ -143,7 +144,7 @@ const RegisterUserModal = () => {
                   <FormControl>
                     <div className="relative">
                       <Input
-                        disabled={isLoading}
+                        disabled={isPending}
                         {...field}
                         type={isPasswordVisible ? "text" : "password"}
                       />
@@ -167,12 +168,12 @@ const RegisterUserModal = () => {
 
             <DialogFooter>
               <Button
-                disabled={isLoading}
+                disabled={isPending}
                 size="lg"
                 variant="default"
                 className="w-full"
               >
-                {isLoading ? (
+                {isPending ? (
                   <Loader2 className="animate-spin" />
                 ) : (
                   <span>Sign Up</span>
@@ -191,9 +192,9 @@ const RegisterUserModal = () => {
               alt="google logo"
             />
           </Button>
-          {/* <Button variant="ghost">
+          <Button variant="ghost">
             <Facebook />
-          </Button> */}
+          </Button>
         </div>
         <div className="text-center">
           <span>Already have an account?</span>
