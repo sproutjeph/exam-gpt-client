@@ -36,6 +36,8 @@ import { signIn } from "next-auth/react";
 import { RegisterSchema } from "@/shemas";
 import { register } from "@/actions/registerUser";
 import { toast } from "sonner";
+import { FormError } from "@/components/base-components/FormError";
+import { FormSuccess } from "@/components/base-components/FormSuccess";
 
 const RegisterUserModal = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -71,19 +73,16 @@ const RegisterUserModal = () => {
     });
   };
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     const message = data?.message || "Registration Successed";
-  //     toast.success(message);
-  //     form.reset();
-  //     dispatch(closeRegisterUserModal());
-  //     dispatch(openActivateUserModal());
-  //   }
-  //   if (error) {
-  //     const errorData = error as any;
-  //     toast.error(errorData?.data?.msg);
-  //   }
-  // }, [isSuccess, error, data?.message, form, dispatch]);
+  useEffect(() => {
+    if (success) {
+      //delay and open activation modal
+      setTimeout(() => {
+        form.reset();
+        dispatch(closeRegisterUserModal());
+        dispatch(openActivateUserModal());
+      }, 1000);
+    }
+  }, [success, error, form, dispatch]);
 
   return (
     <Dialog
@@ -93,6 +92,8 @@ const RegisterUserModal = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
+            <FormError message={error} />
+            <FormSuccess message={success} />
             <span className="flex items-center text-xl font-bold gap-x-2">
               Register an Account
             </span>

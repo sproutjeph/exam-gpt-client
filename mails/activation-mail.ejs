@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Exam GPT</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 90%;
+        text-align: left;
+      }
+      h1 {
+        color: #007bff;
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+      p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      strong {
+        font-weight: bold;
+        color: #333;
+      }
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome, <%= user.name %>!!</h1>
+      <p>
+        Thank you for registering on our website. We're excited to have you as a
+        member of our community.
+      </p>
+      <p>To activate your account, please use the following activation code:</p>
+      <p><strong><%= activationCode %></strong></p>
+      <p>
+        If you have any questions or need assistance, feel free to contact our
+        support team.
+      </p>
+      <p>Thank you again for joining us!</p>
+      <div class="footer">
+        Sincerely,<br />
+        Exam GPT
+      </div>
+    </div>
+  </body>
+</html>
