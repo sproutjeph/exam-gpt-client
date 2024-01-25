@@ -33,17 +33,16 @@ import { useRouter } from "next/navigation";
 import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
-
-export const FormSchema = z.object({
-  email: z.string().email("Invalid email").min(1, "Email is Required"),
-  password: z
-    .string()
-    .min(6, "password must be greater than 6 characters")
-    .max(20),
-});
+import { useEffect, useState, useTransition } from "react";
+import { LoginSchema } from "@/shemas";
+import { loginUser } from "@/actions/loginUser";
+import { FormError } from "@/components/base-components/FormError";
+import { FormSuccess } from "@/components/base-components/FormSuccess";
 
 const LoginModal = () => {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -54,40 +53,29 @@ const LoginModal = () => {
   const dispatch = useAppDispatch();
   const { isLoginModalOpen } = useAppSelector((state) => state.modals);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
-  const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const data: IRegUser = {
-      email: values.email,
-      password: values.password,
-    };
+  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    setError("");
+    setSuccess("");
 
-    console.log(data);
+    startTransition(() => {
+      loginUser(values).then((data) => {
+        if (data?.error) {
+          form.reset();
+          setError(data?.error);
+        } else {
+          setSuccess("Logedin successed");
+        }
+      });
+    });
   };
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     toast.success("Login successful");
-  //     dispatch(closeLoginModal());
-  //     form.reset();
-  //     router.push("/dashboard");
-  //   }
-  //   if (error) {
-  //     if ("data" in error) {
-  //       const errorData = error as any;
-  //       toast.error(errorData.data.msg);
-  //     } else {
-  //       console.log("Something went wrong");
-  //     }
-  //   }
-  // }, [error, isSuccess]);
 
   return (
     <Dialog
@@ -97,6 +85,8 @@ const LoginModal = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
+            <FormError message={error} />
+            <FormSuccess message={success} />
             <span className="flex items-center text-xl font-bold gap-x-2">
               Login
             </span>
@@ -114,7 +104,7 @@ const LoginModal = () => {
                   <FormControl className="">
                     <Input
                       className=""
-                      disabled={isLoading}
+                      disabled={isPending}
                       {...field}
                       type="email"
                     />
@@ -132,7 +122,7 @@ const LoginModal = () => {
                   <FormControl>
                     <div className="relative">
                       <Input
-                        disabled={isLoading}
+                        disabled={isPending}
                         {...field}
                         type={isPasswordVisible ? "text" : "password"}
                       />
@@ -161,7 +151,7 @@ const LoginModal = () => {
                 variant="default"
                 className="w-full"
               >
-                {isLoading ? (
+                {isPending ? (
                   <Loader2 className="animate-spin" />
                 ) : (
                   <span>Sign in</span>

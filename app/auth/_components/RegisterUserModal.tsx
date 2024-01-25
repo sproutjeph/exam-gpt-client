@@ -38,7 +38,7 @@ import { register } from "@/actions/registerUser";
 import { toast } from "sonner";
 import { FormError } from "@/components/base-components/FormError";
 import { FormSuccess } from "@/components/base-components/FormSuccess";
-import { saveAccessToken } from "@/featuers/userSlice";
+import { saveAccessToken, saveActivationToken } from "@/featuers/userSlice";
 import { useRouter } from "next/navigation";
 
 const RegisterUserModal = () => {
@@ -72,6 +72,7 @@ const RegisterUserModal = () => {
       register(values).then((data) => {
         setError(data.error);
         setSuccess(data.success);
+        dispatch(saveActivationToken(data.token as string));
       });
     });
   };
@@ -82,7 +83,7 @@ const RegisterUserModal = () => {
       setTimeout(() => {
         form.reset();
         dispatch(closeRegisterUserModal());
-        dispatch(openLoginModal());
+        dispatch(openActivateUserModal());
       }, 1000);
     }
   }, [success, error, form, dispatch]);

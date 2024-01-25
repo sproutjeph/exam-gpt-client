@@ -2,22 +2,26 @@
 
 import prisma from "@/lib/mongoDB";
 import jwt, { Secret } from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+
+const SALT = 10;
 
 export async function activateUser(
   activationToken: string,
   activationCode: string
 ) {
-  const decodedToken = jwt.verify(
+  const newUser = jwt.verify(
     activationToken,
     process.env.ACTIVATION_SECRET as Secret
-  ) as { user: { email: string; password: string }; activationCode: string };
+  ) as {
+    user: { email: string; password: string; name: string };
+    activationCode: string;
+  };
 
-  const { user, activationCode: tokenActivationCode } = decodedToken;
-
-  if (activationCode !== tokenActivationCode) {
+  if (newUser.activationCode !== activationCode) {
     return { error: "Invalid activation code!" };
   }
-  const { email } = user;
+  const { email, password, name } = newUser.user;
 
   const existingUser = await prisma.user.findUnique({
     where: {
@@ -28,5 +32,17 @@ export async function activateUser(
     return { error: "User already exists!" };
   }
 
-  return { user: {} };
+  const hashedPassword = await bcrypt.hash(password, SALT);
+
+  const data = await prisma.user.create({
+    data: {
+      email,
+      name,
+      password: hashedPassword,
+      apiUseageCount: 0,
+      isVerified: new Date(),
+    },
+  });
+
+  return { user: data, success: "User created successfully" };
 }

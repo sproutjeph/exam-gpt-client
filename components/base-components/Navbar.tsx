@@ -6,10 +6,11 @@ import ModeToggle from "./ModeToggle";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { openLoginModal } from "@/featuers/modals/modalSlice";
 import UserAvatar from "./UserAvatar";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
+  const user = useCurrentUser();
 
   return (
     <nav className="flex items-center p-4 shadow-sm bg-accent">

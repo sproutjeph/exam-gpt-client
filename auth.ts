@@ -12,7 +12,13 @@ export const {
 } = NextAuth({
   pages: {},
   events: {},
-  callbacks: {},
+  callbacks: {
+    // async signIn({ user, account }) {
+    //   if (account?.provider !== "credentials") {
+    //     return true;
+    //   }
+    // }
+  },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   ...authConfig,

@@ -13,31 +13,27 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../../../components/ui/dialog";
-import { Button } from "../../../components/ui/button";
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import {
   closeActivateUserModal,
   openLoginModal,
 } from "@/featuers/modals/modalSlice";
 import { IActivateUser } from "@/types/types";
-import toast from "react-hot-toast";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import { Loader2, ShieldCheckIcon } from "lucide-react";
-
-export const FormSchema = z.object({
-  otp1: z.string().min(1, "First OTP Code").max(1),
-  otp2: z.string().min(1, "2nd OTP Code").max(1),
-  otp3: z.string().min(1, "3rd OTP Code").max(1),
-  otp4: z.string().min(1, "4th OTP Code").max(1),
-  otp5: z.string().min(1, "5th OTP Code").max(1),
-  otp6: z.string().min(1, "6th OTP Code").max(1),
-});
+import { activateUser } from "@/actions/activateUser";
+import { FormError } from "@/components/base-components/FormError";
+import { FormSuccess } from "@/components/base-components/FormSuccess";
+import { ActivationSchema } from "@/shemas";
 
 const ActivateUserModal = () => {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const dispatch = useAppDispatch();
-  // const { token } = useAppSelector((state) => state.auth);
-  const token = "";
+  const { activationToken } = useAppSelector((state) => state.user);
 
   const inputRefs = useRef<HTMLInputElement[] | null[]>([
     null,
@@ -50,8 +46,8 @@ const ActivateUserModal = () => {
 
   const { isActivateUserModalOpen } = useAppSelector((state) => state.modals);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof ActivationSchema>>({
+    resolver: zodResolver(ActivationSchema),
     defaultValues: {
       otp1: "",
       otp2: "",
@@ -88,35 +84,37 @@ const ActivateUserModal = () => {
     }
   };
 
-  const isLoading = form.formState.isSubmitting;
+  const onSubmit = async (values: z.infer<typeof ActivationSchema>) => {
+    setError("");
+    setSuccess("");
 
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     const activationCode = `${values.otp1}${values.otp2}${values.otp3}${values.otp4}${values.otp5}${values.otp6}`;
 
     const data = {
-      activationToken: token,
+      activationToken,
       activationCode,
     } as IActivateUser;
     console.log(data);
+
+    startTransition(() => {
+      activateUser(activationToken, activationCode).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+        form.reset();
+      });
+    });
   };
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     toast.success("Activation is successful");
-  //     dispatch(closeActivateUserModal());
-  //     dispatch(openLoginModal());
-  //     form.reset();
-  //   }
-
-  //   if (error) {
-  //     if ("data" in error) {
-  //       const errorData = error as any;
-  //       toast.error(errorData.data.msg);
-  //     } else {
-  //       console.log("Something went wrong");
-  //     }
-  //   }
-  // }, [isSuccess, error]);
+  useEffect(() => {
+    if (success) {
+      //delay to see success message and open login modal
+      setTimeout(() => {
+        form.reset();
+        dispatch(closeActivateUserModal());
+        dispatch(openLoginModal());
+      }, 1000);
+    }
+  }, [success, error, form, dispatch]);
 
   return (
     <Dialog
@@ -126,6 +124,8 @@ const ActivateUserModal = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
+            <FormError message={error} />
+            <FormSuccess message={success} />
             <span className="flex items-center text-xl font-bold gap-x-2">
               Verify Your Account
             </span>
@@ -151,7 +151,7 @@ const ActivateUserModal = () => {
                       <FormItem>
                         <FormControl>
                           <Input
-                            disabled={isLoading}
+                            disabled={isPending}
                             {...field}
                             maxLength={1}
                             ref={(el) => (inputRefs.current[i] = el)}
@@ -170,8 +170,8 @@ const ActivateUserModal = () => {
             </div>
 
             <DialogFooter className="p-0 mt-4">
-              <Button className="w-full" disabled={isLoading}>
-                {isLoading ? (
+              <Button className="w-full" disabled={isPending}>
+                {isPending ? (
                   <Loader2 className="animate-spin" />
                 ) : (
                   <span>Verify OTP</span>

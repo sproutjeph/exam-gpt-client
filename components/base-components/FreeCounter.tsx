@@ -12,7 +12,7 @@ interface FreeCounterProps {}
 
 const FreeCounter: FC<FreeCounterProps> = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
+  const user = { apiUseageCount: 0 };
 
   return (
     <div className="px-3 mt-auto mb-8">
