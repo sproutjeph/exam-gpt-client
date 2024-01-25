@@ -38,8 +38,11 @@ import { register } from "@/actions/registerUser";
 import { toast } from "sonner";
 import { FormError } from "@/components/base-components/FormError";
 import { FormSuccess } from "@/components/base-components/FormSuccess";
+import { saveAccessToken } from "@/featuers/userSlice";
+import { useRouter } from "next/navigation";
 
 const RegisterUserModal = () => {
+  const router = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
@@ -79,7 +82,7 @@ const RegisterUserModal = () => {
       setTimeout(() => {
         form.reset();
         dispatch(closeRegisterUserModal());
-        dispatch(openActivateUserModal());
+        dispatch(openLoginModal());
       }, 1000);
     }
   }, [success, error, form, dispatch]);
