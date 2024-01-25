@@ -20,93 +20,105 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
-import { Button } from "../ui/button";
+} from "../../../components/ui/dialog";
+import { Button } from "../../../components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import {
-  closeLoginModal,
-  openRegisterUserModal,
+  closeRegisterUserModal,
+  openActivateUserModal,
+  openLoginModal,
 } from "@/featuers/modals/modalSlice";
 import { IRegUser } from "@/types/types";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { useLoginMutation } from "@/featuers/auth/authApi";
+import { RegisterSchema } from "@/shemas";
+import { register } from "@/actions/registerUser";
+import { toast } from "sonner";
 
-export const FormSchema = z.object({
-  email: z.string().email("Invalid email").min(1, "Email is Required"),
-  password: z
-    .string()
-    .min(6, "password must be greater than 6 characters")
-    .max(20),
-});
-
-const LoginModal = () => {
-  const [login, { error, isSuccess }] = useLoginMutation();
+const RegisterUserModal = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
-  const router = useRouter();
 
   const dispatch = useAppDispatch();
-  const { isLoginModalOpen } = useAppSelector((state) => state.modals);
+  const { isRegisterUserModalOpen } = useAppSelector((state) => state.modals);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
-  const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const data: IRegUser = {
-      email: values.email,
-      password: values.password,
-    };
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    setError("");
+    setSuccess("");
 
-    await login(data);
+    startTransition(() => {
+      register(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
+    });
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Login successful");
-      dispatch(closeLoginModal());
-      form.reset();
-      router.push("/dashboard");
-    }
-    if (error) {
-      if ("data" in error) {
-        const errorData = error as any;
-        toast.error(errorData.data.msg);
-      } else {
-        console.log("Something went wrong");
-      }
-    }
-  }, [error, isSuccess]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     const message = data?.message || "Registration Successed";
+  //     toast.success(message);
+  //     form.reset();
+  //     dispatch(closeRegisterUserModal());
+  //     dispatch(openActivateUserModal());
+  //   }
+  //   if (error) {
+  //     const errorData = error as any;
+  //     toast.error(errorData?.data?.msg);
+  //   }
+  // }, [isSuccess, error, data?.message, form, dispatch]);
 
   return (
     <Dialog
-      open={isLoginModalOpen}
-      onOpenChange={() => dispatch(closeLoginModal())}
+      open={isRegisterUserModalOpen}
+      onOpenChange={() => dispatch(closeRegisterUserModal())}
     >
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
             <span className="flex items-center text-xl font-bold gap-x-2">
-              Login
+              Register an Account
             </span>
           </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              name="name"
+              render={({ field }) => (
+                <FormItem className="">
+                  <FormLabel className="">Name</FormLabel>
+
+                  <FormControl className="">
+                    <Input
+                      className=""
+                      disabled={isPending}
+                      {...field}
+                      type="text"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               name="email"
               render={({ field }) => (
@@ -116,7 +128,7 @@ const LoginModal = () => {
                   <FormControl className="">
                     <Input
                       className=""
-                      disabled={isLoading}
+                      disabled={isPending}
                       {...field}
                       type="email"
                     />
@@ -134,7 +146,7 @@ const LoginModal = () => {
                   <FormControl>
                     <div className="relative">
                       <Input
-                        disabled={isLoading}
+                        disabled={isPending}
                         {...field}
                         type={isPasswordVisible ? "text" : "password"}
                       />
@@ -155,25 +167,25 @@ const LoginModal = () => {
                 </FormItem>
               )}
             />
+
             <DialogFooter>
               <Button
-                disabled={false}
-                onClick={() => {}}
+                disabled={isPending}
                 size="lg"
                 variant="default"
                 className="w-full"
               >
-                {isLoading ? (
+                {isPending ? (
                   <Loader2 className="animate-spin" />
                 ) : (
-                  <span>Sign in</span>
+                  <span>Sign Up</span>
                 )}
               </Button>
             </DialogFooter>
           </form>
         </Form>
-        <h4 className="mt-4 mb-2 text-center">Or Sign in with</h4>
-        <div className="flex items-center justify-center gap-4">
+        <h4 className="mt-4 mb-2 text-center">Or join with</h4>
+        <div className="flex items-center justify-center ">
           <Button variant="ghost" onClick={() => signIn("google")}>
             <Image
               src="/google-logo.svg"
@@ -182,20 +194,20 @@ const LoginModal = () => {
               alt="google logo"
             />
           </Button>
-          {/* <Button variant="ghost" onClick={() => signIn("facebook")}>
+          <Button variant="ghost">
             <Facebook />
-          </Button> */}
+          </Button>
         </div>
         <div className="text-center">
-          <span>Dont have an account?</span>
+          <span>Already have an account?</span>
           <span
             className="ml-4 cursor-pointer text-blue"
             onClick={() => {
-              dispatch(closeLoginModal());
-              dispatch(openRegisterUserModal());
+              dispatch(closeRegisterUserModal());
+              dispatch(openLoginModal());
             }}
           >
-            Sign Up
+            Sign In
           </span>
         </div>
       </DialogContent>
@@ -203,4 +215,4 @@ const LoginModal = () => {
   );
 };
 
-export default LoginModal;
+export default RegisterUserModal;

@@ -1,13 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Roboto } from "next/font/google";
-import ToasterProvider from "@/providers/ToasterProvider";
 import { ReduxProviders } from "@/providers/ReduxProvider";
 import { ModalProvider } from "@/providers/ModalProvider";
 import { ReactQueryProvider } from "@/providers/ReactQuery";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -32,7 +32,7 @@ export default async function RootLayout({
         <ReactQueryProvider>
           <ReduxProviders>
             <body className={inter.className}>
-              <ToasterProvider />
+              <Toaster />
               <ModalProvider />
               <ThemeProvider
                 attribute="class"

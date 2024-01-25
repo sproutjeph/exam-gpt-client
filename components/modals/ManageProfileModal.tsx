@@ -19,7 +19,7 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 
 const ManageProfileModal = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
+  // const { user } = useAppSelector((state) => state.auth);
 
   const { isManageProfileModalOpen } = useAppSelector((state) => state.modals);
 
@@ -43,9 +43,9 @@ const ManageProfileModal = () => {
             <Separator />
             <div className="flex items-center gap-4 p-2 my-2 rounded-sm cursor-pointer hover:bg-muted">
               <Avatar className="w-12 h-12 ">
-                <AvatarImage src={user?.avatar?.url || "/no-photo.jpg"} />
+                <AvatarImage src={"/no-photo.jpg"} />
               </Avatar>
-              <h4>{user?.name || "Jephthah Mbah"}</h4>
+              <h4>{"Jephthah Mbah"}</h4>
               <ChevronRight className="ml-auto" />
             </div>
           </div>
@@ -54,7 +54,7 @@ const ManageProfileModal = () => {
 
             <Separator />
             <div className="flex items-center gap-4 p-2 my-2 rounded-sm cursor-pointer hover:bg-muted">
-              <h4>{user?.email || "donjeph@gmail.com"}</h4>
+              <h4>{"donjeph@gmail.com"}</h4>
               <ChevronRight className="ml-auto" />
             </div>
           </div>
@@ -80,7 +80,7 @@ const ManageProfileModal = () => {
               onClick={() => dispatch(openChangeProfileImageModal())}
             >
               <Avatar className="w-12 h-12 ">
-                <AvatarImage src={user?.avatar?.url || "/no-photo.jpg"} />
+                <AvatarImage src={"/no-photo.jpg"} />
               </Avatar>
               <h4>Change Profile Image</h4>
               <ChevronRight className="ml-auto" />

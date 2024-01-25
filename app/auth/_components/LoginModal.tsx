@@ -20,103 +20,91 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
-import { Button } from "../ui/button";
+} from "../../../components/ui/dialog";
+import { Button } from "../../../components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import {
-  closeRegisterUserModal,
-  openActivateUserModal,
-  openLoginModal,
+  closeLoginModal,
+  openRegisterUserModal,
 } from "@/featuers/modals/modalSlice";
 import { IRegUser } from "@/types/types";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
-import { RegisterSchema } from "@/shemas";
-import { register } from "@/actions/registerUser";
+import { useEffect, useState } from "react";
 
-const RegisterUserModal = () => {
+export const FormSchema = z.object({
+  email: z.string().email("Invalid email").min(1, "Email is Required"),
+  password: z
+    .string()
+    .min(6, "password must be greater than 6 characters")
+    .max(20),
+});
+
+const LoginModal = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isPending, startTransition] = useTransition();
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
+  const router = useRouter();
 
   const dispatch = useAppDispatch();
-  const { isRegisterUserModalOpen } = useAppSelector((state) => state.modals);
+  const { isLoginModalOpen } = useAppSelector((state) => state.modals);
 
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
   });
+  const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    try {
-      startTransition(() => {
-        register(values).then((data) => {
-          console.log(data);
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    const data: IRegUser = {
+      email: values.email,
+      password: values.password,
+    };
+
+    console.log(data);
   };
 
   // useEffect(() => {
   //   if (isSuccess) {
-  //     const message = data?.message || "Registration Successed";
-  //     toast.success(message);
+  //     toast.success("Login successful");
+  //     dispatch(closeLoginModal());
   //     form.reset();
-  //     dispatch(closeRegisterUserModal());
-  //     dispatch(openActivateUserModal());
+  //     router.push("/dashboard");
   //   }
   //   if (error) {
-  //     const errorData = error as any;
-  //     toast.error(errorData?.data?.msg);
+  //     if ("data" in error) {
+  //       const errorData = error as any;
+  //       toast.error(errorData.data.msg);
+  //     } else {
+  //       console.log("Something went wrong");
+  //     }
   //   }
-  // }, [isSuccess, error, data?.message, form, dispatch]);
+  // }, [error, isSuccess]);
 
   return (
     <Dialog
-      open={isRegisterUserModalOpen}
-      onOpenChange={() => dispatch(closeRegisterUserModal())}
+      open={isLoginModalOpen}
+      onOpenChange={() => dispatch(closeLoginModal())}
     >
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
             <span className="flex items-center text-xl font-bold gap-x-2">
-              Register an Account
+              Login
             </span>
           </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              name="name"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormLabel className="">Name</FormLabel>
-
-                  <FormControl className="">
-                    <Input
-                      className=""
-                      disabled={isPending}
-                      {...field}
-                      type="text"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               name="email"
               render={({ field }) => (
@@ -126,7 +114,7 @@ const RegisterUserModal = () => {
                   <FormControl className="">
                     <Input
                       className=""
-                      disabled={isPending}
+                      disabled={isLoading}
                       {...field}
                       type="email"
                     />
@@ -144,7 +132,7 @@ const RegisterUserModal = () => {
                   <FormControl>
                     <div className="relative">
                       <Input
-                        disabled={isPending}
+                        disabled={isLoading}
                         {...field}
                         type={isPasswordVisible ? "text" : "password"}
                       />
@@ -165,25 +153,25 @@ const RegisterUserModal = () => {
                 </FormItem>
               )}
             />
-
             <DialogFooter>
               <Button
-                disabled={isPending}
+                disabled={false}
+                onClick={() => {}}
                 size="lg"
                 variant="default"
                 className="w-full"
               >
-                {isPending ? (
+                {isLoading ? (
                   <Loader2 className="animate-spin" />
                 ) : (
-                  <span>Sign Up</span>
+                  <span>Sign in</span>
                 )}
               </Button>
             </DialogFooter>
           </form>
         </Form>
-        <h4 className="mt-4 mb-2 text-center">Or join with</h4>
-        <div className="flex items-center justify-center ">
+        <h4 className="mt-4 mb-2 text-center">Or Sign in with</h4>
+        <div className="flex items-center justify-center gap-4">
           <Button variant="ghost" onClick={() => signIn("google")}>
             <Image
               src="/google-logo.svg"
@@ -192,20 +180,20 @@ const RegisterUserModal = () => {
               alt="google logo"
             />
           </Button>
-          <Button variant="ghost">
+          <Button variant="ghost" onClick={() => signIn("facebook")}>
             <Facebook />
           </Button>
         </div>
         <div className="text-center">
-          <span>Already have an account?</span>
+          <span>Dont have an account?</span>
           <span
             className="ml-4 cursor-pointer text-blue"
             onClick={() => {
-              dispatch(closeRegisterUserModal());
-              dispatch(openLoginModal());
+              dispatch(closeLoginModal());
+              dispatch(openRegisterUserModal());
             }}
           >
-            Sign In
+            Sign Up
           </span>
         </div>
       </DialogContent>
@@ -213,4 +201,4 @@ const RegisterUserModal = () => {
   );
 };
 
-export default RegisterUserModal;
+export default LoginModal;

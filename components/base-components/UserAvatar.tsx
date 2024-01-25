@@ -9,16 +9,11 @@ import { useState } from "react";
 import { redirect } from "next/navigation";
 import { openManageProfileModal } from "@/featuers/modals/modalSlice";
 import { signOut } from "next-auth/react";
-import { useLogOutQuery } from "@/featuers/auth/authApi";
 
 const UserAvatar = () => {
   const dispath = useAppDispatch();
   const [loggedOut, setLoggedOut] = useState(false);
-
-  const { user } = useAppSelector((state) => state.auth);
-  const { isLoading } = useLogOutQuery(undefined, {
-    skip: !loggedOut ? true : false,
-  });
+  const isLoading = true;
 
   async function logoutUser() {
     setLoggedOut(true);
@@ -31,18 +26,18 @@ const UserAvatar = () => {
       <Popover>
         <PopoverTrigger asChild>
           <Avatar className="w-10 h-10 cursor-pointer">
-            <AvatarImage src={user?.avatar?.url || "/no-photo.jpg"} />
+            <AvatarImage src={"/no-photo.jpg"} />
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="w-80">
           <div className="flex items-center gap-3">
             <Avatar className="w-12 h-12">
-              <AvatarImage src={user?.avatar?.url || "/no-photo.jpg"} />
+              <AvatarImage src={"/no-photo.jpg"} />
             </Avatar>
             <div className="">
-              <h4 className="text-xs">{user?.name}</h4>
+              <h4 className="text-xs">{"Jeph"}</h4>
               <h6 className="text-xs text-primary-foreground/50">
-                {user?.email}
+                {"donjeph@gmail.com"}
               </h6>
             </div>
           </div>

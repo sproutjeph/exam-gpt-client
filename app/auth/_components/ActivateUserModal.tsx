@@ -13,8 +13,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
-import { Button } from "../ui/button";
+} from "../../../components/ui/dialog";
+import { Button } from "../../../components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import {
   closeActivateUserModal,
@@ -24,7 +24,6 @@ import { IActivateUser } from "@/types/types";
 import toast from "react-hot-toast";
 import React, { useEffect, useRef } from "react";
 import { Loader2, ShieldCheckIcon } from "lucide-react";
-import { useActivationMutation } from "@/featuers/auth/authApi";
 
 export const FormSchema = z.object({
   otp1: z.string().min(1, "First OTP Code").max(1),
@@ -37,8 +36,8 @@ export const FormSchema = z.object({
 
 const ActivateUserModal = () => {
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.auth);
-  const [activation, { isSuccess, error }] = useActivationMutation();
+  // const { token } = useAppSelector((state) => state.auth);
+  const token = "";
 
   const inputRefs = useRef<HTMLInputElement[] | null[]>([
     null,
@@ -98,26 +97,26 @@ const ActivateUserModal = () => {
       activationToken: token,
       activationCode,
     } as IActivateUser;
-    await activation(data);
+    console.log(data);
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Activation is successful");
-      dispatch(closeActivateUserModal());
-      dispatch(openLoginModal());
-      form.reset();
-    }
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     toast.success("Activation is successful");
+  //     dispatch(closeActivateUserModal());
+  //     dispatch(openLoginModal());
+  //     form.reset();
+  //   }
 
-    if (error) {
-      if ("data" in error) {
-        const errorData = error as any;
-        toast.error(errorData.data.msg);
-      } else {
-        console.log("Something went wrong");
-      }
-    }
-  }, [isSuccess, error]);
+  //   if (error) {
+  //     if ("data" in error) {
+  //       const errorData = error as any;
+  //       toast.error(errorData.data.msg);
+  //     } else {
+  //       console.log("Something went wrong");
+  //     }
+  //   }
+  // }, [isSuccess, error]);
 
   return (
     <Dialog

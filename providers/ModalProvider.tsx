@@ -1,11 +1,11 @@
 "use client";
 
-import ActivateUserModal from "@/components/modals/ActivateUserModal";
+import ActivateUserModal from "@/app/auth/_components/ActivateUserModal";
 import ChangePasswordModal from "@/components/modals/ChangePasswordModal";
 import ChangeProfileImageModal from "@/components/modals/ChangeProfileImageModal";
-import LoginModal from "@/components/modals/LoginModal";
+import LoginModal from "@/app/auth/_components/LoginModal";
 import ManageProfileModal from "@/components/modals/ManageProfileModal";
-import RegisterUserModal from "@/components/modals/RegisterUserModal";
+import RegisterUserModal from "@/app/auth/_components/RegisterUserModal";
 import SubscriptionModal from "@/components/modals/SubscriptionModal";
 import { useEffect, useState } from "react";
 
