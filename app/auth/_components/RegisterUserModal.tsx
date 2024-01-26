@@ -28,21 +28,24 @@ import {
   openActivateUserModal,
   openLoginModal,
 } from "@/featuers/modals/modalSlice";
-import { IRegUser } from "@/types/types";
-import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
+import {
+  Facebook,
+  Github,
+  Loader2,
+  LucideEye,
+  LucideEyeOff,
+} from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
 import { RegisterSchema } from "@/shemas";
 import { register } from "@/actions/registerUser";
-import { toast } from "sonner";
 import { FormError } from "@/components/base-components/FormError";
 import { FormSuccess } from "@/components/base-components/FormSuccess";
-import { saveAccessToken, saveActivationToken } from "@/featuers/userSlice";
+import { saveActivationToken } from "@/featuers/userSlice";
 import { useRouter } from "next/navigation";
 
 const RegisterUserModal = () => {
-  const router = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
@@ -189,7 +192,7 @@ const RegisterUserModal = () => {
             </DialogFooter>
           </form>
         </Form>
-        <h4 className="mt-4 mb-2 text-center">Or join with</h4>
+        {/* <h4 className="mt-4 mb-2 text-center">Or join with</h4>
         <div className="flex items-center justify-center ">
           <Button variant="ghost" onClick={() => signIn("google")}>
             <Image
@@ -199,10 +202,10 @@ const RegisterUserModal = () => {
               alt="google logo"
             />
           </Button>
-          <Button variant="ghost">
-            <Facebook />
+          <Button variant="ghost" onClick={() => signIn("github")}>
+            <Github />
           </Button>
-        </div>
+        </div> */}
         <div className="text-center">
           <span>Already have an account?</span>
           <span

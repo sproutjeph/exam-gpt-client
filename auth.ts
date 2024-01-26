@@ -1,9 +1,9 @@
-import NextAuth from "next-auth";
+import { getAccountByUserId, getUserById } from "./utils/user";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { UserRole } from "@prisma/client";
 import authConfig from "./auth.config";
 import prisma from "./lib/mongoDB";
-import { getAccountByUserId, getUserById } from "./utils/user";
+import NextAuth from "next-auth";
 
 export const {
   handlers: { GET, POST },
@@ -14,15 +14,39 @@ export const {
   pages: {
     signOut: "/",
   },
-  events: {},
+  events: {
+    async linkAccount({ user }) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { isVerified: new Date() },
+      });
+    },
+  },
   callbacks: {
-    // async signIn({ user, account }) {
-    //   if (account?.provider !== "credentials") {
-    //     return true;
-    //   }
-    // }
+    // Allow OAuth without email verification
+    async signIn({ user, account }) {
+      if (account?.provider !== "credentials") {
+        return true;
+      }
+
+      return true;
+    },
 
     async session({ session }) {
+      // if (token.sub && session.user) {
+      //   session.user.id = token.sub;
+      // }
+
+      // if (token.role && session.user) {
+      //   session.user.role = token.role as UserRole;
+      // }
+
+      // if (session.user) {
+      //   session.user.name = token.name;
+      //   session.user.email = token.email;
+      //   session.user.isOAuth = token.isOAuth as boolean;
+      // }
+
       return session;
     },
 

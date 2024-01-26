@@ -1,11 +1,10 @@
 "use server";
 
 import nodeMailer, { Transporter } from "nodemailer";
-
-import ejs from "ejs";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { join } from "path";
+import ejs from "ejs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

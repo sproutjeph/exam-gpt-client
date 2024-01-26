@@ -27,13 +27,10 @@ import {
   closeLoginModal,
   openRegisterUserModal,
 } from "@/featuers/modals/modalSlice";
-import { IRegUser } from "@/types/types";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { Facebook, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
+import { Github, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { LoginSchema } from "@/shemas";
 import { loginUser } from "@/actions/loginUser";
 import { FormError } from "@/components/base-components/FormError";
@@ -48,7 +45,6 @@ const LoginModal = () => {
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
-  const router = useRouter();
 
   const dispatch = useAppDispatch();
   const { isLoginModalOpen } = useAppSelector((state) => state.modals);
@@ -160,7 +156,7 @@ const LoginModal = () => {
             </DialogFooter>
           </form>
         </Form>
-        <h4 className="mt-4 mb-2 text-center">Or Sign in with</h4>
+        {/* <h4 className="mt-4 mb-2 text-center">Or Sign in with</h4>
         <div className="flex items-center justify-center gap-4">
           <Button variant="ghost" onClick={() => signIn("google")}>
             <Image
@@ -170,10 +166,10 @@ const LoginModal = () => {
               alt="google logo"
             />
           </Button>
-          <Button variant="ghost" onClick={() => signIn("facebook")}>
-            <Facebook />
+          <Button variant="ghost" onClick={() => signIn("github")}>
+            <Github />
           </Button>
-        </div>
+        </div> */}
         <div className="text-center">
           <span>Dont have an account?</span>
           <span
