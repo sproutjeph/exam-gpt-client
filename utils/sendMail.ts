@@ -25,6 +25,7 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
       user: process.env.SMTP_MAIL,
       pass: process.env.SMTP_PASSWORD,
     },
+    secure: true,
   });
 
   const { email, subject, template, data } = options;
@@ -40,6 +41,19 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
     subject,
     html,
   };
+
+  await new Promise((resolve, reject) => {
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log("Server is ready to take our messages");
+        resolve(success);
+      }
+    });
+  });
 
   await new Promise((resolve, reject) => {
     transporter.sendMail(emailOptions, (err, info) => {
