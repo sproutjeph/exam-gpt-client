@@ -41,7 +41,15 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
     html,
   };
 
-  await transporter.sendMail(emailOptions);
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(emailOptions, (err, info) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(info);
+      }
+    });
+  });
 };
 
 export default sendEmail;
