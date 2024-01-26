@@ -156,20 +156,20 @@ const LoginModal = () => {
             </DialogFooter>
           </form>
         </Form>
-        {/* <h4 className="mt-4 mb-2 text-center">Or Sign in with</h4>
+        <h4 className="mt-4 mb-2 text-center">Or Sign in with</h4>
         <div className="flex items-center justify-center gap-4">
-          <Button variant="ghost" onClick={() => signIn("google")}>
+          {/* <Button variant="ghost" onClick={() => signIn("google")}>
             <Image
               src="/google-logo.svg"
               width="40"
               height="40"
               alt="google logo"
             />
-          </Button>
+          </Button> */}
           <Button variant="ghost" onClick={() => signIn("github")}>
             <Github />
           </Button>
-        </div> */}
+        </div>
         <div className="text-center">
           <span>Dont have an account?</span>
           <span
