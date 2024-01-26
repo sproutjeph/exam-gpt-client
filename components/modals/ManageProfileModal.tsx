@@ -16,10 +16,11 @@ import {
 import { ChevronRight } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { Avatar, AvatarImage } from "../ui/avatar";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const ManageProfileModal = () => {
   const dispatch = useAppDispatch();
-  // const { user } = useAppSelector((state) => state.auth);
+  const user = useCurrentUser();
 
   const { isManageProfileModalOpen } = useAppSelector((state) => state.modals);
 
@@ -45,7 +46,7 @@ const ManageProfileModal = () => {
               <Avatar className="w-12 h-12 ">
                 <AvatarImage src={"/no-photo.jpg"} />
               </Avatar>
-              <h4>{"Jephthah Mbah"}</h4>
+              <h4>{user?.name}</h4>
               <ChevronRight className="ml-auto" />
             </div>
           </div>
@@ -54,7 +55,7 @@ const ManageProfileModal = () => {
 
             <Separator />
             <div className="flex items-center gap-4 p-2 my-2 rounded-sm cursor-pointer hover:bg-muted">
-              <h4>{"donjeph@gmail.com"}</h4>
+              <h4>{user?.email}</h4>
               <ChevronRight className="ml-auto" />
             </div>
           </div>
@@ -80,7 +81,7 @@ const ManageProfileModal = () => {
               onClick={() => dispatch(openChangeProfileImageModal())}
             >
               <Avatar className="w-12 h-12 ">
-                <AvatarImage src={"/no-photo.jpg"} />
+                <AvatarImage src={user?.image || "/no-photo.jpg"} />
               </Avatar>
               <h4>Change Profile Image</h4>
               <ChevronRight className="ml-auto" />

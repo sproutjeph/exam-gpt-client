@@ -1,25 +1,14 @@
 "use client";
 
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
+import { useAppDispatch } from "@/redux-store/hooks";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Loader2, LogOutIcon, Settings } from "lucide-react";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import { redirect } from "next/navigation";
+import { LogOutIcon, Settings } from "lucide-react";
 import { openManageProfileModal } from "@/featuers/modals/modalSlice";
 import { signOut } from "next-auth/react";
 
 const UserAvatar = () => {
   const dispath = useAppDispatch();
-  const [loggedOut, setLoggedOut] = useState(false);
-  const isLoading = true;
-
-  async function logoutUser() {
-    setLoggedOut(true);
-    await signOut();
-    redirect("/");
-  }
 
   return (
     <>
@@ -50,14 +39,13 @@ const UserAvatar = () => {
           </div>
           <div
             className="flex items-center gap-8 px-6 py-2 mt-6 rounded-sm cursor-pointer hover:bg-muted"
-            onClick={() => logoutUser()}
+            onClick={() => {
+              signOut();
+            }}
           >
             <LogOutIcon className="w-4 h-4" />
-            {isLoading ? (
-              <Loader2 className="animate-spin" />
-            ) : (
-              <h6 className="text-sm">Log out</h6>
-            )}
+
+            <h6 className="text-sm">Log out</h6>
           </div>
         </PopoverContent>
       </Popover>

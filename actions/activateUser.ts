@@ -1,7 +1,7 @@
 "use server";
 
-import prisma from "@/lib/mongoDB";
 import jwt, { Secret } from "jsonwebtoken";
+import prisma from "@/lib/mongoDB";
 import bcrypt from "bcryptjs";
 
 const SALT = 10;

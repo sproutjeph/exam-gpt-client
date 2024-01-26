@@ -1,13 +1,9 @@
 "use client";
 
 import { Loader, Navbar, Sidebar } from "@/components/base-components";
-import { FC, Suspense, useEffect, useState } from "react";
-import { useAppSelector } from "@/redux-store/hooks";
+import { FC, Suspense } from "react";
 
-import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
-
-import toast from "react-hot-toast";
 
 interface layoutProps {
   children: React.ReactNode;

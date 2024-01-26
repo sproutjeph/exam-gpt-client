@@ -1,11 +1,11 @@
 "use server";
 
-import { LoginSchema } from "@/shemas";
-import { getUserByEmail } from "@/utils/user";
-import * as z from "zod";
-import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { getUserByEmail } from "@/utils/user";
+import { LoginSchema } from "@/shemas";
+import { AuthError } from "next-auth";
+import { signIn } from "@/auth";
+import * as z from "zod";
 
 export async function loginUser(values: z.infer<typeof LoginSchema>) {
   const validatedFields = LoginSchema.safeParse(values);

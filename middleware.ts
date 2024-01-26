@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import {
   DEFAULT_LOGIN_REDIRECT,
+  DEFAULT_LOGOUT_REDIRECT,
   apiAuthPrefix,
   authRoutes,
   publicRoutes,
@@ -28,16 +29,19 @@ export default auth((req) => {
     return null;
   }
 
+  // if (!isLogedIn && !isPulicRoute) {
+  //   // go to the last place you are when you log back in
+  //   let callbackUrl = nextUrl.pathname;
+  //   if (nextUrl.search) {
+  //     callbackUrl += nextUrl.search;
+  //   }
+  //   const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+  //   return Response.redirect(
+  //     new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+  //   );
+  // }
   if (!isLogedIn && !isPulicRoute) {
-    // go to the last place you are when you log back in
-    let callbackUrl = nextUrl.pathname;
-    if (nextUrl.search) {
-      callbackUrl += nextUrl.search;
-    }
-    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
-    return Response.redirect(
-      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
-    );
+    return Response.redirect(new URL(DEFAULT_LOGOUT_REDIRECT, nextUrl));
   }
 
   return null;

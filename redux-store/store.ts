@@ -3,7 +3,6 @@ import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import modalsReducer from "@/featuers/modals/modalSlice";
 import askAiReducer from "@/featuers/askAiSlice";
 import cbTestReducer from "@/featuers/CBtest";
-import apiLimitCountReducer from "@/featuers/apiLimitCount";
 import userRrducer from "@/featuers/userSlice";
 
 export const store = configureStore({
@@ -12,7 +11,6 @@ export const store = configureStore({
     askAi: askAiReducer,
     modals: modalsReducer,
     cbTest: cbTestReducer,
-    apiLimitCount: apiLimitCountReducer,
   },
   devTools: false,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),

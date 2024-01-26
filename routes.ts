@@ -30,3 +30,9 @@ export const apiAuthPrefix = "/api/auth";
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+
+/**
+ * The default redirect path after logout
+ * @type {string}
+ */
+export const DEFAULT_LOGOUT_REDIRECT = "/";
