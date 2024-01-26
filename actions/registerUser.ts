@@ -43,9 +43,11 @@ export async function register(values: z.infer<typeof RegisterSchema>) {
       template: "activation-mail.ejs",
       data,
     });
+    return {
+      success: "Email sent successfully",
+      token: activationToken.token,
+    };
   } catch (error) {
     return { error: "Error sending email" };
   }
-
-  return { success: "Comfirmation Email sent", token: activationToken.token };
 }
