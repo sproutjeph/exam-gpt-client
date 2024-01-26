@@ -16,7 +16,7 @@ interface EmailOptions {
   data: { [key: string]: any };
 }
 
-const sendEmail = async (options: EmailOptions): Promise<void> => {
+async function sendEmail(options: EmailOptions): Promise<void> {
   const transporter: Transporter = nodeMailer.createTransport({
     host: process.env.SMTP_HOST,
     port: Number(process.env.SMTP_PORT),
@@ -43,19 +43,6 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
   };
 
   await new Promise((resolve, reject) => {
-    // verify connection configuration
-    transporter.verify(function (error, success) {
-      if (error) {
-        console.log(error);
-        reject(error);
-      } else {
-        console.log("Server is ready to take our messages");
-        resolve(success);
-      }
-    });
-  });
-
-  await new Promise((resolve, reject) => {
     // send mail
     transporter.sendMail(emailOptions, (err, response) => {
       if (err) {
@@ -65,6 +52,6 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
       }
     });
   });
-};
+}
 
 export default sendEmail;

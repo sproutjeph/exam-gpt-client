@@ -43,6 +43,7 @@ export async function register(values: z.infer<typeof RegisterSchema>) {
       template: "activation-mail.ejs",
       data,
     });
+
     return {
       success: "Email sent successfully",
       token: activationToken.token,

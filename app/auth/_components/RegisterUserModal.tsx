@@ -1,10 +1,9 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-
 import {
   Form,
   FormControl,
@@ -13,7 +12,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import {
   Dialog,
   DialogContent,
@@ -192,7 +190,7 @@ const RegisterUserModal = () => {
             </DialogFooter>
           </form>
         </Form>
-        <h4 className="mt-4 mb-2 text-center">Or join with</h4>
+        {/* <h4 className="mt-4 mb-2 text-center">Or join with</h4>
         <div className="flex items-center justify-center ">
           <Button variant="ghost" onClick={() => signIn("google")}>
             <Image
@@ -205,7 +203,7 @@ const RegisterUserModal = () => {
           <Button variant="ghost" onClick={() => signIn("github")}>
             <Github />
           </Button>
-        </div>
+        </div> */}
         <div className="text-center">
           <span>Already have an account?</span>
           <span
