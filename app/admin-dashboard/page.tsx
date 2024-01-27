@@ -6,7 +6,7 @@ import {
   RevenueCard,
   TeamMembers,
 } from "@/components/base-components";
-import PaymentMethod from "@/components/base-components/PaymentMethods";
+import PaymentMethod from "@/app/admin-dashboard/_components/PaymentMethod";
 
 const AddminDashboard = ({}) => {
   return (

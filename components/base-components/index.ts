@@ -32,10 +32,10 @@ export { default as ModeToggle } from "@/components/base-components/ModeToggle";
 
 export { default as CBTestTimer } from "@/components/base-components/CBTestTimer";
 export { default as AddminNavbar } from "@/components/base-components/AddminNavbar";
-export { default as RevenueCard } from "@/components/base-components/RevenueCard";
-export { default as TeamMembers } from "@/components/base-components/TeamMenbers";
+export { default as RevenueCard } from "@/app/admin-dashboard/_components/RevenueCard";
+export { default as TeamMembers } from "@/app/admin-dashboard/_components/TeamMenbers";
 export { default as Icons } from "@/components/base-components/Icons";
-export { default as ReportIssue } from "@/components/base-components/ReportIssue";
-export { default as RecentSales } from "@/components/base-components/RecentSales";
+export { default as ReportIssue } from "@/app/admin-dashboard/_components/ReportIssue";
+export { default as RecentSales } from "@/app/admin-dashboard/_components/RecentSales";
 export { default as Payments } from "@/components/base-components/payments/Payments";
 export { default as LineChartComp } from "@/app/(landing)/_components/LineChartComp";

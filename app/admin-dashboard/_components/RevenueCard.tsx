@@ -1,7 +1,12 @@
 "use client";
 
 import { FC } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../../components/ui/card";
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer } from "recharts";
 
 interface RevenueCardProps {}

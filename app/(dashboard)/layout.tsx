@@ -3,15 +3,11 @@
 import { Loader, Navbar, Sidebar } from "@/components/base-components";
 import { FC, Suspense } from "react";
 
-import { useSession } from "next-auth/react";
-
 interface layoutProps {
   children: React.ReactNode;
 }
 
 const DashboardLayout: FC<layoutProps> = ({ children }) => {
-  const { data } = useSession();
-
   return (
     <section className="relative min-h-full">
       <div className="hidden h-full md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-80">
