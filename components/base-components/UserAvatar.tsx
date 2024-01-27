@@ -8,7 +8,7 @@ import { openManageProfileModal } from "@/featuers/modals/modalSlice";
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 
-const UserAvatar = ({ user }: { user: KindeUser }) => {
+const UserAvatar = ({ user }: { user: KindeUser | null }) => {
   const dispath = useAppDispatch();
 
   return (
@@ -25,9 +25,9 @@ const UserAvatar = ({ user }: { user: KindeUser }) => {
               <AvatarImage src={user?.picture || "/no-photo.jpg"} />
             </Avatar>
             <div className="">
-              <h4 className="text-xs">{user.family_name}</h4>
+              <h4 className="text-xs">{user?.family_name}</h4>
               <h6 className="text-xs text-primary-foreground/50">
-                {user.email}
+                {user?.email}
               </h6>
             </div>
           </div>
