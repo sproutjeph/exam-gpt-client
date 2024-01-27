@@ -1,4 +1,4 @@
-export { default as Navbar } from "@/components/base-components/Navbar";
+export { default as Navbar } from "@/app/(dashboard)/(routes)/dashboard/_components/Navbar";
 
 export { default as FreeCounter } from "@/components/base-components/FreeCounter";
 
