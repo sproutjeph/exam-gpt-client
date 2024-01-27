@@ -29,7 +29,6 @@ import {
 } from "@/featuers/modals/modalSlice";
 import { Github, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
-import { signIn } from "next-auth/react";
 import { useState, useTransition } from "react";
 import { LoginSchema } from "@/shemas";
 import { loginUser } from "@/actions/loginUser";

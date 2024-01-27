@@ -5,7 +5,6 @@ import { useAppDispatch } from "@/redux-store/hooks";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { LogOutIcon, Settings } from "lucide-react";
 import { openManageProfileModal } from "@/featuers/modals/modalSlice";
-import { signOut } from "next-auth/react";
 
 const UserAvatar = () => {
   const dispath = useAppDispatch();
@@ -39,9 +38,7 @@ const UserAvatar = () => {
           </div>
           <div
             className="flex items-center gap-8 px-6 py-2 mt-6 rounded-sm cursor-pointer hover:bg-muted"
-            onClick={() => {
-              signOut();
-            }}
+            onClick={() => {}}
           >
             <LogOutIcon className="w-4 h-4" />
 

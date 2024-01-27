@@ -16,11 +16,10 @@ import {
 import { ChevronRight } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const ManageProfileModal = () => {
   const dispatch = useAppDispatch();
-  const user = useCurrentUser();
+  const user = { name: "", email: "", image: "" };
 
   const { isManageProfileModalOpen } = useAppSelector((state) => state.modals);
 

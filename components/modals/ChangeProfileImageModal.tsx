@@ -23,7 +23,6 @@ import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { isBase64Image } from "@/lib/utils";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const ChangeProfileImageModal = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -33,7 +32,7 @@ const ChangeProfileImageModal = () => {
   const { isChangeProfileImageModalOpen } = useAppSelector(
     (state) => state.modals
   );
-  const user = useCurrentUser();
+  const user = { image: "" };
 
   const UserValidation = z.object({
     profile_photo: z.string().url().nonempty(),
