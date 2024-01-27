@@ -1,12 +1,5 @@
-"use client";
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { testimonials } from "@/utils/data";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../../components/ui/card";
 
 const LandingContent = () => {
   return (

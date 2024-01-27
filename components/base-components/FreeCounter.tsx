@@ -8,12 +8,11 @@ import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
 import { Card, CardContent } from "../ui/card";
 import { MAX_FREE_COUNTS } from "@/constants/constants";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 interface FreeCounterProps {}
 
 const FreeCounter: FC<FreeCounterProps> = () => {
   const dispatch = useAppDispatch();
-  const user = useCurrentUser();
+  const user = null;
   let apiUseageCount = 0;
 
   return (

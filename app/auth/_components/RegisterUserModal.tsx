@@ -35,7 +35,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState, useTransition } from "react";
-import { signIn } from "next-auth/react";
 import { RegisterSchema } from "@/shemas";
 import { register } from "@/actions/registerUser";
 import { FormError } from "@/components/base-components/FormError";

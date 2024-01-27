@@ -16,11 +16,11 @@ import {
 import { ChevronRight } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const ManageProfileModal = () => {
   const dispatch = useAppDispatch();
-  const user = useCurrentUser();
+  const { user } = useKindeBrowserClient();
 
   const { isManageProfileModalOpen } = useAppSelector((state) => state.modals);
 
@@ -44,9 +44,9 @@ const ManageProfileModal = () => {
             <Separator />
             <div className="flex items-center gap-4 p-2 my-2 rounded-sm cursor-pointer hover:bg-muted">
               <Avatar className="w-12 h-12 ">
-                <AvatarImage src={"/no-photo.jpg"} />
+                <AvatarImage src={user?.picture || "/no-photo.jpg"} />
               </Avatar>
-              <h4>{user?.name}</h4>
+              <h4>{user?.family_name}</h4>
               <ChevronRight className="ml-auto" />
             </div>
           </div>
@@ -81,7 +81,7 @@ const ManageProfileModal = () => {
               onClick={() => dispatch(openChangeProfileImageModal())}
             >
               <Avatar className="w-12 h-12 ">
-                <AvatarImage src={user?.image || "/no-photo.jpg"} />
+                <AvatarImage src={user?.picture || "/no-photo.jpg"} />
               </Avatar>
               <h4>Change Profile Image</h4>
               <ChevronRight className="ml-auto" />
