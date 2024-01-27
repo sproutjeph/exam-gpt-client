@@ -106,14 +106,19 @@ const ActivateUserModal = () => {
   };
 
   useEffect(() => {
+    let timer: any;
     if (success) {
       //delay to see success message and open login modal
-      setTimeout(() => {
+      timer = setTimeout(() => {
         form.reset();
         dispatch(closeActivateUserModal());
         dispatch(openLoginModal());
       }, 1000);
     }
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [success, error, form, dispatch]);
 
   return (

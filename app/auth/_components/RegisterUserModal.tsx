@@ -79,14 +79,18 @@ const RegisterUserModal = () => {
   };
 
   useEffect(() => {
+    let timer: any;
     if (success) {
       //delay and open activation modal
-      setTimeout(() => {
+      timer = setTimeout(() => {
         form.reset();
         dispatch(closeRegisterUserModal());
         dispatch(openActivateUserModal());
       }, 1000);
     }
+    return () => {
+      clearTimeout(timer);
+    };
   }, [success, error, form, dispatch]);
 
   return (
