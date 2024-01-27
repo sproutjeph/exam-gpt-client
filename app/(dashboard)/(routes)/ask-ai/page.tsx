@@ -25,12 +25,14 @@ import * as z from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { clearQuestion } from "@/featuers/askAiSlice";
 import ChatActionIcons from "@/components/base-components/ChatActionIcons";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const AskAiPage = () => {
   const router = useRouter();
   const path = usePathname();
   const dispatch = useAppDispatch();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+  const { user } = useKindeBrowserClient();
 
   const { currentQuestion } = useAppSelector((state) => state.askAi);
 
@@ -112,7 +114,11 @@ const AskAiPage = () => {
                     : "bg-muted"
                 )}
               >
-                {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
+                {message.role === "user" ? (
+                  <UserAvatar user={user} />
+                ) : (
+                  <BotAvatar />
+                )}
 
                 <p>{message.content}</p>
               </div>

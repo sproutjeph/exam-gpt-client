@@ -1,13 +1,13 @@
 "use client";
 
+import { FC, useEffect, useState } from "react";
+import { routes } from "@/constants/constants";
 import { Montserrat } from "next/font/google";
 import { usePathname } from "next/navigation";
 import FreeCounter from "./FreeCounter";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
-import { routes } from "@/constants/constants";
 
 const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 
