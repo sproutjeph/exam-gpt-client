@@ -1,13 +1,7 @@
-import "./globals.css";
+import { AppProviders } from "./AppProviders";
+import { Roboto } from "next/font/google";
 import type { Metadata } from "next";
-import { Inter, Roboto } from "next/font/google";
-import { ReduxProviders } from "@/providers/ReduxProvider";
-import { ModalProvider } from "@/providers/ModalProvider";
-import { ReactQueryProvider } from "@/providers/ReactQuery";
-import { ThemeProvider } from "@/providers/ThemeProvider";
-import { Toaster } from "@/components/ui/sonner";
-
-const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -26,17 +20,9 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <ReactQueryProvider>
-        <ReduxProviders>
-          <body className={roboto.className}>
-            <Toaster />
-            <ModalProvider />
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
-            </ThemeProvider>
-          </body>
-        </ReduxProviders>
-      </ReactQueryProvider>
+      <body className={roboto.className}>
+        <AppProviders>{children}</AppProviders>
+      </body>
     </html>
   );
 }
