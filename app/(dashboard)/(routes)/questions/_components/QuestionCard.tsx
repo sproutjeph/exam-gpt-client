@@ -11,7 +11,11 @@ import {
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { IQuestion } from "@/types/types";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux-store/hooks";
 import { saveCurrentQuestion } from "@/featuers/askAiSlice";
