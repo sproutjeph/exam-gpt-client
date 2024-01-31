@@ -1,30 +1,91 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { testimonials } from "@/utils/data";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CardDescription, CardTitle } from "@/components/ui/card";
+import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
+import CustomCard from "./CustomCard";
+import { randomUUID } from "crypto";
+import { USERS } from "./Users";
 
 const LandingContent = () => {
   return (
-    <section className="px-10 pb-20">
-      <h2 className="mb-10 text-4xl font-extrabold text-center text-white">
-        Testimonials
-      </h2>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {testimonials.map((item) => (
-          <Card
-            key={item.description}
-            className="text-black bg-gray-100 border-none"
+    <section className="relative">
+      <div
+        className="w-full
+          blur-[120px]
+          rounded-full
+          h-32
+          absolute
+          -z-100
+          top-56
+        "
+      />
+      <div
+        className="
+          px-4
+          sm:px-6 
+          flex
+          flex-col
+          overflow-x-hidden
+          overflow-visible
+        "
+      >
+        <h2 className=" text-4xl font-extrabold text-center text-white">
+          Testimonials
+        </h2>
+
+        {[...Array(2)].map((arr, index) => (
+          <div
+            key={randomUUID()}
+            className={twMerge(
+              clsx("mt-10 flex flex-nowrap gap-6 self-start", {
+                "flex-row-reverse": index === 1,
+                "animate-[slide_250s_linear_infinite]": true,
+                "animate-[slide_250s_linear_infinite_reverse]": index === 1,
+                "ml-[100vw]": index === 1,
+              }),
+              "hover:paused"
+            )}
           >
-            <CardHeader>
-              <CardTitle className="flex items-center gap-x-2">
-                <div>
-                  <p className="text-lg">{item.name}</p>
-                  <p className="text-sm text-zinc-400">{item.title}</p>
-                </div>
-              </CardTitle>
-              <CardContent className="px-0 pt-4">
-                {item.description}
-              </CardContent>
-            </CardHeader>
-          </Card>
+            {USERS.map((testimonial, index) => (
+              <CustomCard
+                key={testimonial.name}
+                className="w-[320px]
+                  shrink-0s
+                  rounded-xl
+                  dark:bg-gradient-to-t
+                  dark:from-border dark:to-background
+                "
+                cardHeader={
+                  <div
+                    className="flex
+                      items-center
+                      gap-4
+                  "
+                  >
+                    <Avatar>
+                      <AvatarFallback>
+                        <AvatarImage src={String(testimonial.imageUrl)} />
+                        <AvatarFallback>AV</AvatarFallback>
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <CardTitle className="text-foreground">
+                        {testimonial.name}
+                      </CardTitle>
+                      <CardDescription className="dark:text-washed-purple-800">
+                        {testimonial.name.toLocaleLowerCase()}
+                      </CardDescription>
+                    </div>
+                  </div>
+                }
+                cardContent={
+                  <p className="dark:text-washed-purple-800">
+                    {testimonial.message}
+                  </p>
+                }
+              />
+            ))}
+          </div>
         ))}
       </div>
     </section>
