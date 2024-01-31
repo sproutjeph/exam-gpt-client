@@ -11,7 +11,7 @@ export { default as LandingHero } from "@/app/(landing)/_components/LandingHero"
 export { default as LandingContent } from "@/app/(landing)/_components/LandingContent";
 export { default as StoreDownLoadBtns } from "@/components/base-components/StoreDownLoadBtns";
 
-export { default as QuestionCard } from "@/components/base-components/QuestionCard";
+export { default as QuestionCard } from "@/app/(dashboard)/(routes)/questions/_components/QuestionCard";
 
 export { default as Empty } from "@/components/base-components/Empty";
 
