@@ -8,9 +8,11 @@ import {
 export default function LandingPage() {
   return (
     <main className="h-full ">
-      <LandingNavbar />
-      <LandingHero />
-      <StoreDownLoadBtns />
+      <div className="max-w-screen-xl mx-auto">
+        <LandingNavbar />
+        <LandingHero />
+        <StoreDownLoadBtns />
+      </div>
       <LandingContent />
     </main>
   );
