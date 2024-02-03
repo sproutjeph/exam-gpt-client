@@ -1,8 +1,8 @@
-import { Heading } from "@/components/base-components";
-
-import { MessageSquare } from "lucide-react";
-import AskAiForm from "./_components/AskAiForm";
 import GoBack from "@/components/base-components/GoBack";
+import { Heading } from "@/components/base-components";
+import AskAiForm from "./_components/AskAiForm";
+import { MessageSquare } from "lucide-react";
+import { Suspense } from "react";
 
 const AskAiPage = () => {
   return (
@@ -15,8 +15,9 @@ const AskAiPage = () => {
         bgColor="bg-violet-500/10"
       />
       <GoBack />
-
-      <AskAiForm />
+      <Suspense fallback={<p>Loading...</p>}>
+        <AskAiForm />
+      </Suspense>
     </div>
   );
 };

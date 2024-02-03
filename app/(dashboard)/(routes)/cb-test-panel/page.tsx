@@ -62,20 +62,6 @@ const CBtestPanelPage: FC<pageProps> = ({}) => {
     setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
   };
 
-  const question = {
-    _id: "12",
-    correctOption: "C",
-    examType: "JAMB",
-    examYear: "2010",
-    subject: "mathematics",
-    image: "",
-    option: { a: "6", b: "9", c: "12", d: "34", e: "16" },
-    question:
-      "The volume of a certain sphere is numerically equal to twice its surface area. The diameter of the sphere is:",
-    solution:
-      "Let’s solve this problem together! The volume of a sphere is given by the formula V=34​πr3\n where r is the radius of the sphere. The surface area of a sphere is given by the formula A=4πr2\nSince the volume of the sphere is numerically equal to twice its surface area, we can write the equation: 34​πr3=2(4πr2)\nSolving for r, we get r = 6. Since the diameter of a sphere is twice its radius, the diameter of this sphere is 12.",
-  };
-
   return (
     <main className="relative px-2 sm:px-8">
       <Tabs defaultValue={selectedCBTestData[0]?.subject.toUpperCase()}>
