@@ -5,12 +5,16 @@ import MobileSidebar from "@/components/base-components/MobileSidebar";
 import { User } from "lucide-react";
 import ModeToggle from "@/components/base-components/ModeToggle";
 import UserAvatar from "@/components/base-components/UserAvatar";
+import { FC } from "react";
 
-const Navbar = () => {
+interface NavbarProps {
+  isAdmin: boolean | undefined;
+}
+const Navbar: FC<NavbarProps> = ({ isAdmin }) => {
   const { user } = useKindeBrowserClient();
   return (
     <nav className="flex items-center p-4 shadow-sm bg-accent">
-      <MobileSidebar />
+      <MobileSidebar isAdmin={isAdmin} />
       <div className="ml-10 ">
         <ModeToggle />
       </div>

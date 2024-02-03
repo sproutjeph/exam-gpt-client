@@ -23,7 +23,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
         <Sidebar isAdmin={isAdmin} />
       </div>
       <main className="pb-10 md:pl-64">
-        <Navbar />
+        <Navbar isAdmin />
         <Suspense fallback={<Loader />}>{children}</Suspense>
       </main>
     </section>
