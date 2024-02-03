@@ -9,15 +9,18 @@ interface layoutProps {
 }
 
 const DashboardLayout: FC<layoutProps> = async ({ children }) => {
-  const { isAuthenticated } = getKindeServerSession();
+  const { isAuthenticated, getPermission } = getKindeServerSession();
   const isLoggedIn = await isAuthenticated();
   if (!isLoggedIn) {
     redirect("/api/auth/login");
   }
+
+  const permission = await getPermission("upload:question");
+  const isAdmin = permission?.isGranted;
   return (
     <section className="relative min-h-full">
       <div className="hidden h-full md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-80">
-        <Sidebar />
+        <Sidebar isAdmin={isAdmin} />
       </div>
       <main className="pb-10 md:pl-64">
         <Navbar />
