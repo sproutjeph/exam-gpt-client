@@ -8,12 +8,15 @@ import FreeCounter from "./FreeCounter";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { User } from "lucide-react";
 
 const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 
-interface SidebarProps {}
+interface SidebarProps {
+  isAdmin: boolean | undefined;
+}
 
-const Sidebar: FC<SidebarProps> = ({}) => {
+const Sidebar: FC<SidebarProps> = ({ isAdmin }) => {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -37,23 +40,42 @@ const Sidebar: FC<SidebarProps> = ({}) => {
           </h1>
         </Link>
         <div className="space-y-1">
-          {routes.map((route) => (
+          {isAdmin && (
             <Link
-              key={route.href}
-              href={route.href}
+              href="/admin-dashboard"
               className={cn(
                 "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
-                pathname === route.href
+                pathname === "/admin-dashboard"
                   ? "text-white bg-white/10"
                   : "text-zinc-400"
               )}
             >
               <div className="flex items-center flex-1">
-                <route.icon className={cn("h-5 w-5 mr-3", route.color)} />
-                {route.label}
+                <User className={cn("h-5 w-5 mr-3")} />
+                Admin
               </div>
             </Link>
-          ))}
+          )}
+          {routes.map((route) => {
+            return (
+              <Link
+                key={route.href}
+                href={route.href}
+                className={cn(
+                  "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
+                  pathname === route.href
+                    ? "text-white bg-white/10"
+                    : "text-zinc-400"
+                )}
+              >
+                <div className="flex items-center flex-1">
+                  <route.icon className={cn("h-5 w-5 mr-3", route.color)} />
+
+                  {route.label}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
       <FreeCounter />

@@ -105,13 +105,6 @@ export const routes = [
     color: "text-[#FFFFFF]",
     bgColor: "bg-[#8A2BE2]",
   },
-  {
-    label: "Admin",
-    icon: User,
-    href: "/admin-dashboard",
-    color: "",
-    bgColor: "",
-  },
 ];
 export const exams = [
   {
