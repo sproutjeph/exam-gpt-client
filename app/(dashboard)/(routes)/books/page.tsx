@@ -1,35 +1,17 @@
-"use client";
-
 import TextBookCard from "@/components/base-components/TextBookCard";
 import { textBooks } from "@/utils/data";
-import { Container, Grid, Typography } from "@mui/material";
-import { FC } from "react";
 
-interface pageProps {}
-
-const TextBooksPage: FC<pageProps> = ({}) => {
+const TextBooksPage = () => {
   return (
-    <Container>
-      <Typography
-        variant="h5"
-        style={{
-          textAlign: "center",
-          marginBottom: "2rem",
-          marginTop: "2rem",
-          color: "",
-        }}
-      >
-        Text Books
-      </Typography>
+    <main className="mx-3">
+      <h1 className="text-2xl text-center my-8">Text Books</h1>
 
-      <Grid container spacing={3}>
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {textBooks.map((textBook) => (
-          <Grid item key={textBook.id} xs={12} sm={6} md={4} lg={3}>
-            <TextBookCard textBook={textBook} />
-          </Grid>
+          <TextBookCard textBook={textBook} />
         ))}
-      </Grid>
-    </Container>
+      </ul>
+    </main>
   );
 };
 
