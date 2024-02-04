@@ -1,14 +1,10 @@
-"use client";
-
 import { routes } from "@/constants/constants";
 import { Card } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const DashboardPage = () => {
-  const router = useRouter();
-
   return (
     <section>
       <div className="my-8 space-y-4 ">
@@ -21,23 +17,23 @@ const DashboardPage = () => {
       </div>
       <div className="grid items-center justify-center grid-cols-2 gap-4 px-4 space-y-4 md:px-8 lg:px-32 2xl:grid-cols-3">
         {routes.map((tool) => (
-          <Card
-            onClick={() => router.push(tool.href)}
-            key={tool.href}
-            className={cn(
-              `flex items-center justify-between p-4 transition  cursor-pointer border-black/5 hover:shadow-md`
-            )}
-          >
-            <div className="flex items-center gap-x-2">
-              <div className={cn("p-2 w-fit rounded-md")}>
-                <tool.icon className={cn("w-8 h-8")} />
+          <Link href={tool.href} key={tool.href}>
+            <Card
+              className={cn(
+                `flex items-center justify-between p-4 transition  cursor-pointer border-black/5 hover:shadow-md`
+              )}
+            >
+              <div className="flex items-center gap-x-2">
+                <div className={cn("p-2 w-fit rounded-md")}>
+                  <tool.icon className={cn("w-8 h-8")} />
+                </div>
+                <div className="text-xs font-semibold sm:text-base">
+                  {tool.label}
+                </div>
               </div>
-              <div className="text-xs font-semibold sm:text-base">
-                {tool.label}
-              </div>
-            </div>
-            <ArrowRight className="hidden w-5 h-5 sm:block" />
-          </Card>
+              <ArrowRight className="hidden w-5 h-5 sm:block" />
+            </Card>
+          </Link>
         ))}
       </div>
     </section>
