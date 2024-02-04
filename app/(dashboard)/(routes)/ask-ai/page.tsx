@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 const AskAiPage = () => {
   return (
-    <div className="flex h-[90vh] w-full max-w-5xl flex-col px-2 pt-2 mx-auto">
+    <main className="flex h-[90vh] w-full max-w-5xl flex-col px-2 pt-2 mx-auto">
       <Heading
         title="Slove With AI"
         description="Our most advanced AI  model"
@@ -18,7 +18,7 @@ const AskAiPage = () => {
       <Suspense fallback={<p>Loading...</p>}>
         <AskAiForm />
       </Suspense>
-    </div>
+    </main>
   );
 };
 

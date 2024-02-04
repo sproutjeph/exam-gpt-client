@@ -12,7 +12,7 @@ import CopyRight from "./_Components/CopyRight";
 
 export default function Pricing() {
   return (
-    <section>
+    <main>
       <div className="container max-w-4xl">
         <h2 className="my-4 text-4xl text-center">Pricing</h2>
         <h6 className="mb-6 text-center">
@@ -72,6 +72,6 @@ export default function Pricing() {
         </ul>
         <CopyRight />
       </footer>
-    </section>
+    </main>
   );
 }

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const DashboardPage = () => {
   return (
-    <section>
+    <main>
       <div className="my-8 space-y-4 ">
         <h2 className="text-xl font-bold text-center sm:text-2xl md:text-4xl">
           Solve O-Level Past Questions with AI
@@ -36,7 +36,7 @@ const DashboardPage = () => {
           </Link>
         ))}
       </div>
-    </section>
+    </main>
   );
 };
 
