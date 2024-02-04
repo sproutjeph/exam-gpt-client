@@ -1,8 +1,8 @@
-import { Loader, Sidebar } from "@/components/base-components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { redirect } from "next/navigation";
-import { FC, Suspense } from "react";
 import Navbar from "../(dashboard)/(routes)/dashboard/_components/Navbar";
+import { Sidebar } from "@/components/base-components";
+import { redirect } from "next/navigation";
+import { FC } from "react";
 
 interface layoutProps {
   children: React.ReactNode;

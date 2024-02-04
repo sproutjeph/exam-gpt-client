@@ -27,7 +27,7 @@ export { default as CBTestSubjectCard } from "@/components/base-components/CBTes
 
 export { default as AccountProfile } from "@/components/base-components/AccountProfile";
 export { default as TextBookCard } from "@/components/base-components/TextBookCard";
-export { default as DashboardBottomNavbar } from "@/components/base-components/DashboardBottomNavbar";
+
 export { default as ModeToggle } from "@/components/base-components/ModeToggle";
 
 export { default as CBTestTimer } from "@/components/base-components/CBTestTimer";

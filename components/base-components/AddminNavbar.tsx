@@ -1,5 +1,3 @@
-"use client";
-
 import { FC } from "react";
 import ModeToggle from "./ModeToggle";
 import { Button } from "../ui/button";
