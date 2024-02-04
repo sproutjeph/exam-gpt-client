@@ -14,7 +14,7 @@ const layout: FC<layoutProps> = async ({ children }) => {
     redirect("/dashboard");
   }
   return (
-    <main className="">
+    <main>
       <AddminNavbar />
       <div className="py-8 ">{children}</div>
     </main>

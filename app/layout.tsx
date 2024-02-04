@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: "The Best AI Tool to prepare for your O-level Exams",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;

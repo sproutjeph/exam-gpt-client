@@ -14,9 +14,7 @@ const LandingLayout: FC<layoutProps> = async ({ children }) => {
   }
 
   return (
-    <main className="h-full overflow-auto bg-black">
-      <div className="w-full h-full ">{children}</div>
-    </main>
+    <main className="h-full overflow-auto bg-black w-full">{children}</main>
   );
 };
 
