@@ -16,7 +16,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
   }
 
   const permission = await getPermission("upload:question");
-  const isAdmin = permission?.isGranted;
+  const isAdmin = permission?.isGranted as boolean | null;
   return (
     <section className="relative min-h-full">
       <div className="hidden h-full md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-80">

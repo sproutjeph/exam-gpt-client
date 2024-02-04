@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 import { FC } from "react";
 
 interface MobileSidebarProps {
-  isAdmin: boolean | undefined;
+  isAdmin: boolean | null;
 }
 
 const MobileSidebar: FC<MobileSidebarProps> = ({ isAdmin }) => {

@@ -1,4 +1,4 @@
-import ComputerBaseTestTabs from "./_components/ComputerBaseTestTabs";
+import ComputerBaseTestTabs from "./_components/computer-baseTest-tabs";
 
 const ComputerBaseTestPage = () => {
   return (

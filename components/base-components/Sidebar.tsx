@@ -13,7 +13,7 @@ import { User } from "lucide-react";
 const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 
 interface SidebarProps {
-  isAdmin: boolean | undefined;
+  isAdmin: boolean | null;
 }
 
 const Sidebar: FC<SidebarProps> = ({ isAdmin }) => {

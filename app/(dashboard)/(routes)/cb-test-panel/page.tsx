@@ -1,4 +1,4 @@
-import CBTestPanelTabs from "./_components/CBTestPanelTabs";
+import CBTestPanelTabs from "./_components/cb-test-panel-tabs";
 
 const CBtestPanelPage = () => {
   return (

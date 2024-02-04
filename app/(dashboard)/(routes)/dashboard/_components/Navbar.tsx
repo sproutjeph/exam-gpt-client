@@ -8,7 +8,7 @@ import UserAvatar from "@/components/base-components/UserAvatar";
 import { FC } from "react";
 
 interface NavbarProps {
-  isAdmin: boolean | undefined;
+  isAdmin: boolean | null;
 }
 const Navbar: FC<NavbarProps> = ({ isAdmin }) => {
   const { user } = useKindeBrowserClient();

@@ -1,6 +1,6 @@
 import GoBack from "@/components/base-components/GoBack";
 import { Heading } from "@/components/base-components";
-import AskAiForm from "./_components/AskAiForm";
+import AskAiForm from "./_components/ask-ai-form";
 import { MessageSquare } from "lucide-react";
 import { Suspense } from "react";
 
