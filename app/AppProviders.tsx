@@ -1,7 +1,14 @@
 "use client";
 
 import NavigationProgressBar from "@/components/base-components/NavigationProgressBar";
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import {
+  ReactNode,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import RouterProgressionContext from "@/contexts/RouterProgressionContext";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ReactQueryProvider } from "@/providers/ReactQuery";
@@ -37,14 +44,16 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <ReactQueryProvider>
       <ReduxProviders>
-        <RouterEventWrapper>
-          <NavigationProgressBar />
-          <Toaster />
-          <ModalProvider />
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-          </ThemeProvider>
-        </RouterEventWrapper>
+        <Suspense>
+          <RouterEventWrapper>
+            <NavigationProgressBar />
+            <Toaster />
+            <ModalProvider />
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+            </ThemeProvider>
+          </RouterEventWrapper>
+        </Suspense>
       </ReduxProviders>
     </ReactQueryProvider>
   );
