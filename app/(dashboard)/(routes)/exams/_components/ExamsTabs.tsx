@@ -6,15 +6,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Loader } from "@/components/base-components";
 import { Button } from "@/components/ui/button";
 import { useSubject } from "@/hooks/useSubject";
 import { exams } from "@/constants/constants";
 import { ISubject } from "@/types/types";
 import { useState } from "react";
 import Link from "next/link";
-import { Loader } from "@/components/base-components";
-import { CircularProgress } from "@mui/material";
-
 import { FC } from "react";
 
 interface ExamsTabsProps {}
@@ -45,9 +43,7 @@ const ExamsTabs: FC<ExamsTabsProps> = ({}) => {
         <h4 className="my-4 text-lg text-center">{`${currentExam} PAST QUESTION`}</h4>
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {isLoading ? (
-            <div className="flex items-center justify-center">
-              <CircularProgress style={{}} />
-            </div>
+            <Loader />
           ) : (
             subjects?.data?.map((subject: ISubject) => (
               <Popover key={subject._id}>

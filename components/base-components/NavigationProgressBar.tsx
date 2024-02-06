@@ -72,7 +72,7 @@ export interface NavigationProgressProps {
 }
 
 const NavigationProgressBar = ({
-  color = "#8B418F",
+  color = "#F97316",
   startPosition = 0.3,
   stopDelayMs = 200,
   height = 3,

@@ -1,10 +1,11 @@
 import Image from "next/image";
+import { FC } from "react";
 
 interface EmptyProps {
   label: string;
 }
 
-const Empty = ({ label }: EmptyProps) => {
+const Empty: FC<EmptyProps> = ({ label }) => {
   return (
     <div className="flex flex-col items-center justify-center h-full p-20">
       <div className="relative h-72 w-72">
