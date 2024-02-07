@@ -2,7 +2,7 @@ export const USERS = [
   {
     name: "Alice",
     message:
-      "Exam-GPT has been a game-changer for our team. With its reliable end-to-end testing, we catch bugs early, leading to faster development cycles and improved collaboration.",
+      "Exam-GPT has been a game-changer for my Jamb exams. With its reliable anwers I was able to pass my exams.",
     imageUrl: "../../../public/avatars/1.png",
   },
   {

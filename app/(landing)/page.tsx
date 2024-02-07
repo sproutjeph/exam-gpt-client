@@ -7,7 +7,7 @@ import {
 
 export default function LandingPage() {
   return (
-    <main className="h-full ">
+    <main className="mb-8">
       <div className="max-w-screen-xl mx-auto">
         <LandingNavbar />
         <LandingHero />
