@@ -1,12 +1,8 @@
 import { MAX_FREE_COUNTS } from "@/constants/constants";
 import { NextResponse } from "next/server";
-import { Configuration, OpenAIApi } from "openai";
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
+import { OpenAIStream, StreamingTextResponse } from "ai";
+import { ChatCompletionMessageParam } from "ai/prompts";
+import Openai from "openai";
 
 export async function POST(req: Request) {
   try {
@@ -19,9 +15,11 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!configuration.apiKey) {
-      return new NextResponse("API key is required", { status: 500 });
-    }
+    const openia = new Openai();
+    const systemMessage: ChatCompletionMessageParam = {
+      role: "system",
+      content: "You are an educational chat bot",
+    };
 
     if (!messages) {
       return new NextResponse("Messages are required", { status: 400 });
@@ -37,17 +35,18 @@ export async function POST(req: Request) {
         }
       );
     }
-
-    const response = await openai.createChatCompletion({
+    const response = await openia.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages,
+      stream: true,
+      messages: [systemMessage, ...messages],
     });
+
+    const stream = OpenAIStream(response);
     // increase API limit
     apiUseageCount += 1;
-
-    return NextResponse.json(response.data.choices[0].message);
-  } catch (error) {
-    console.log("[CONVERSATION_ERROR]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    return new StreamingTextResponse(stream);
+  } catch (error: any) {
+    console.log(error);
+    return Response.json({ error: error.message }, { status: 500 });
   }
 }

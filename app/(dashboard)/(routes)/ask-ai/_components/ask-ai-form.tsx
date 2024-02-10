@@ -8,11 +8,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { clearQuestion } from "@/featuers/askAiSlice";
-import { ChatCompletionRequestMessage } from "openai";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { askAiformSchema } from "@/types/types";
-import axios from "axios";
 import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -25,6 +23,8 @@ import {
 } from "@/components/base-components";
 import ChatActionIcons from "@/components/base-components/ChatActionIcons";
 import { cn } from "@/lib/utils";
+import { Message, useChat } from "ai/react";
+import ReactMarkdown from "react-markdown";
 
 interface AskAiFormProps {}
 
@@ -32,7 +32,16 @@ const AskAiForm: FC<AskAiFormProps> = ({}) => {
   const router = useRouter();
   const path = usePathname();
   const dispatch = useAppDispatch();
-  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    setMessages,
+    isLoading,
+    error,
+  } = useChat();
   const { user } = useKindeBrowserClient();
 
   const { currentQuestion } = useAppSelector((state) => state.askAi);
@@ -44,35 +53,35 @@ const AskAiForm: FC<AskAiFormProps> = ({}) => {
     },
   });
 
-  const isLoading = form.formState.isSubmitting;
   useEffect(() => {
     dispatch(clearQuestion());
   }, [path, dispatch]);
 
-  const onSubmit = async (values: z.infer<typeof askAiformSchema>) => {
-    try {
-      const userMessage: ChatCompletionRequestMessage = {
-        role: "user",
-        content: values.prompt,
-      };
-      const newMessages = [...messages, userMessage];
+  // const onSubmit = async (values: z.infer<typeof askAiformSchema>) => {
+  //   try {
+  //     const userMessage: ChatCompletionRequestMessage = {
+  //       role: "user",
+  //       content: values.prompt,
+  //     };
+  //     const newMessages = [...messages, userMessage];
 
-      const response = await axios.post("/api/ask-ai", {
-        messages: newMessages,
-      });
-      setMessages((current) => [...current, userMessage, response.data]);
+  //     const response = await axios.post("/api/ask-ai", {
+  //       messages: newMessages,
+  //     });
+  //     setMessages((current) => [...current, userMessage, response.data]);
 
-      form.setValue("prompt", "");
-    } catch (error: any) {
-      if (error?.response?.status === 403) {
-        dispatch(openSubscriptionModal());
-      } else {
-        toast.error(`Something went wrong. ${error}`);
-      }
-    } finally {
-      router.refresh();
-    }
-  };
+  //     form.setValue("prompt", "");
+  //   } catch (error: any) {
+  //     if (error?.response?.status === 403) {
+  //       dispatch(openSubscriptionModal());
+  //     } else {
+  //       toast.error(`Something went wrong. ${error}`);
+  //     }
+  //   } finally {
+  //     router.refresh();
+  //   }
+  // };
+
   return (
     <>
       <div className="flex-1 p-4 overflow-y-auto text-sm leading-6 rounded-xl sm:text-base sm:leading-7">
@@ -110,7 +119,7 @@ const AskAiForm: FC<AskAiFormProps> = ({}) => {
         </div>
       </div>
       <Form {...form}>
-        <form className="mt-2" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="mt-2" onSubmit={handleSubmit}>
           <label htmlFor="chat-input" className="sr-only">
             Enter your prompt
           </label>
