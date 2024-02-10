@@ -10,9 +10,9 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { messages } = body;
 
-    if (!userId) {
-      return Response.json("Unauthorized", { status: 401 });
-    }
+    // if (!userId) {
+    //   return Response.json("Unauthorized", { status: 401 });
+    // }
 
     const openia = new Openai();
     const systemMessage: ChatCompletionMessageParam = {
