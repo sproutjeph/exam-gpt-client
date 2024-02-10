@@ -1,5 +1,4 @@
 import { MAX_FREE_COUNTS } from "@/constants/constants";
-import { NextResponse } from "next/server";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { ChatCompletionMessageParam } from "ai/prompts";
 import Openai from "openai";
@@ -12,7 +11,7 @@ export async function POST(req: Request) {
     const { messages } = body;
 
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return Response.json("Unauthorized", { status: 401 });
     }
 
     const openia = new Openai();
@@ -22,18 +21,15 @@ export async function POST(req: Request) {
     };
 
     if (!messages) {
-      return new NextResponse("Messages are required", { status: 400 });
+      return Response.json("Messages are required", { status: 400 });
     }
 
     let apiUseageCount = 0;
 
     if (apiUseageCount === MAX_FREE_COUNTS) {
-      return new NextResponse(
-        "Free trial has expired. Please upgrade to pro.",
-        {
-          status: 403,
-        }
-      );
+      return Response.json("Free trial has expired. Please upgrade to pro.", {
+        status: 403,
+      });
     }
     const response = await openia.chat.completions.create({
       model: "gpt-3.5-turbo",

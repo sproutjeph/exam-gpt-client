@@ -16,7 +16,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux-store/hooks";
 import { saveCurrentQuestion } from "@/featuers/askAiSlice";
 import { openAiChatModal } from "@/featuers/modals/modalSlice";
@@ -28,7 +27,6 @@ interface QuestionCardProps {
 }
 
 const QuestionCard: FC<QuestionCardProps> = ({ question, index, cbTest }) => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   return (

@@ -10,7 +10,6 @@ import {
   LayoutDashboard,
   MessageSquare,
   UploadCloud,
-  User,
 } from "lucide-react";
 
 export const MAX_FREE_COUNTS = 5;
@@ -68,13 +67,13 @@ export const routes = [
     href: "/exams",
     bgColor: "bg-[#00FF00]",
   },
-  {
-    label: "Ask AI",
-    icon: MessageSquare,
-    href: "/ask-ai",
-    color: "text-[#333333]",
-    bgColor: "bg-[#00FFFF]",
-  },
+  // {
+  //   label: "Ask AI",
+  //   icon: MessageSquare,
+  //   href: "/ask-ai",
+  //   color: "text-[#333333]",
+  //   bgColor: "bg-[#00FFFF]",
+  // },
 
   {
     label: "Books",

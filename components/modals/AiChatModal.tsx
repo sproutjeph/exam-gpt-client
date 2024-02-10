@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useRef } from "react";
+import { FC, Fragment, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,9 @@ import ReactMarkdown from "react-markdown";
 import { ScrollArea } from "../ui/scroll-area";
 import Link from "next/link";
 import { Textarea } from "../ui/textarea";
+import { BotAvatar, Empty, UserAvatar } from "../base-components";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import ChatActionIcons from "../base-components/ChatActionIcons";
 
 interface AiChatModalProps {}
 
@@ -62,7 +65,7 @@ const AiChatModal: FC<AiChatModalProps> = ({}) => {
       open={isAiChatModalOpen}
       onOpenChange={() => dispatch(closeAiChatModal())}
     >
-      <DialogContent>
+      <DialogContent className="">
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
             <span className="flex items-center text-xl font-bold gap-x-2">
@@ -77,7 +80,10 @@ const AiChatModal: FC<AiChatModalProps> = ({}) => {
         <ScrollArea className="h-[600px] flex-col">
           <div className="" ref={scrollRef}>
             {messages.map((message) => (
-              <ChatMessage key={message.id} message={message} />
+              <Fragment key={message.id}>
+                <ChatActionIcons />
+                <ChatMessage message={message} />
+              </Fragment>
             ))}
             {isLoading && lastMessageIsUser && (
               <ChatMessage
@@ -96,6 +102,13 @@ const AiChatModal: FC<AiChatModalProps> = ({}) => {
                   content: error.message,
                 }}
               />
+            )}
+
+            {!error && messages.length === 0 && (
+              <>
+                <BotAvatar />
+                <Empty label="No conversation started." />
+              </>
             )}
           </div>
         </ScrollArea>
@@ -129,15 +142,16 @@ export default AiChatModal;
 
 function ChatMessage({ message: { role, content } }: { message: Message }) {
   const isAiMessage = role === "assistant";
+  const { user } = useKindeBrowserClient();
 
   return (
     <div
       className={cn(
-        "mb-3 flex items-center",
+        "mb-3 flex items-center gap-1",
         isAiMessage ? "me-5 justify-start" : "ms-5 justify-end"
       )}
     >
-      {isAiMessage && <Bot className="mr-2 flex-none" />}
+      {isAiMessage ? <BotAvatar /> : <UserAvatar user={user} />}
       <div
         className={cn(
           "rounded-md border px-3 py-2",
