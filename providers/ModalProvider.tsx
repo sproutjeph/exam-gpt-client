@@ -8,6 +8,7 @@ import ManageProfileModal from "@/components/modals/ManageProfileModal";
 import RegisterUserModal from "@/app/auth/_components/RegisterUserModal";
 import SubscriptionModal from "@/components/modals/SubscriptionModal";
 import { useEffect, useState } from "react";
+import AiChatModal from "@/components/modals/AiChatModal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -29,6 +30,7 @@ export const ModalProvider = () => {
       <ManageProfileModal />
       <ChangeProfileImageModal />
       <ChangePasswordModal />
+      <AiChatModal />
     </main>
   );
 };

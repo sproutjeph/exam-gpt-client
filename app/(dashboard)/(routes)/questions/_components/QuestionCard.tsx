@@ -19,6 +19,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux-store/hooks";
 import { saveCurrentQuestion } from "@/featuers/askAiSlice";
+import { openAiChatModal } from "@/featuers/modals/modalSlice";
 
 interface QuestionCardProps {
   question: IQuestion;
@@ -80,7 +81,7 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index, cbTest }) => {
                 className=""
                 onClick={() => {
                   dispatch(saveCurrentQuestion(question.question));
-                  router.push("/ask-ai");
+                  dispatch(openAiChatModal());
                 }}
               >
                 Ask AI To Slove

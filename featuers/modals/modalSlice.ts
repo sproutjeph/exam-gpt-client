@@ -8,6 +8,7 @@ type ModalsState = {
   isManageProfileModalOpen: boolean;
   isChangeProfileImageModalOpen: boolean;
   isChangePasswordModalOpen: boolean;
+  isAiChatModalOpen: boolean;
 };
 
 const initialState: ModalsState = {
@@ -18,6 +19,7 @@ const initialState: ModalsState = {
   isManageProfileModalOpen: false,
   isChangeProfileImageModalOpen: false,
   isChangePasswordModalOpen: false,
+  isAiChatModalOpen: false,
 };
 
 const modalsSlice = createSlice({
@@ -64,7 +66,13 @@ const modalsSlice = createSlice({
       state.isChangePasswordModalOpen = false;
     },
     openChangePasswordModal(state) {
-      state.isChangePasswordModalOpen = true;
+      state.isAiChatModalOpen = true;
+    },
+    closeAiChatModal(state) {
+      state.isAiChatModalOpen = false;
+    },
+    openAiChatModal(state) {
+      state.isAiChatModalOpen = true;
     },
   },
 });
@@ -84,6 +92,8 @@ export const {
   closeChangeProfileImageModal,
   openChangePasswordModal,
   closeChangePasswordModal,
+  closeAiChatModal,
+  openAiChatModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;
