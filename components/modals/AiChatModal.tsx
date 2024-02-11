@@ -1,16 +1,9 @@
 "use client";
 
-import { FC, Fragment, useEffect, useRef } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "../ui/dialog";
+import { Fragment, useEffect, useRef } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
-import { Bot, Send } from "lucide-react";
 import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { closeAiChatModal } from "@/featuers/modals/modalSlice";
@@ -23,9 +16,7 @@ import { BotAvatar, Empty, UserAvatar } from "../base-components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import ChatActionIcons from "../base-components/ChatActionIcons";
 
-interface AiChatModalProps {}
-
-const AiChatModal: FC<AiChatModalProps> = ({}) => {
+const AiChatModal = () => {
   const dispatch = useAppDispatch();
   const { isAiChatModalOpen } = useAppSelector((state) => state.modals);
   const { currentQuestion } = useAppSelector((state) => state.askAi);
@@ -65,7 +56,7 @@ const AiChatModal: FC<AiChatModalProps> = ({}) => {
       open={isAiChatModalOpen}
       onOpenChange={() => dispatch(closeAiChatModal())}
     >
-      <DialogContent className="">
+      <DialogContent className="h-[90%] flex flex-col p-2">
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center pb-2 gap-y-4">
             <span className="flex items-center text-xl font-bold gap-x-2">
@@ -77,7 +68,7 @@ const AiChatModal: FC<AiChatModalProps> = ({}) => {
           </DialogTitle>
         </DialogHeader>
 
-        <ScrollArea className="h-[600px] flex-col">
+        <ScrollArea className="flex-col flex-1">
           <div className="" ref={scrollRef}>
             {messages.map((message) => (
               <Fragment key={message.id}>
@@ -113,23 +104,48 @@ const AiChatModal: FC<AiChatModalProps> = ({}) => {
           </div>
         </ScrollArea>
 
-        <div className="">
+        <div className="relative">
+          <Button
+            variant="ghost"
+            type="button"
+            className="absolute left-0 flex items-center pl-3 bottom-6"
+          >
+            <svg
+              aria-hidden="true"
+              className="w-5 h-5"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z"></path>
+              <path d="M5 10a7 7 0 0 0 14 0"></path>
+              <path d="M8 21l8 0"></path>
+              <path d="M12 17l0 4"></path>
+            </svg>
+            <span className="sr-only">Use voice input</span>
+          </Button>
           <form onSubmit={handleSubmit} className="flex items-center gap-x-2">
             <Textarea
               value={input}
               onChange={handleInputChange}
               ref={inputRef}
-              className="flex-1"
+              className="block pt-2 pl-10 pr-20 text-sm shadow-md resize-none bg-gray-50 dark:bg-dark-4 sm:text-base"
+              cols={30}
             />
 
             <Button
               disabled={isLoading || currentQuestion.length === 0}
-              size="icon"
-              variant="premium"
-              className=""
+              variant="ghost"
               type="submit"
+              className="absolute bottom-6 right-2.5 rounded-lg  px-4 py-2 text-sm font-medium sm:text-base text-primary"
             >
-              <Send className="fill-white" size={24} />
+              Solve
+              <span className="sr-only">Solve</span>
             </Button>
           </form>
         </div>
