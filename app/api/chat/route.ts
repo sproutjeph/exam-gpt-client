@@ -31,13 +31,9 @@ export async function POST(req: Request) {
     const apiUseageCount = await getUserApiUseageCount(user.id);
 
     if (apiUseageCount === MAX_FREE_COUNTS) {
-      return NextResponse.json(
-        "Free trial has expired. Please upgrade to pro.",
-        {
-          status: 403,
-        }
-      );
+      throw new Error("You have reached the limit of API usage");
     }
+
     const response = await openia.chat.completions.create({
       model: "gpt-3.5-turbo",
       stream: true,

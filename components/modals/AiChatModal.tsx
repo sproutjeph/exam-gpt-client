@@ -51,6 +51,11 @@ const AiChatModal = () => {
     setInput(currentQuestion);
   }, [currentQuestion]);
 
+  // useEffect(() => {
+  //   if (error?.message) {
+  //   }
+  // }, []);
+
   return (
     <Dialog
       open={isAiChatModalOpen}
