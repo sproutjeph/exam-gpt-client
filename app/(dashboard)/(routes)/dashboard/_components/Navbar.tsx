@@ -9,12 +9,13 @@ import { FC } from "react";
 
 interface NavbarProps {
   isAdmin: boolean | null;
+  apiUseageCount: number;
 }
-const Navbar: FC<NavbarProps> = ({ isAdmin }) => {
+const Navbar: FC<NavbarProps> = ({ isAdmin, apiUseageCount }) => {
   const { user } = useKindeBrowserClient();
   return (
     <nav className="flex items-center p-4 shadow-sm bg-accent">
-      <MobileSidebar isAdmin={isAdmin} />
+      <MobileSidebar isAdmin={isAdmin} apiUseageCount={apiUseageCount} />
       <div className="ml-10 ">
         <ModeToggle />
       </div>

@@ -41,7 +41,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
         />
       </div>
       <main className="pb-10 md:pl-64">
-        <Navbar isAdmin />
+        <Navbar isAdmin apiUseageCount={Number(userInDB?.apiUseageCount)} />
         {children}
       </main>
     </section>

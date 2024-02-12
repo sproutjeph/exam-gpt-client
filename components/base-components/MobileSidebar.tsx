@@ -6,9 +6,10 @@ import { FC } from "react";
 
 interface MobileSidebarProps {
   isAdmin: boolean | null;
+  apiUseageCount: number;
 }
 
-const MobileSidebar: FC<MobileSidebarProps> = ({ isAdmin }) => {
+const MobileSidebar: FC<MobileSidebarProps> = ({ isAdmin, apiUseageCount }) => {
   return (
     <Sheet>
       <SheetTrigger>
@@ -17,7 +18,7 @@ const MobileSidebar: FC<MobileSidebarProps> = ({ isAdmin }) => {
         </div>
       </SheetTrigger>
       <SheetContent side="left" className="p-0">
-        <Sidebar isAdmin={isAdmin} />
+        <Sidebar isAdmin={isAdmin} apiUseageCount={apiUseageCount} />
       </SheetContent>
     </Sheet>
   );

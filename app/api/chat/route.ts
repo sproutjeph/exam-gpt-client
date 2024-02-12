@@ -1,10 +1,10 @@
-import { OpenAIStream, StreamingTextResponse } from "ai";
 import { MAX_FREE_COUNTS } from "@/constants/constants";
-import { ChatCompletionMessageParam } from "ai/prompts";
 import { NextResponse } from "next/server";
-import Openai from "openai";
 import { getUserApiUseageCount, updateUserApiUseageCount } from "@/utils/user";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { LangChainStream, StreamingTextResponse } from "ai";
+import { ChatOpenAI } from "@langchain/openai";
+import { ChatPromptTemplate } from "@langchain/core/prompts";
 
 export async function POST(req: Request) {
   const { getUser } = getKindeServerSession();
@@ -18,11 +18,26 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { messages } = body;
 
-    const openia = new Openai();
-    const systemMessage: ChatCompletionMessageParam = {
-      role: "system",
-      content: "You are an educational chat bot",
-    };
+    const currentMessageContent = messages[messages.length - 1].content;
+
+    const { stream, handlers } = LangChainStream();
+
+    const chatModal = new ChatOpenAI({
+      modelName: "gpt-3.5-turbo",
+      streaming: true,
+      callbacks: [handlers],
+    });
+
+    const prompt = ChatPromptTemplate.fromMessages([
+      ["system", "You are an educational chat bot"],
+      ["user", "{input}"],
+    ]);
+
+    const chain = prompt.pipe(chatModal);
+
+    chain.invoke({
+      input: currentMessageContent,
+    });
 
     if (!messages) {
       return NextResponse.json("Messages are required", { status: 400 });
@@ -31,21 +46,17 @@ export async function POST(req: Request) {
     const apiUseageCount = await getUserApiUseageCount(user.id);
 
     if (apiUseageCount === MAX_FREE_COUNTS) {
-      throw new Error("You have reached the limit of API usage");
+      throw new Error("You have reached the limit of API usage", {
+        cause: 400,
+      });
     }
 
-    const response = await openia.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      stream: true,
-      messages: [systemMessage, ...messages],
-    });
-
-    const stream = OpenAIStream(response);
     // increase API limit
     await updateUserApiUseageCount(user?.id);
+
     return new StreamingTextResponse(stream);
   } catch (error: any) {
-    console.log(error);
+    console.log(error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
