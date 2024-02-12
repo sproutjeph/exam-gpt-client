@@ -2,13 +2,28 @@ import { MAX_FREE_COUNTS } from "@/constants/constants";
 import { NextResponse } from "next/server";
 import { getUserApiUseageCount, updateUserApiUseageCount } from "@/utils/user";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { LangChainStream, StreamingTextResponse } from "ai";
-import { ChatOpenAI } from "@langchain/openai";
-import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { StreamingTextResponse, Message, GoogleGenerativeAIStream } from "ai";
+
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
+
+export const runtime = "edge";
+
+const buildGoogleGenAIPrompt = (messages: Message[]) => ({
+  contents: messages
+    .filter(
+      (message) => message.role === "user" || message.role === "assistant"
+    )
+    .map((message) => ({
+      role: message.role === "user" ? "user" : "model",
+      parts: [{ text: message.content }],
+    })),
+});
 
 export async function POST(req: Request) {
-  const { getUser } = getKindeServerSession();
   try {
+    const { getUser } = getKindeServerSession();
     const user = await getUser();
 
     if (!user) {
@@ -18,41 +33,28 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { messages } = body;
 
-    const currentMessageContent = messages[messages.length - 1].content;
-
-    const { stream, handlers } = LangChainStream();
-
-    const chatModal = new ChatOpenAI({
-      modelName: "gpt-3.5-turbo",
-      streaming: true,
-      callbacks: [handlers],
-    });
-
-    const prompt = ChatPromptTemplate.fromMessages([
-      ["system", "You are an educational chat bot"],
-      ["user", "{input}"],
-    ]);
-
-    const chain = prompt.pipe(chatModal);
-
-    chain.invoke({
-      input: currentMessageContent,
-    });
-
     if (!messages) {
       return NextResponse.json("Messages are required", { status: 400 });
     }
 
     const apiUseageCount = await getUserApiUseageCount(user.id);
 
-    if (apiUseageCount === MAX_FREE_COUNTS) {
+    if (Number(apiUseageCount) >= MAX_FREE_COUNTS) {
       throw new Error("You have reached the limit of API usage", {
-        cause: 400,
+        cause: 403,
       });
     }
 
+    const geminiStream = await genAI
+      .getGenerativeModel({ model: "gemini-pro" })
+      .generateContentStream(buildGoogleGenAIPrompt(messages));
+
     // increase API limit
-    await updateUserApiUseageCount(user?.id);
+    const count = await updateUserApiUseageCount(user?.id);
+    console.log(count);
+
+    // Convert the response into a friendly text-stream
+    const stream = GoogleGenerativeAIStream(geminiStream);
 
     return new StreamingTextResponse(stream);
   } catch (error: any) {

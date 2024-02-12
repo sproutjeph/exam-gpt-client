@@ -141,6 +141,7 @@ const AiChatModal = () => {
               ref={inputRef}
               className="block pt-2 pl-10 pr-20 text-sm shadow-md resize-none bg-gray-50 dark:bg-dark-4 sm:text-base"
               cols={30}
+              required
             />
 
             <Button
@@ -169,13 +170,13 @@ function ChatMessage({ message: { role, content } }: { message: Message }) {
     <div
       className={cn(
         "mb-3 flex items-center gap-1",
-        isAiMessage ? "me-5 justify-start" : "ms-5 justify-end"
+        isAiMessage ? "me-5 justify-start" : "ms-3 justify-end"
       )}
     >
       {isAiMessage ? <BotAvatar /> : <UserAvatar user={user} />}
       <div
         className={cn(
-          "rounded-md border px-3 py-2",
+          "rounded-md border px-1 py-2",
           isAiMessage ? "bg-background" : "bg-foreground text-background"
         )}
       >
