@@ -1,8 +1,9 @@
-import db from "@/lib/mongoDB";
+import prisma from "@/lib/db";
+import { User } from "@prisma/client";
 
 export const getUserByEmail = async (email: string) => {
   try {
-    const user = await db.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email } });
 
     return user;
   } catch (error) {
@@ -11,9 +12,9 @@ export const getUserByEmail = async (email: string) => {
   }
 };
 
-export const getUserById = async (id: string) => {
+export const getUserByUserId = async (userId: string | undefined) => {
   try {
-    const user = await db.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({ where: { userId } });
 
     return user;
   } catch {
@@ -21,14 +22,42 @@ export const getUserById = async (id: string) => {
   }
 };
 
-export const getAccountByUserId = async (userId: string) => {
+export const saveUser = async (user: User) => {
   try {
-    const account = await db.account.findFirst({
-      where: { userId },
+    await prisma.user.create({
+      data: {
+        ...user,
+      },
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    return account;
+export const updateUserApiUseageCount = async (userId: string) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { userId } });
+
+    if (!user) return;
+
+    await prisma.user.update({
+      where: {
+        userId: user?.userId,
+      },
+      data: {
+        apiUseageCount: user?.apiUseageCount + 1,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserApiUseageCount = async (userId: string) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { userId } });
+    return user?.apiUseageCount;
   } catch {
-    return null;
+    return 0;
   }
 };

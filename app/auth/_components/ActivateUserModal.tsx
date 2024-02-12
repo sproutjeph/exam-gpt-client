@@ -23,7 +23,6 @@ import {
 import { IActivateUser } from "@/types/types";
 import React, { useEffect, useRef, useState, useTransition } from "react";
 import { Loader2, ShieldCheckIcon } from "lucide-react";
-import { activateUser } from "@/actions/activateUser";
 import { FormError } from "@/components/base-components/FormError";
 import { FormSuccess } from "@/components/base-components/FormSuccess";
 import { ActivationSchema } from "@/shemas";
@@ -97,11 +96,11 @@ const ActivateUserModal = () => {
     console.log(data);
 
     startTransition(() => {
-      activateUser(activationToken, activationCode).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
-        form.reset();
-      });
+      // activateUser(activationToken, activationCode).then((data) => {
+      //   setError(data.error);
+      //   setSuccess(data.success);
+      //   form.reset();
+      // });
     });
   };
 

@@ -3,17 +3,20 @@ import { MAX_FREE_COUNTS } from "@/constants/constants";
 import { ChatCompletionMessageParam } from "ai/prompts";
 import { NextResponse } from "next/server";
 import Openai from "openai";
+import { getUserApiUseageCount, updateUserApiUseageCount } from "@/utils/user";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export async function POST(req: Request) {
+  const { getUser } = getKindeServerSession();
   try {
-    const { userId } = { userId: "will add soon" };
+    const user = await getUser();
+
+    if (!user) {
+      return NextResponse.json("Unauthorized", { status: 401 });
+    }
 
     const body = await req.json();
     const { messages } = body;
-
-    // if (!userId) {
-    //   return Response.json("Unauthorized", { status: 401 });
-    // }
 
     const openia = new Openai();
     const systemMessage: ChatCompletionMessageParam = {
@@ -25,7 +28,7 @@ export async function POST(req: Request) {
       return NextResponse.json("Messages are required", { status: 400 });
     }
 
-    let apiUseageCount = 0;
+    const apiUseageCount = await getUserApiUseageCount(user.id);
 
     if (apiUseageCount === MAX_FREE_COUNTS) {
       return NextResponse.json(
@@ -43,7 +46,7 @@ export async function POST(req: Request) {
 
     const stream = OpenAIStream(response);
     // increase API limit
-    apiUseageCount += 1;
+    await updateUserApiUseageCount(user?.id);
     return new StreamingTextResponse(stream);
   } catch (error: any) {
     console.log(error);

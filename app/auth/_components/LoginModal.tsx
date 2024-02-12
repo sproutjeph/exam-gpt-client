@@ -31,7 +31,6 @@ import { Github, Loader2, LucideEye, LucideEyeOff } from "lucide-react";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { LoginSchema } from "@/shemas";
-import { loginUser } from "@/actions/loginUser";
 import { FormError } from "@/components/base-components/FormError";
 import { FormSuccess } from "@/components/base-components/FormSuccess";
 
@@ -60,16 +59,7 @@ const LoginModal = () => {
     setError("");
     setSuccess("");
 
-    startTransition(() => {
-      loginUser(values).then((data) => {
-        if (data?.error) {
-          form.reset();
-          setError(data?.error);
-        } else {
-          setSuccess("Logedin successed");
-        }
-      });
-    });
+    startTransition(() => {});
   };
 
   return (

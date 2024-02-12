@@ -8,12 +8,13 @@ import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
 import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
 import { Card, CardContent } from "../ui/card";
 import { MAX_FREE_COUNTS } from "@/constants/constants";
-interface FreeCounterProps {}
+interface FreeCounterProps {
+  apiUseageCount: number;
+}
 
-const FreeCounter: FC<FreeCounterProps> = () => {
+const FreeCounter: FC<FreeCounterProps> = ({ apiUseageCount }) => {
   const dispatch = useAppDispatch();
   const user = null;
-  let apiUseageCount = 0;
 
   return (
     <div className="px-3 mt-auto mb-8">

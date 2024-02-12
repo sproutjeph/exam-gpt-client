@@ -14,9 +14,10 @@ const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 
 interface SidebarProps {
   isAdmin: boolean | null;
+  apiUseageCount: number;
 }
 
-const Sidebar: FC<SidebarProps> = ({ isAdmin }) => {
+const Sidebar: FC<SidebarProps> = ({ isAdmin, apiUseageCount }) => {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -78,7 +79,7 @@ const Sidebar: FC<SidebarProps> = ({ isAdmin }) => {
           })}
         </div>
       </div>
-      <FreeCounter />
+      <FreeCounter apiUseageCount={apiUseageCount} />
     </aside>
   );
 };
