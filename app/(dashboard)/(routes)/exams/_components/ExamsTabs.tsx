@@ -13,11 +13,8 @@ import { exams } from "@/constants/constants";
 import { ISubject } from "@/types/types";
 import { useState } from "react";
 import Link from "next/link";
-import { FC } from "react";
 
-interface ExamsTabsProps {}
-
-const ExamsTabs: FC<ExamsTabsProps> = ({}) => {
+const ExamsTabs = () => {
   const [currentExam, setCurrentExam] = useState("JAMB");
   const { subjects, isLoading, error } = useSubject(currentExam);
   return (

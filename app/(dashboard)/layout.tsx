@@ -1,9 +1,9 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Navbar from "../(dashboard)/(routes)/dashboard/_components/Navbar";
+import { getUserByUserId, saveUser } from "@/utils/user";
 import { Sidebar } from "@/components/base-components";
 import { redirect } from "next/navigation";
 import { FC } from "react";
-import { getUserByUserId, saveUser } from "@/utils/user";
 
 interface layoutProps {
   children: React.ReactNode;
@@ -41,7 +41,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
         />
       </div>
       <main className="pb-10 md:pl-64">
-        <Navbar isAdmin apiUseageCount={Number(userInDB?.apiUseageCount)} />
+        <Navbar isAdmin apiUseageCount={Number(userInDB?.apiUseageCount) | 0} />
         {children}
       </main>
     </section>

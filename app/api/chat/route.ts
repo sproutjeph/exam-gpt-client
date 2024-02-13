@@ -1,10 +1,9 @@
+import { getUserApiUseageCount, updateUserApiUseageCount } from "@/utils/user";
+import { StreamingTextResponse, Message, GoogleGenerativeAIStream } from "ai";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { MAX_FREE_COUNTS } from "@/constants/constants";
 import { NextResponse } from "next/server";
-import { getUserApiUseageCount, updateUserApiUseageCount } from "@/utils/user";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { StreamingTextResponse, Message, GoogleGenerativeAIStream } from "ai";
-
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
@@ -50,8 +49,7 @@ export async function POST(req: Request) {
       .generateContentStream(buildGoogleGenAIPrompt(messages));
 
     // increase API limit
-    const count = await updateUserApiUseageCount(user?.id);
-    console.log(count);
+    await updateUserApiUseageCount(user?.id);
 
     // Convert the response into a friendly text-stream
     const stream = GoogleGenerativeAIStream(geminiStream);
