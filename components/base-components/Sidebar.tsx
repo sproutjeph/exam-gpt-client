@@ -15,7 +15,7 @@ const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 interface SidebarProps {
   isAdmin: boolean | null;
   apiUseageCount: number;
-  setIsSheetOpen: Dispatch<SetStateAction<boolean>>;
+  setIsSheetOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 const Sidebar: FC<SidebarProps> = ({
@@ -73,7 +73,7 @@ const Sidebar: FC<SidebarProps> = ({
                     ? "text-white bg-white/10"
                     : "text-zinc-400"
                 )}
-                onClick={() => setIsSheetOpen(false)}
+                onClick={() => (setIsSheetOpen ? setIsSheetOpen(false) : null)}
               >
                 <div className="flex items-center flex-1">
                   <route.icon className={cn("h-5 w-5 mr-3", route.color)} />
