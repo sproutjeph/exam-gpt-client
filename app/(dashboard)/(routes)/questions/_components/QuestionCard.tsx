@@ -31,7 +31,7 @@ const QuestionCard: FC<QuestionCardProps> = ({ question, index, cbTest }) => {
 
   return (
     <article>
-      <Card className="w-[350px] md:w-[450px]  border-dark-4">
+      <Card className=" w-full sm:w-[350px] md:w-[450px]  border-dark-4 dark:border-gray-600">
         <CardHeader>
           <CardTitle className="text-center">Question ({index + 1})</CardTitle>
         </CardHeader>

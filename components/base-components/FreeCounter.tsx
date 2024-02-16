@@ -1,24 +1,23 @@
 "use client";
 
+import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
+import { MAX_FREE_COUNTS } from "@/constants/constants";
+import { useAppDispatch } from "@/redux-store/hooks";
+import { Card, CardContent } from "../ui/card";
+import { Progress } from "../ui/progress";
+import { Button } from "../ui/button";
 import { FC } from "react";
 
-import { Button } from "../ui/button";
-import { Progress } from "../ui/progress";
-import { useAppDispatch, useAppSelector } from "@/redux-store/hooks";
-import { openSubscriptionModal } from "@/featuers/modals/modalSlice";
-import { Card, CardContent } from "../ui/card";
-import { MAX_FREE_COUNTS } from "@/constants/constants";
 interface FreeCounterProps {
   apiUseageCount: number;
 }
 
 const FreeCounter: FC<FreeCounterProps> = ({ apiUseageCount }) => {
   const dispatch = useAppDispatch();
-  const user = null;
 
   return (
     <div className="px-3 mt-auto mb-8">
-      <Card className="border dark:bg-dark-3">
+      <Card className="border dark:bg-dark-3 dark:border-gray-600">
         <CardContent className="py-6">
           <div className="mb-4 space-y-2 text-sm text-center">
             <h6>

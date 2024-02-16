@@ -2,18 +2,17 @@
 
 import { Loader } from "@/components/base-components";
 import { useQuestion } from "@/hooks/useQuestion";
-import { useSearchParams } from "next/navigation";
 import QuestionCard from "./QuestionCard";
 import { IQuestion } from "@/types/types";
+import { FC } from "react";
 
-const Questions = () => {
-  const params = useSearchParams();
-  const examType = params.get("examType");
-  const examYear = params.get("examYear");
-  const subject = params.get("subject");
+interface QuestionProps {
+  searchParams: { examType: string; subject: string; examYear: string };
+}
 
-  console.log(examType, examYear, subject);
-
+const Questions: FC<QuestionProps> = ({
+  searchParams: { examType, examYear, subject },
+}) => {
   const { questions, isLoading } = useQuestion(
     String(examType),
     String(examYear),
@@ -21,10 +20,10 @@ const Questions = () => {
   );
 
   return (
-    <>
-      <h2 className="mt-4 text-lg text-center">{`  ${examYear} ${examType}  ${subject} Past Questions`}</h2>
+    <div className="">
+      <h2 className="mt-4 text-lg text-center mb-4">{`  ${examYear} ${examType}  ${subject} Past Questions`}</h2>
 
-      <ul className="grid justify-center my-4 xl:grid-cols-2 gap-y-4 xl:place-items-center">
+      <ul className="flex flex-wrap gap-4 items-center justify-center">
         {isLoading ? (
           <Loader />
         ) : (
@@ -38,7 +37,7 @@ const Questions = () => {
           ))
         )}
       </ul>
-    </>
+    </div>
   );
 };
 
