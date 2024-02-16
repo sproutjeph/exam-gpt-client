@@ -18,10 +18,10 @@ const FreeCounter: FC<FreeCounterProps> = ({ apiUseageCount }) => {
 
   return (
     <div className="px-3 mt-auto mb-8">
-      <Card className="border-0 bg-orange-50">
+      <Card className="border dark:bg-dark-3">
         <CardContent className="py-6">
           <div className="mb-4 space-y-2 text-sm text-center">
-            <h6 style={{ color: "black" }}>
+            <h6>
               {apiUseageCount} / {MAX_FREE_COUNTS} Free API Call
             </h6>
 

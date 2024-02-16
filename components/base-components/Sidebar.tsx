@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { routes } from "@/constants/constants";
 import { Montserrat } from "next/font/google";
 import { usePathname } from "next/navigation";
@@ -15,9 +15,14 @@ const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 interface SidebarProps {
   isAdmin: boolean | null;
   apiUseageCount: number;
+  setIsSheetOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const Sidebar: FC<SidebarProps> = ({ isAdmin, apiUseageCount }) => {
+const Sidebar: FC<SidebarProps> = ({
+  isAdmin,
+  apiUseageCount,
+  setIsSheetOpen,
+}) => {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -30,7 +35,7 @@ const Sidebar: FC<SidebarProps> = ({ isAdmin, apiUseageCount }) => {
   }
 
   return (
-    <aside className="flex flex-col h-full py-4 space-y-4 overflow-y-scroll text-white bg-mainColor">
+    <aside className="flex flex-col h-full py-4 space-y-4 overflow-y-scroll text-white border">
       <div className="flex-1 px-3 py-2">
         <Link href="/dashboard" className="flex items-center pl-3 mb-14">
           <div className="relative w-8 h-8 mr-4">
@@ -68,6 +73,7 @@ const Sidebar: FC<SidebarProps> = ({ isAdmin, apiUseageCount }) => {
                     ? "text-white bg-white/10"
                     : "text-zinc-400"
                 )}
+                onClick={() => setIsSheetOpen(false)}
               >
                 <div className="flex items-center flex-1">
                   <route.icon className={cn("h-5 w-5 mr-3", route.color)} />

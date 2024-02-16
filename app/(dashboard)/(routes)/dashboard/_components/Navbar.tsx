@@ -14,7 +14,7 @@ interface NavbarProps {
 const Navbar: FC<NavbarProps> = ({ isAdmin, apiUseageCount }) => {
   const { user } = useKindeBrowserClient();
   return (
-    <nav className="flex items-center p-4 shadow-sm bg-accent">
+    <nav className="flex items-center p-4 shadow-sm border-b">
       <MobileSidebar isAdmin={isAdmin} apiUseageCount={apiUseageCount} />
       <div className="ml-10 ">
         <ModeToggle />
