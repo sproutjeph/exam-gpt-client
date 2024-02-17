@@ -1,4 +1,4 @@
-export { default as Navbar } from "@/app/(dashboard)/(routes)/dashboard/_components/Navbar";
+export { default as Navbar } from "@/app/(routes)/dashboard/_components/Navbar";
 
 export { default as FreeCounter } from "@/components/base-components/FreeCounter";
 
@@ -11,7 +11,7 @@ export { default as LandingHero } from "@/app/(landing)/_components/LandingHero"
 export { default as LandingContent } from "@/app/(landing)/_components/LandingContent";
 export { default as StoreDownLoadBtns } from "@/app/(landing)/_components/StoreDownLoadBtns";
 
-export { default as QuestionCard } from "@/app/(dashboard)/(routes)/questions/_components/QuestionCard";
+export { default as QuestionCard } from "@/app/(routes)/questions/_components/QuestionCard";
 
 export { default as Empty } from "@/components/base-components/Empty";
 

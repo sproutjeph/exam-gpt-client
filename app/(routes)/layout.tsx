@@ -1,5 +1,5 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import Navbar from "../(dashboard)/(routes)/dashboard/_components/Navbar";
+import Navbar from "./dashboard/_components/Navbar";
 import { getUserByUserId, saveUser } from "@/utils/user";
 import { Sidebar } from "@/components/base-components";
 import { redirect } from "next/navigation";
@@ -11,6 +11,7 @@ interface layoutProps {
 
 const DashboardLayout: FC<layoutProps> = async ({ children }) => {
   const { isAuthenticated, getPermission, getUser } = getKindeServerSession();
+  const user = await getUser();
   const isLoggedIn = await isAuthenticated();
   if (!isLoggedIn) {
     redirect("/api/auth/login");
@@ -18,7 +19,6 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
 
   const permission = await getPermission("upload:question");
   const isAdmin = permission?.isGranted as boolean | null;
-  const user = await getUser();
   const userInDB = await getUserByUserId(user?.id);
 
   if (!userInDB) {

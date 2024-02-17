@@ -7,7 +7,7 @@ function QuestionsPage({
   searchParams: { examType: string; subject: string; examYear: string };
 }) {
   return (
-    <main className="mt-8 overflow-scroll mx-3">
+    <main className="mt-8 mx-3">
       <GoBack />
       <Questions searchParams={searchParams} />
     </main>
