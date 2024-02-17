@@ -35,7 +35,7 @@ const Sidebar: FC<SidebarProps> = ({
   }
 
   return (
-    <aside className="flex flex-col h-full py-4 space-y-4 overflow-y-scroll text-white border">
+    <aside className="flex flex-col h-full py-4 space-y-4 overflow-y-scroll border dark:bg-dark-2 bg-gray-100">
       <div className="flex-1 px-3 py-2">
         <Link href="/dashboard" className="flex items-center pl-3 mb-14">
           <div className="relative w-8 h-8 mr-4">
@@ -50,9 +50,9 @@ const Sidebar: FC<SidebarProps> = ({
             <Link
               href="/admin-dashboard"
               className={cn(
-                "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
+                "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:bg-white/10 rounded-lg transition",
                 pathname === "/admin-dashboard"
-                  ? "text-white bg-white/10"
+                  ? "dark:text-white dark:bg-white/10"
                   : "text-zinc-400"
               )}
             >
@@ -68,9 +68,9 @@ const Sidebar: FC<SidebarProps> = ({
                 key={route.href}
                 href={route.href}
                 className={cn(
-                  "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
+                  "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition hover:bg-gray-100 hover:text-black",
                   pathname === route.href
-                    ? "text-white bg-white/10"
+                    ? "dark:text-white dark:bg-white/10"
                     : "text-zinc-400"
                 )}
                 onClick={() => (setIsSheetOpen ? setIsSheetOpen(false) : null)}
