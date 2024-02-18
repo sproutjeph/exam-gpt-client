@@ -8,7 +8,8 @@ import FreeCounter from "./FreeCounter";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { User } from "lucide-react";
+import { ChevronLeft, User } from "lucide-react";
+import { Button } from "../ui/button";
 
 const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 
@@ -73,7 +74,7 @@ const Sidebar: FC<SidebarProps> = ({
                     ? "dark:text-white dark:bg-white/10"
                     : "text-zinc-400"
                 )}
-                onClick={() => (setIsSheetOpen ? setIsSheetOpen(false) : null)}
+                onClick={() => setIsSheetOpen && setIsSheetOpen(false)}
               >
                 <div className="flex items-center flex-1">
                   <route.icon className={cn("h-5 w-5 mr-3", route.color)} />
@@ -85,6 +86,14 @@ const Sidebar: FC<SidebarProps> = ({
           })}
         </div>
       </div>
+      <Button
+        size="icon"
+        className="rounded-full ml-4"
+        variant="secondary"
+        onClick={() => setIsSheetOpen && setIsSheetOpen(false)}
+      >
+        <ChevronLeft />
+      </Button>
       <FreeCounter apiUseageCount={apiUseageCount} />
     </aside>
   );

@@ -3,12 +3,29 @@ import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import DashboardCard from "./_components/DashboardCard";
 
 const DashboardPage = () => {
   return (
-    <main>
-      <div className="my-8 space-y-4 ">
-        <h2 className="text-xl font-bold text-center sm:text-2xl md:text-4xl">
+    <main className="mx-4 my-4">
+      <h1 className="text-2xl">👋 Hi Good Morning Jephthah!</h1>
+      <p className="text-sm text-muted-foreground ml-8 mt-1 mb-8">
+        Here's your summary for today
+      </p>
+      <div className=" grid gap-4 sm:grid-cols-2">
+        <DashboardCard
+          description="Qeustions solved"
+          imageUrl="/exams.svg"
+          value="10"
+        />
+        <DashboardCard
+          description="Books Read"
+          imageUrl="/study.svg"
+          value="20"
+        />
+      </div>
+      {/* <div className="my-8 space-y-4 ">
+        <h2 className="text-xl font-bold text-center sm:text-2xl md:text-4xl px-1">
           Solve O-Level Past Questions with AI
         </h2>
         <p className="text-sm font-light text-center text-muted-foreground md:text-lg">
@@ -35,7 +52,7 @@ const DashboardPage = () => {
             </Card>
           </Link>
         ))}
-      </div>
+      </div> */}
     </main>
   );
 };

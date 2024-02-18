@@ -303,7 +303,7 @@ const UploadQuestionForm: FC<UploadQuestionFormProps> = ({}) => {
             Options Section.
           </FormDescription>
 
-          <div className="flex w-full col-span-2 gap-x-4">
+          <div className="flex w-full col-span-2 gap-x-4 md:col-span-1">
             <Button variant="main" type="button">
               A
             </Button>
@@ -311,7 +311,7 @@ const UploadQuestionForm: FC<UploadQuestionFormProps> = ({}) => {
             <FormField
               name="optionA"
               render={({ field }) => (
-                <FormItem className="flex-1 col-span-2">
+                <FormItem className="flex-1 col-span-2 ">
                   <FormControl className="">
                     <Input
                       className=""
@@ -324,7 +324,7 @@ const UploadQuestionForm: FC<UploadQuestionFormProps> = ({}) => {
               )}
             />
           </div>
-          <div className="flex w-full col-span-2 gap-x-4">
+          <div className="flex w-full col-span-2 gap-x-4 md:col-span-1">
             <Button variant="main" type="button">
               B
             </Button>
@@ -344,7 +344,7 @@ const UploadQuestionForm: FC<UploadQuestionFormProps> = ({}) => {
               )}
             />
           </div>
-          <div className="flex w-full col-span-2 gap-x-4">
+          <div className="flex w-full col-span-2 gap-x-4 md:col-span-1">
             <Button variant="main" type="button">
               C
             </Button>
@@ -364,7 +364,7 @@ const UploadQuestionForm: FC<UploadQuestionFormProps> = ({}) => {
               )}
             />
           </div>
-          <div className="flex w-full col-span-2 gap-x-4">
+          <div className="flex w-full col-span-2 gap-x-4 md:col-span-1">
             <Button variant="main" type="button">
               D
             </Button>
@@ -384,7 +384,7 @@ const UploadQuestionForm: FC<UploadQuestionFormProps> = ({}) => {
               )}
             />
           </div>
-          <div className="flex w-full col-span-2 gap-x-4">
+          <div className="flex w-full col-span-2 gap-x-4 md:col-span-1">
             <Button variant="main" type="button">
               E
             </Button>

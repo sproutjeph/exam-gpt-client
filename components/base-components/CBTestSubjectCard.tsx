@@ -64,7 +64,7 @@ const CBTestSubjectCard: FC<CBTestSubjectCardProps> = ({ subject }) => {
 
       <div className="flex items-center space-x-2">
         <div className="flex items-center flex-1 space-x-2">
-          <Calendar />
+          <Calendar className="text-primary" />
           <p className="text-sm ">Exam Year</p>
         </div>
 
@@ -98,7 +98,7 @@ const CBTestSubjectCard: FC<CBTestSubjectCardProps> = ({ subject }) => {
       </div>
       <div className="flex items-center justify-between space-x-2">
         <div className="flex items-center flex-1 space-x-2">
-          <List />
+          <List className="text-primary" />
           <p className="text-sm ">NO of Question</p>
         </div>
 

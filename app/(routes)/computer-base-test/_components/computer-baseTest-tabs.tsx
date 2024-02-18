@@ -99,7 +99,7 @@ const ComputerBaseTestTabs: FC<ComputerBaseTestTabsProps> = ({}) => {
           <Card className="">
             <div className="flex items-center m-4 space-x-2 ">
               <div className="flex items-center flex-1 space-x-2">
-                <Book />
+                <Book className="text-primary" />
                 <p className="text-sm ">Exam Mode</p>
               </div>
 
@@ -124,7 +124,7 @@ const ComputerBaseTestTabs: FC<ComputerBaseTestTabsProps> = ({}) => {
           <Card className="">
             <div className="flex items-center m-4 space-x-2 ">
               <div className="flex items-center flex-1 space-x-2">
-                <Clock />
+                <Clock className="text-primary" />
                 <p className="text-sm ">Set Time</p>
               </div>
 
