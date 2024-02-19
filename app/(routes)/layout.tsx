@@ -4,6 +4,7 @@ import { getUserByUserId, saveUser } from "@/utils/user";
 import { Sidebar } from "@/components/base-components";
 import { redirect } from "next/navigation";
 import { FC } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface layoutProps {
   children: React.ReactNode;
@@ -33,7 +34,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
   }
 
   return (
-    <section className="relative min-h-full dark:bg-dark-1 bg-gray-50 flex">
+    <section className="relative h-screen dark:bg-dark-1 bg-gray-50 flex overflow-y-hidden">
       <Sidebar
         isAdmin={isAdmin}
         apiUseageCount={Number(userInDB?.apiUseageCount) | 0}
@@ -41,7 +42,7 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
       />
       <main className="pb-10 flex-1">
         <Navbar isAdmin apiUseageCount={Number(userInDB?.apiUseageCount) | 0} />
-        {children}
+        <ScrollArea className="h-[900px]">{children}</ScrollArea>
       </main>
     </section>
   );
