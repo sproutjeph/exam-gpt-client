@@ -103,7 +103,7 @@ const UploadQuestionForm: FC<UploadQuestionFormProps> = ({}) => {
     }
   };
   return (
-    <div className="p-6 mt-2 shadow-md lg:max-w-xl lg:mx-auto">
+    <div className="p-4 mt-2 shadow-md lg:max-w-3xl lg:mx-auto">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

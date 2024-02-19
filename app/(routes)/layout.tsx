@@ -33,14 +33,13 @@ const DashboardLayout: FC<layoutProps> = async ({ children }) => {
   }
 
   return (
-    <section className="relative min-h-full dark:bg-dark-1 bg-gray-50">
-      <div className="hidden h-full md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-80">
-        <Sidebar
-          isAdmin={isAdmin}
-          apiUseageCount={Number(userInDB?.apiUseageCount) | 0}
-        />
-      </div>
-      <main className="pb-10 md:pl-64 ">
+    <section className="relative min-h-full dark:bg-dark-1 bg-gray-50 flex">
+      <Sidebar
+        isAdmin={isAdmin}
+        apiUseageCount={Number(userInDB?.apiUseageCount) | 0}
+        isMobile={false}
+      />
+      <main className="pb-10 flex-1">
         <Navbar isAdmin apiUseageCount={Number(userInDB?.apiUseageCount) | 0} />
         {children}
       </main>

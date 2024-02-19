@@ -23,6 +23,7 @@ const MobileSidebar: FC<MobileSidebarProps> = ({ isAdmin, apiUseageCount }) => {
           isAdmin={isAdmin}
           apiUseageCount={apiUseageCount}
           setIsSheetOpen={setIsSheetOpen}
+          isMobile={true}
         />
       </SheetContent>
     </Sheet>

@@ -12,7 +12,7 @@ const DashboardPage = () => {
       <p className="text-sm text-muted-foreground ml-8 mt-1 mb-8">
         Here's your summary for today
       </p>
-      <div className=" grid gap-4 sm:grid-cols-2">
+      <div className=" grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <DashboardCard
           description="Qeustions solved"
           imageUrl="/exams.svg"
@@ -23,7 +23,18 @@ const DashboardPage = () => {
           imageUrl="/study.svg"
           value="20"
         />
+        <DashboardCard
+          description="Free User"
+          imageUrl="/study.svg"
+          value="Sub"
+        />
+        <DashboardCard
+          description="API calls"
+          imageUrl="/study.svg"
+          value="0"
+        />
       </div>
+
       {/* <div className="my-8 space-y-4 ">
         <h2 className="text-xl font-bold text-center sm:text-2xl md:text-4xl px-1">
           Solve O-Level Past Questions with AI

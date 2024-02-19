@@ -1,14 +1,14 @@
 "use client";
 
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import { routes } from "@/constants/constants";
+import { MAX_FREE_COUNTS, routes } from "@/constants/constants";
 import { Montserrat } from "next/font/google";
 import { usePathname } from "next/navigation";
 import FreeCounter from "./FreeCounter";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, User } from "lucide-react";
+import { ChevronLeft, ChevronRight, User } from "lucide-react";
 import { Button } from "../ui/button";
 
 const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
@@ -17,15 +17,20 @@ interface SidebarProps {
   isAdmin: boolean | null;
   apiUseageCount: number;
   setIsSheetOpen?: Dispatch<SetStateAction<boolean>>;
+  isMobile?: boolean;
 }
 
 const Sidebar: FC<SidebarProps> = ({
   isAdmin,
   apiUseageCount,
   setIsSheetOpen,
+  isMobile,
 }) => {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
+  const [expand, setExpand] = useState(true);
+
+  const showOnCollasp = !isMobile && !expand;
 
   useEffect(() => {
     setIsMounted(true);
@@ -36,13 +41,25 @@ const Sidebar: FC<SidebarProps> = ({
   }
 
   return (
-    <aside className="flex flex-col h-full py-4 space-y-4 overflow-y-scroll border dark:bg-dark-2 bg-gray-100">
+    <aside
+      className={cn(
+        "flex flex-col h-screen py-4 space-y-4 overflow-y-scroll border dark:bg-dark-2 bg-gray-100  md:flex md:flex-col  md:inset-y-0 z-40",
+        !isMobile && expand && "md:w-64 hidden",
+        !isMobile && !expand && "md:w-24 hidden"
+      )}
+    >
       <div className="flex-1 px-3 py-2">
         <Link href="/dashboard" className="flex items-center pl-3 mb-14">
           <div className="relative w-8 h-8 mr-4">
             <Image fill alt="Logo" src="/logo.png" />
           </div>
-          <h1 className={cn("text-2xl font-bold", poppins.className)}>
+          <h1
+            className={cn(
+              "text-2xl font-bold",
+              poppins.className,
+              showOnCollasp && "hidden"
+            )}
+          >
             Exam GPT
           </h1>
         </Link>
@@ -79,22 +96,34 @@ const Sidebar: FC<SidebarProps> = ({
                 <div className="flex items-center flex-1">
                   <route.icon className={cn("h-5 w-5 mr-3", route.color)} />
 
-                  {route.label}
+                  <p className={cn(showOnCollasp && "hidden")}>{route.label}</p>
                 </div>
               </Link>
             );
           })}
         </div>
       </div>
-      <Button
-        size="icon"
-        className="rounded-full ml-4"
-        variant="secondary"
-        onClick={() => setIsSheetOpen && setIsSheetOpen(false)}
-      >
-        <ChevronLeft />
-      </Button>
-      <FreeCounter apiUseageCount={apiUseageCount} />
+      {!isMobile ? (
+        <Button
+          size="icon"
+          className={cn(
+            "rounded-full fixed  bg-primary/25 hover:bg-primary/35 top-[70%]",
+            expand ? " left-[235px]" : "left-[75px]"
+          )}
+          onClick={() => setExpand(!expand)}
+        >
+          {expand ? <ChevronLeft /> : <ChevronRight />}
+        </Button>
+      ) : null}
+
+      {showOnCollasp ? (
+        <div className="flex flex-col justify-center items-center">
+          <p className="dark:text-white">{`${apiUseageCount} / ${MAX_FREE_COUNTS}`}</p>
+          <p>API calls</p>
+        </div>
+      ) : (
+        <FreeCounter apiUseageCount={apiUseageCount} />
+      )}
     </aside>
   );
 };
