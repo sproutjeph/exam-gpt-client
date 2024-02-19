@@ -1,4 +1,7 @@
-import { Button } from "../../../components/ui/button";
+"use client";
+
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
+import { Button } from "@/components/ui/button";
 import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -17,11 +20,9 @@ const LandingNavbar = () => {
           Exam-GPT
         </h1>
       </Link>
-      <Link className="flex items-center gap-x-2" href="/dashboard">
-        <Button variant="main" className="rounded-full hover:bg-mainColor/90">
-          Get Started
-        </Button>
-      </Link>
+      <LoginLink className="rounded-full hover:bg-mainColor/90">
+        <Button variant="main">Get Started</Button>
+      </LoginLink>
     </nav>
   );
 };

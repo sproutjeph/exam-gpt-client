@@ -74,8 +74,13 @@ const Sidebar: FC<SidebarProps> = ({
                   : "text-zinc-400"
               )}
             >
-              <div className="flex items-center flex-1">
-                <User className={cn("h-5 w-5 mr-3")} />
+              <div
+                className={cn(
+                  "flex items-center flex-1 gap-2",
+                  showOnCollasp && "flex-col"
+                )}
+              >
+                <User className={cn("h-5 w-5")} />
                 Admin
               </div>
             </Link>
@@ -93,8 +98,13 @@ const Sidebar: FC<SidebarProps> = ({
                 )}
                 onClick={() => setIsSheetOpen && setIsSheetOpen(false)}
               >
-                <div className="flex items-center flex-1">
-                  <route.icon className={cn("h-5 w-5 mr-3", route.color)} />
+                <div
+                  className={cn(
+                    "flex items-center flex-1 gap-2",
+                    showOnCollasp && "justify-center"
+                  )}
+                >
+                  <route.icon className={cn("h-5 w-5", route.color)} />
 
                   <p className={cn(showOnCollasp && "hidden")}>{route.label}</p>
                 </div>
