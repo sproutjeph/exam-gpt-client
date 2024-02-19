@@ -1,10 +1,10 @@
 "use client";
 
-import { Loader } from "@/components/base-components";
 import { useQuestion } from "@/hooks/useQuestion";
 import QuestionCard from "./QuestionCard";
 import { IQuestion } from "@/types/types";
 import { FC } from "react";
+import QuestionCardSkeleton from "./QuestionCardSkeleton";
 
 interface QuestionProps {
   searchParams: { examType: string; subject: string; examYear: string };
@@ -23,9 +23,14 @@ const Questions: FC<QuestionProps> = ({
     <div className="">
       <h2 className="mt-4 text-lg text-center mb-4">{`  ${examYear} ${examType}  ${subject} Past Questions`}</h2>
 
-      <ul className="flex flex-wrap gap-4 items-center justify-center">
+      <ul className="flex flex-wrap gap-4 items-center justify-center h-full">
         {isLoading ? (
-          <Loader />
+          <>
+            <QuestionCardSkeleton />
+            <QuestionCardSkeleton />
+            <QuestionCardSkeleton />
+            <QuestionCardSkeleton />
+          </>
         ) : (
           questions?.data.map((question: IQuestion, i: number) => (
             <QuestionCard
