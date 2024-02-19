@@ -6,13 +6,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Loader } from "@/components/base-components";
 import { Button } from "@/components/ui/button";
 import { useSubject } from "@/hooks/useSubject";
 import { exams } from "@/constants/constants";
 import { ISubject } from "@/types/types";
 import { useState } from "react";
 import Link from "next/link";
+import ExamButtonSkeleton from "./ExamButtonSkeleton";
 
 const ExamsTabs = () => {
   const [currentExam, setCurrentExam] = useState("JAMB");
@@ -40,7 +40,11 @@ const ExamsTabs = () => {
         <h4 className="my-4 text-lg text-center">{`${currentExam} PAST QUESTION`}</h4>
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {isLoading ? (
-            <Loader />
+            <>
+              <ExamButtonSkeleton />
+              <ExamButtonSkeleton />
+              <ExamButtonSkeleton />
+            </>
           ) : (
             subjects?.data?.map((subject: ISubject) => (
               <Popover key={subject._id}>
