@@ -1,15 +1,15 @@
 "use client";
 
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, memo, useEffect, useState } from "react";
 import { MAX_FREE_COUNTS, routes } from "@/constants/constants";
+import { ChevronLeft, ChevronRight, User } from "lucide-react";
 import { Montserrat } from "next/font/google";
 import { usePathname } from "next/navigation";
 import FreeCounter from "./FreeCounter";
+import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, User } from "lucide-react";
-import { Button } from "../ui/button";
 
 const poppins = Montserrat({ weight: "600", subsets: ["latin"] });
 
@@ -20,12 +20,12 @@ interface SidebarProps {
   isMobile?: boolean;
 }
 
-const Sidebar: FC<SidebarProps> = ({
+const Sidebar = memo(function Sidebar({
   isAdmin,
   apiUseageCount,
   setIsSheetOpen,
   isMobile,
-}) => {
+}: SidebarProps) {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
   const [expand, setExpand] = useState(true);
@@ -136,6 +136,6 @@ const Sidebar: FC<SidebarProps> = ({
       )}
     </aside>
   );
-};
+});
 
 export default Sidebar;

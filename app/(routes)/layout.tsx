@@ -1,10 +1,10 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import Navbar from "./dashboard/_components/Navbar";
 import { getUserByUserId, saveUser } from "@/utils/user";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sidebar } from "@/components/base-components";
+import Navbar from "./dashboard/_components/Navbar";
 import { redirect } from "next/navigation";
 import { FC } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface layoutProps {
   children: React.ReactNode;
