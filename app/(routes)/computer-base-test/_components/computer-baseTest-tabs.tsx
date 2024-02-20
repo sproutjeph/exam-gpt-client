@@ -22,6 +22,7 @@ import { useAllSubjects } from "@/hooks/useAllSubjects";
 import { Book, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
+import CBTestSubjectCardSkeleton from "./CBTestSubjectCardSkeleton";
 
 interface ComputerBaseTestTabsProps {}
 
@@ -47,17 +48,17 @@ const ComputerBaseTestTabs: FC<ComputerBaseTestTabsProps> = ({}) => {
 
       <TabsContent value="Subjects">
         <ul className="grid 3xl:grid-cols-3 lg:grid-cols-2 gap-x-2">
-          {isLoading ? (
-            <div className="flex items-center justify-center mt-2">
-              <Loader />
-            </div>
-          ) : (
-            subjects?.data.map((subject) => (
-              <li key={subject._id}>
-                <CBTestSubjectCard subject={subject} />
-              </li>
-            ))
-          )}
+          {isLoading
+            ? [1, 2, 3].map((i) => (
+                <li key={i} className="mb-4">
+                  <CBTestSubjectCardSkeleton />
+                </li>
+              ))
+            : subjects?.data.map((subject) => (
+                <li key={subject._id}>
+                  <CBTestSubjectCard subject={subject} />
+                </li>
+              ))}
         </ul>
         <div className="fixed z-50 translate-x-1 shadow-2xl left-1/3 sm:left-1/2 bottom-20 sm:bottom-4">
           <Button
