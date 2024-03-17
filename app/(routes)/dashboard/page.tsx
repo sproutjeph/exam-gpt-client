@@ -1,13 +1,13 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import DashboardCard from "./_components/DashboardCard";
+import {
+  User,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
 
 const DashboardPage = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-
   return (
     <main className="mx-4 my-4">
-      <h1 className="text-2xl">👋 Hi Good Morning {user?.given_name}!</h1>
+      <h1 className="text-2xl">👋 Hi Good Morning Jeph!</h1>
       <p className="text-sm text-muted-foreground ml-8 mt-1 mb-8">
         Here's your summary for today
       </p>

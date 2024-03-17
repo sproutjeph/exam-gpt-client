@@ -26,15 +26,17 @@ const LandingHero = () => {
         Slove Exam past Questions with AI.
       </div>
       <div>
-        <Link href="/dashboard">
-          <Button
-            variant="premium"
-            className="p-4 font-semibold transition-all rounded-full md:text-lg md:p-6 hover:scale-105"
-            // onClick={()=> dispatch(openLoginModal)}
-          >
-            Start Sloving For Free
-          </Button>
-        </Link>
+        {/* <Link href="/auth/signin"> */}
+        <Button
+          variant="premium"
+          className="p-4 font-semibold transition-all rounded-full md:text-lg md:p-6 hover:scale-105"
+          onClick={() => {
+            dispatch(openLoginModal);
+          }}
+        >
+          Start Sloving For Free
+        </Button>
+        {/* </Link> */}
       </div>
       <div className="text-xs font-normal text-zinc-400 md:text-sm">
         No credit card required.
