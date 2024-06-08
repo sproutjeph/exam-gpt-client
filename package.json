@@ -87,9 +87,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/bcryptjs": "^2.4.6",
-    "@types/ejs": "^3.1.5",
     "@types/jsonwebtoken": "^9.0.5",
-    "@types/nodemailer": "^6.4.14",
     "@types/nprogress": "^0.2.3",
     "@types/uuid": "^9.0.2",
     "eslint-plugin-jest-dom": "^5.0.1",
@@ -99,7 +97,6 @@
     "jest-environment-jsdom": "^29.6.2",
     "msw": "^1.2.3",
     "npm": "^10.4.0",
-    "prisma": "^5.8.1",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1"
   }
